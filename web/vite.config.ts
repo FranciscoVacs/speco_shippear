@@ -39,7 +39,7 @@ export default defineConfig(({ mode }) => {
     // In single mode samples are not embedded: the exporter injects window.__SPECREVIEW__.
     publicDir: single ? false : "public",
     build: { chunkSizeWarningLimit: 600, minify: single ? false : "esbuild", sourcemap: false, outDir: single ? "dist-single" : "dist" },
-    server: { proxy: { "/api": "http://127.0.0.1:8765" } },
+    server: { allowedHosts: true, proxy: { "/api": "http://127.0.0.1:8765" } },
     preview: { proxy: { "/api": "http://127.0.0.1:8765" } },
   };
 });

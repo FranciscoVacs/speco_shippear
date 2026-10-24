@@ -25,6 +25,12 @@ const LedgerPage = lazy(() => import("./pages/LedgerPage"));
 const AuthorizeClient = lazy(() => import("./pages/AuthorizeClient"));
 const AgentsPage = lazy(() => import("./pages/AgentsPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const BelloLayout = lazy(() => import("./bello/BelloLayout"));
+const BelloOverview = lazy(() => import("./bello/pages/Overview"));
+const BelloSpecs = lazy(() => import("./bello/pages/SpecsPage"));
+const BelloRules = lazy(() => import("./bello/pages/RulesPage"));
+const BelloTrace = lazy(() => import("./bello/pages/TracePage"));
+const BelloAssistantPage = lazy(() => import("./bello/pages/AssistantPage"));
 const SettingsLayout = lazy(() => import("./pages/settings/SettingsLayout"));
 const General = lazy(() => import("./pages/settings/General"));
 const Members = lazy(() => import("./pages/settings/Members"));
@@ -73,6 +79,21 @@ function buildRoutes(embedded: boolean): RouteObject[] {
         ...(embedded || !cloudEnabled() ? [] : [{ path: "oauth/consent", element: <AuthorizeClient /> } satisfies RouteObject]),
         ...(embedded || !cloudEnabled() ? [] : [{ path: "agents", element: <AgentsPage /> } satisfies RouteObject]),
         ...(embedded || !cloudEnabled() ? [] : [{ path: "ideas", element: <Ideas /> } satisfies RouteObject, { path: "ideas/:id", element: <Idea /> } satisfies RouteObject]),
+        ...(embedded
+          ? []
+          : [
+              {
+                path: "bello",
+                element: <BelloLayout />,
+                children: [
+                  { index: true, element: <BelloOverview /> },
+                  { path: "specs", element: <BelloSpecs /> },
+                  { path: "reglas", element: <BelloRules /> },
+                  { path: "trazabilidad", element: <BelloTrace /> },
+                  { path: "asistente", element: <BelloAssistantPage /> },
+                ],
+              } satisfies RouteObject,
+            ]),
         { path: "rules", element: <RulesPage /> },
         { path: "rules/:ruleId", element: <RulesPage /> },
         { path: "docs", element: <DocsPage /> },

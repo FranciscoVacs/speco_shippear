@@ -38,6 +38,11 @@ function useCrumbs(embedded: boolean): Crumb[] {
   if (p === "/reviews") return [{ label: t("nav.reviews") }];
   if (rule) return [{ label: t("nav.rules"), to: "/rules" }, { label: decodeURIComponent(rule.params.ruleId ?? "") }];
   if (p === "/rules") return [{ label: t("nav.rules") }];
+  if (p === "/bello") return [{ label: "Bello · Demo" }];
+  if (p.startsWith("/bello/")) {
+    const sub: Record<string, string> = { specs: "Árbol de specs", reglas: "Reglas y normativa", trazabilidad: "Trazabilidad", asistente: "Asistente" };
+    return [{ label: "Bello · Demo", to: "/bello" }, { label: sub[p.slice(7)] ?? p.slice(7) }];
+  }
   if (p === "/connect") return [{ label: t("connect.title") }];
   if (p === "/portrait") return [{ label: t("nav.portrait") }];
   if (p === "/agents") return [{ label: t("nav.agents") }];

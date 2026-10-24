@@ -2,7 +2,7 @@
 import { cloudEnabled } from "../cloud/config";
 import { useEffect, useRef, type ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { BookOpen, Bell, ChevronLeft, ChevronRight, Bot, Gavel, FolderGit2, GaugeCircle, Home, Lightbulb, Receipt, KeyRound, ListChecks, Plug, Scale, ScrollText, Search, ShieldCheck, Settings, Users, UserRound, X } from "lucide-react";
+import { BookOpen, Bell, ChevronLeft, ChevronRight, Bot, Gavel, FolderGit2, GaugeCircle, Home, Lightbulb, Receipt, KeyRound, Landmark, ListChecks, Plug, Scale, ScrollText, Search, ShieldCheck, Settings, Users, UserRound, X } from "lucide-react";
 import { useT, type Key } from "../i18n";
 import { DEMO_REPOS, session, useSession } from "./session";
 import { TenantSwitcher } from "./TenantSwitcher";
@@ -145,6 +145,7 @@ export function Sidebar({ embedded, drawerOpen, onCloseDrawer, checklist }: Prop
         ) : (
           <>
             {nav("/", "nav.home", <Home size={ICON} />, path === "/")}
+            <SbLink to="/bello" label="Bello · Demo" icon={<Landmark size={ICON} />} active={path.startsWith("/bello")} onNavigate={onCloseDrawer} />
             <SbLink to="/decisions" label={t("nav.decisions")} icon={<Gavel size={ICON} />} active={path.startsWith("/decisions")} onNavigate={onCloseDrawer} badge={pending || undefined} badgeLabel={pending ? tn(t, "dec.badge", pending) : undefined} />
             {nav("/ledger", "nav.ledger", <ScrollText size={ICON} />, path.startsWith("/ledger"))}
             {nav("/reviews", "nav.reviews", <ListChecks size={ICON} />, path.startsWith("/reviews") && !(path === "/reviews" && repoParam))}
