@@ -36,7 +36,7 @@ function send(text: string, reqs: Requirement[]) {
   }, 650);
 }
 
-export function BelloAssistant({ compact = false }: { compact?: boolean }) {
+export function BelloAssistant({ compact = false, home }: { compact?: boolean; home?: React.ReactNode }) {
   const { requirements } = useBello();
   const list = useSyncExternalStore(sub, snap);
   const busy = useSyncExternalStore(sub, snapThinking);
@@ -45,7 +45,7 @@ export function BelloAssistant({ compact = false }: { compact?: boolean }) {
   const added = new Set(requirements.map((r) => r.id));
 
   useEffect(() => {
-    endRef.current?.scrollIntoView({ block: "end" });
+    if (list.length) endRef.current?.scrollIntoView({ block: "end" });
   }, [list.length, busy]);
 
   const submit = (v = text) => {
@@ -54,8 +54,65 @@ export function BelloAssistant({ compact = false }: { compact?: boolean }) {
     setText("");
   };
 
+  const inputId = compact ? "bl-asst-c" : "bl-asst";
+  const composer = (
+    <form
+      className="bl-asst-form"
+      onSubmit={(e) => {
+        e.preventDefault();
+        submit();
+      }}
+    >
+      <label className="sr-only" htmlFor={inputId}>
+        Mensaje al asistente
+      </label>
+      <textarea
+        id={inputId}
+        rows={compact ? 2 : 3}
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="Ej.: Quiero que el cliente pueda pagar servicios con QR…"
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && !e.shiftKey) {
+            if (e.nativeEvent.isComposing || e.keyCode === 229) return;
+            e.preventDefault();
+            submit();
+          }
+        }}
+      />
+      <button type="submit" className="bl-send" disabled={!text.trim() || busy} aria-label="Enviar">
+        <ArrowUp size={16} />
+      </button>
+    </form>
+  );
+
+  if (home !== undefined && list.length === 0) {
+    return (
+      <div className="bl-home">
+        <div className="bl-home-hero">
+          <span className="bl-home-orb" aria-hidden="true">
+            <Sparkles size={26} />
+          </span>
+          <h1>Hola, Lucía. ¿Qué construimos hoy en Bello?</h1>
+          <p className="muted">
+            Describí un requerimiento y lo convierto en specs reforzadas por la normativa BCRA y UIF, PCI DSS, ISO 27001 y las reglas del código de Bello. O preguntame por el estado de cualquier spec.
+          </p>
+        </div>
+        <div className="bl-home-composer">{composer}</div>
+        <div className="bl-home-sugg">
+          {SUGGESTIONS.map((s) => (
+            <button key={s} type="button" className="bl-chip" onClick={() => submit(s)} disabled={busy}>
+              {s}
+            </button>
+          ))}
+        </div>
+        {home}
+      </div>
+    );
+  }
+
   return (
-    <div className={"bl-asst" + (compact ? " compact" : "")}>
+    <div className={"bl-asst" + (compact ? " compact" : "") + (home !== undefined ? " bl-asst-home" : "")}>
       <div className="bl-asst-log" aria-live="polite">
         {list.length === 0 && (
           <div className="bl-asst-empty">
@@ -95,34 +152,7 @@ export function BelloAssistant({ compact = false }: { compact?: boolean }) {
           </button>
         ))}
       </div>
-      <form
-        className="bl-asst-form"
-        onSubmit={(e) => {
-          e.preventDefault();
-          submit();
-        }}
-      >
-        <label className="sr-only" htmlFor={compact ? "bl-asst-c" : "bl-asst"}>
-          Mensaje al asistente
-        </label>
-        <textarea
-          id={compact ? "bl-asst-c" : "bl-asst"}
-          rows={compact ? 2 : 3}
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="Ej.: Quiero que el cliente pueda pagar servicios con QR…"
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && !e.shiftKey) {
-              if (e.nativeEvent.isComposing || e.keyCode === 229) return;
-              e.preventDefault();
-              submit();
-            }
-          }}
-        />
-        <button type="submit" className="bl-send" disabled={!text.trim() || busy} aria-label="Enviar">
-          <ArrowUp size={16} />
-        </button>
-      </form>
+      {composer}
       <p className="bl-asst-foot muted">Modo demo · respuestas generadas con las reglas cargadas en este workspace.</p>
     </div>
   );
@@ -141,7 +171,7 @@ function ReplyView({ reply, added, compact }: { reply: Reply; added: boolean; co
           <ul className="bl-reply-specs">
             {reply.specs.slice(0, compact ? 4 : 8).map((s) => (
               <li key={s.id}>
-                <Link to={`/bello/specs?spec=${encodeURIComponent(s.id)}`}>
+                <Link to={`/specs?spec=${encodeURIComponent(s.id)}`}>
                   <span>{s.title}</span>
                   <StatusBadge status={s.status} />
                 </Link>
@@ -186,7 +216,7 @@ function ReplyView({ reply, added, compact }: { reply: Reply; added: boolean; co
         <div className="bl-draft-f">
           <PersonChip id="lfernandez" size={20} showRole={false} />
           {added ? (
-            <Link to={`/bello/specs?req=${encodeURIComponent(req.id)}`} className="btn sm">
+            <Link to={`/specs?req=${encodeURIComponent(req.id)}`} className="btn sm">
               Ver en el árbol
             </Link>
           ) : (

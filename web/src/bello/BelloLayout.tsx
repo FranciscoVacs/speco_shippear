@@ -1,16 +1,7 @@
-import { NavLink, Outlet } from "react-router-dom";
-import { Fingerprint, LayoutDashboard, ListTree, Scale, Sparkles } from "lucide-react";
+import { Outlet, useLocation } from "react-router-dom";
 import { RULES } from "./data";
 import { allSpecs, useBello, verifiedRatio } from "./store";
 import "./bello.css";
-
-const TABS = [
-  { to: "/bello", end: true, label: "Panel", icon: LayoutDashboard },
-  { to: "/bello/specs", label: "Árbol de specs", icon: ListTree },
-  { to: "/bello/reglas", label: "Reglas y normativa", icon: Scale },
-  { to: "/bello/trazabilidad", label: "Trazabilidad", icon: Fingerprint },
-  { to: "/bello/asistente", label: "Asistente", icon: Sparkles },
-];
 
 export function BelloMark({ size = 40 }: { size?: number }) {
   return (
@@ -20,45 +11,65 @@ export function BelloMark({ size = 40 }: { size?: number }) {
   );
 }
 
-export default function BelloLayout() {
+const HEADERS: Record<string, { title: string; lead: string }> = {
+  "/specs": { title: "Árbol de specs", lead: "Requerimientos, specs y su estado de verificación. Elegí una spec para ver diseño, reglas, impacto y firmas." },
+  "/reglas": { title: "Reglas y normativa", lead: "Normativa externa, certificaciones, reglas nativas del código y políticas propias de Bello que refuerzan cada spec." },
+  "/trazabilidad": { title: "Trazabilidad", lead: "Quién hizo qué y cuándo, encadenado con hash para que ningún evento pueda alterarse sin dejar rastro." },
+};
+
+function DashboardHero() {
   const { requirements } = useBello();
   const specs = allSpecs(requirements);
   return (
-    <div className="bl page">
-      <header className="bl-hero" style={{ backgroundImage: "url(/bello/cover.png)" }}>
-        <div className="bl-hero-in">
-          <div className="bl-hero-id">
-            <BelloMark size={44} />
-            <div>
-              <div className="bl-hero-kicker">Workspace a medida · Speco Enterprise</div>
-              <h1>Bello · Banca digital</h1>
-            </div>
+    <header className="bl-hero" style={{ backgroundImage: "url(/bello/cover.png)" }}>
+      <div className="bl-hero-in">
+        <div className="bl-hero-id">
+          <BelloMark size={44} />
+          <div>
+            <div className="bl-hero-kicker">Workspace a medida · Speco Enterprise</div>
+            <h1>Bello · Banca digital</h1>
           </div>
-          <ul className="bl-hero-stats" aria-label="Resumen del workspace">
-            <li>
-              <strong>{requirements.length}</strong> requerimientos
-            </li>
-            <li>
-              <strong>{specs.length}</strong> specs
-            </li>
-            <li>
-              <strong>{RULES.length}</strong> reglas cargadas
-            </li>
-            <li>
-              <strong>{verifiedRatio(specs)}%</strong> verificado
-            </li>
-          </ul>
-          <span className="bl-demo">Datos de demostración</span>
         </div>
-      </header>
-      <nav className="bl-tabs" aria-label="Secciones de Bello">
-        {TABS.map(({ to, end, label, icon: Icon }) => (
-          <NavLink key={to} to={to} end={end} className={({ isActive }) => "bl-tab" + (isActive ? " on" : "")}>
-            <Icon size={15} aria-hidden="true" />
-            {label}
-          </NavLink>
-        ))}
-      </nav>
+        <ul className="bl-hero-stats" aria-label="Resumen del workspace">
+          <li>
+            <strong>{requirements.length}</strong> requerimientos
+          </li>
+          <li>
+            <strong>{specs.length}</strong> specs
+          </li>
+          <li>
+            <strong>{RULES.length}</strong> reglas cargadas
+          </li>
+          <li>
+            <strong>{verifiedRatio(specs)}%</strong> verificado
+          </li>
+        </ul>
+        <span className="bl-demo">Datos de demostración</span>
+      </div>
+    </header>
+  );
+}
+
+export default function BelloLayout() {
+  const { pathname } = useLocation();
+  if (pathname === "/") {
+    return (
+      <div className="bl bl-home-wrap">
+        <Outlet />
+      </div>
+    );
+  }
+  const header = HEADERS[pathname];
+  return (
+    <div className="bl page">
+      {pathname === "/dashboard" ? (
+        <DashboardHero />
+      ) : header ? (
+        <header className="bl-pagehead">
+          <h1>{header.title}</h1>
+          <p className="muted">{header.lead}</p>
+        </header>
+      ) : null}
       <Outlet />
     </div>
   );

@@ -6,6 +6,7 @@ import { allSpecs, useBello } from "../store";
 import { linkedSpecs, ruleCompliance } from "../metrics";
 import { sha256 } from "../hash";
 import { HashChip, KindIcon, PersonChip, Ring, StatusDot, statusFromPct } from "../ui";
+import { RegChanges } from "../rules/RegChanges";
 
 const KINDS: RuleKind[] = ["certification", "regulation", "bello", "native"];
 
@@ -36,6 +37,7 @@ export default function RulesPage() {
 
   return (
     <div className="bl-stack-y">
+      <RegChanges />
       <section className="bl-kind-grid" aria-label="Tipos de reglas">
         {KINDS.map((k) => {
           const rs = RULES.filter((r) => r.kind === k);
@@ -89,7 +91,7 @@ export default function RulesPage() {
                 <div className="bl-rule-specs">
                   <span className="muted bl-sm">Refuerza {linked.length} specs:</span>
                   {linked.map((s) => (
-                    <Link key={s.id} to={`/bello/specs?spec=${encodeURIComponent(s.id)}`} className="bl-spec-pill">
+                    <Link key={s.id} to={`/specs?spec=${encodeURIComponent(s.id)}`} className="bl-spec-pill">
                       <StatusDot status={s.status} size={8} />
                       {s.title}
                     </Link>

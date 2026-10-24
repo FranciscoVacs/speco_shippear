@@ -306,6 +306,8 @@ export interface Spec {
   rules: string[];
   impacts: { module: string; level: Level; note: string }[];
   design?: string;
+  /** earlier versions of the frontend design, oldest first; `design` is always the current one */
+  designHistory?: DesignVersion[];
   files: string[];
   tests: { passed: number; total: number };
   updatedAt: string;
@@ -343,6 +345,7 @@ export const REQUIREMENTS: Requirement[] = [
           { module: "app-mobile", level: "bajo", note: "Barra de límite disponible." },
         ],
         design: "/bello/design-transfer.png",
+        designHistory: [{ version: "v1", src: "/bello/design-transfer-v1.png", date: "2026-08-15", by: "lfernandez", note: "Primer boceto sin barra de límite." }],
         files: ["payments-api/src/limits/dailyLimit.ts", "core-ledger/src/queries/dailyTotal.ts"],
         tests: { passed: 24, total: 24 },
         updatedAt: "2026-10-18",
@@ -416,6 +419,7 @@ export const REQUIREMENTS: Requirement[] = [
           { module: "app-mobile", level: "alto", note: "Flujo de cámara y guía." },
         ],
         design: "/bello/design-kyc.png",
+        designHistory: [{ version: "v1", src: "/bello/design-kyc-v1.png", date: "2026-08-22", by: "lfernandez", note: "Sin guía de prueba de vida: no cumplía UIF DDC." }],
         files: ["onboarding/src/kyc/verify.ts", "app/src/screens/Liveness.tsx"],
         tests: { passed: 31, total: 31 },
         updatedAt: "2026-10-10",
@@ -471,6 +475,7 @@ export const REQUIREMENTS: Requirement[] = [
           { module: "app-mobile", level: "medio", note: "Componente de tarjeta enmascarada." },
         ],
         design: "/bello/design-card.png",
+        designHistory: [{ version: "v1", src: "/bello/design-card-v1.png", date: "2026-09-04", by: "cruiz", note: "Mostraba «Ver datos» sin MFA previo (PCI 8.4)." }],
         files: ["cards/src/vault/tokenize.ts", "app/src/components/CardView.tsx"],
         tests: { passed: 22, total: 22 },
         updatedAt: "2026-10-05",
@@ -571,6 +576,60 @@ export const EVENT_SEED: TraceEventSeed[] = [
   { at: "2026-10-21T09:48:00Z", actor: "agent", action: "marcó en riesgo", target: "BEL-101/FR-003", detail: "Latencia p95 340 ms > 200 ms" },
   { at: "2026-10-23T08:15:00Z", actor: "agent", action: "detectó falla", target: "BEL-102/FR-002", detail: "5 tests fallan tras cambio de proveedor" },
   { at: "2026-10-23T18:30:00Z", actor: "msosa", action: "solicitó revisión", target: "BEL-103/FR-003", detail: "Requisito PCI 10.2 sin cubrir" },
+];
+
+export interface DesignVersion {
+  version: string;
+  src: string;
+  date: string;
+  by: string;
+  note: string;
+}
+
+export interface RegChange {
+  id: string;
+  ruleId: string;
+  title: string;
+  publishedAt: string;
+  summary: string;
+  before: string;
+  after: string;
+  /** "nuevo": detected, not analysed yet · "analizado": affected specs were flagged for re-verification */
+  state: "nuevo" | "analizado";
+}
+
+/** Sample alerts from the regulatory watch Speco runs for Bello. Texts are illustrative, not official. */
+export const REG_CHANGES: RegChange[] = [
+  {
+    id: "CHG-2026-14",
+    ruleId: "BCRA-SNP",
+    title: "Nuevo tope para transferencias inmediatas sin validación adicional",
+    publishedAt: "2026-10-22",
+    summary: "El regulador baja el monto a partir del cual se exige validación reforzada y pide mostrar el límite disponible antes de confirmar.",
+    before: "Validación reforzada desde ARS 100.000",
+    after: "Validación reforzada desde ARS 50.000 y límite visible antes de confirmar",
+    state: "nuevo",
+  },
+  {
+    id: "CHG-2026-15",
+    ruleId: "UIF-30",
+    title: "Actualización de listas PEP y plazo de screening",
+    publishedAt: "2026-10-20",
+    summary: "Se amplían las categorías PEP y el control contra listas debe repetirse cada 12 meses para clientes activos.",
+    before: "Screening sólo al alta",
+    after: "Screening al alta y re-screening anual",
+    state: "nuevo",
+  },
+  {
+    id: "CHG-2026-09",
+    ruleId: "PCI-DSS",
+    title: "Requisitos futuros de PCI DSS 4.0 pasan a obligatorios",
+    publishedAt: "2026-04-01",
+    summary: "Los requisitos marcados como «best practice» hasta marzo 2025 pasan a ser exigibles en la auditoría anual.",
+    before: "Requisitos 8.4.2 y 10.4.1.1 recomendados",
+    after: "Requisitos 8.4.2 y 10.4.1.1 obligatorios",
+    state: "analizado",
+  },
 ];
 
 /** weekly % of specs verified (static history for the trend chart) */

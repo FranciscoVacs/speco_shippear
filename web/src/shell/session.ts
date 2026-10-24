@@ -57,7 +57,7 @@ export interface SessionState {
   promoDismissed: boolean;
 }
 
-const KEY = "sr-session-v1";
+const KEY = "sr-session-bello-v1";
 
 export const PLAN_LIMITS: Record<Plan, { reviews: number; messages: number; seats: number; price: number }> = {
   Hobby: { reviews: 50, messages: 100, seats: 1, price: 0 },
@@ -65,24 +65,24 @@ export const PLAN_LIMITS: Record<Plan, { reviews: number; messages: number; seat
   Team: { reviews: 2000, messages: 10000, seats: 50, price: 99 },
 };
 
-export const DEMO_REPOS = ["acme/team-app", "acme/billing", "speco.ia"] as const;
+export const DEMO_REPOS = ["bello/app", "bello/web", "bello/payments-api", "bello/core-ledger", "bello/risk-engine", "bello/onboarding", "bello/cards", "bello/reporting"] as const;
 
 function defaults(): SessionState {
   return {
     signedIn: true,
-    user: { name: "Alex Demo", email: "demo@example.com" },
+    user: { name: "Lucía Fernández", email: "lucia.fernandez@bello.com.ar" },
     tenants: [
-      { id: "acme", name: "Acme Product", slug: "acme-product", plan: "Pro", usage: { reviews: 312, messages: 1600 } },
-      { id: "personal", name: "Personal", slug: "alex-demo", plan: "Hobby", usage: { reviews: 34, messages: 61 } },
+      { id: "bello", name: "Bello", slug: "bello", plan: "Team", usage: { reviews: 418, messages: 3120 } },
+      { id: "bello-sandbox", name: "Bello · Sandbox", slug: "bello-sandbox", plan: "Pro", usage: { reviews: 52, messages: 240 } },
     ],
-    tenantId: "acme",
+    tenantId: "bello",
     members: [
-      { id: "m1", name: "Alex Demo", email: "demo@example.com", role: "owner", status: "active" },
-      { id: "m2", name: "Sam Rivera", email: "sam.rivera@example.com", role: "admin", status: "active" },
-      { id: "m3", name: "Jordan Lee", email: "jordan.lee@example.com", role: "member", status: "active" },
-      { id: "m4", name: "Priya Shah", email: "priya.shah@example.com", role: "member", status: "active" },
-      { id: "m5", name: "Morgan Díaz", email: "morgan.diaz@example.com", role: "viewer", status: "active" },
-      { id: "m6", name: "Chris Taylor", email: "chris.taylor@example.com", role: "member", status: "invited" },
+      { id: "m1", name: "Lucía Fernández", email: "lucia.fernandez@bello.com.ar", role: "owner", status: "active" },
+      { id: "m2", name: "Martín Sosa", email: "martin.sosa@bello.com.ar", role: "admin", status: "active" },
+      { id: "m3", name: "Valentina Ruiz", email: "valentina.ruiz@bello.com.ar", role: "member", status: "active" },
+      { id: "m4", name: "Diego Paz", email: "diego.paz@bello.com.ar", role: "member", status: "active" },
+      { id: "m5", name: "Carla Méndez", email: "carla.mendez@bello.com.ar", role: "viewer", status: "active" },
+      { id: "m6", name: "Tomás Ibarra", email: "tomas.ibarra@bello.com.ar", role: "member", status: "invited" },
     ],
     apiKeys: [
       { id: "k1", name: "CI pipeline", prefix: "sr_live_7fa2", createdDaysAgo: 42, lastUsedMin: 18, revoked: false },
@@ -90,14 +90,14 @@ function defaults(): SessionState {
       { id: "k3", name: "Staging", prefix: "sr_test_03be", createdDaysAgo: 9, lastUsedMin: null, revoked: false },
     ],
     notifications: [
-      { id: "n1", kind: "review_done", vars: { feature: "003-team-invitations", n: 6 }, minutesAgo: 12, read: false, href: "/reviews/003-team-invitations" },
-      { id: "n2", kind: "member_joined", vars: { name: "Priya Shah" }, minutesAgo: 55, read: false, href: "/settings/members" },
+      { id: "n1", kind: "review_done", vars: { feature: "BEL-102 · Transferencias", n: 6 }, minutesAgo: 12, read: false, href: "/specs?req=BEL-102" },
+      { id: "n2", kind: "member_joined", vars: { name: "Diego Paz" }, minutesAgo: 55, read: false, href: "/settings/members" },
       { id: "n3", kind: "key_created", vars: { name: "CI pipeline" }, minutesAgo: 190, read: false, href: "/settings/api-keys" },
       { id: "n4", kind: "usage_80", vars: { pct: 80 }, minutesAgo: 300, read: false, href: "/settings/usage" },
-      { id: "n5", kind: "review_done", vars: { feature: "001-invoice-exports", n: 4 }, minutesAgo: 60 * 26, read: true, href: "/reviews/001-invoice-exports" },
+      { id: "n5", kind: "review_done", vars: { feature: "BEL-101 · Onboarding", n: 4 }, minutesAgo: 60 * 26, read: true, href: "/specs?req=BEL-101" },
       { id: "n6", kind: "integration", vars: { name: "GitHub" }, minutesAgo: 60 * 50, read: true, href: "/settings/integrations" },
-      { id: "n7", kind: "invite_sent", vars: { name: "Chris Taylor" }, minutesAgo: 60 * 72, read: true, href: "/settings/members" },
-      { id: "n8", kind: "plan_renewal", vars: { plan: "Pro" }, minutesAgo: 60 * 24 * 5, read: true, href: "/settings/usage" },
+      { id: "n7", kind: "invite_sent", vars: { name: "Tomás Ibarra" }, minutesAgo: 60 * 72, read: true, href: "/settings/members" },
+      { id: "n8", kind: "plan_renewal", vars: { plan: "Team" }, minutesAgo: 60 * 24 * 5, read: true, href: "/settings/usage" },
     ],
     notifPrefs: {
       reviews: { inapp: true, email: true, slack: false },
@@ -106,7 +106,7 @@ function defaults(): SessionState {
       news: { inapp: false, email: false, slack: false },
     },
     integrations: {
-      github: { connected: true, account: "acme" },
+      github: { connected: true, account: "bello" },
       slack: { connected: false, account: "" },
       jira: { connected: false, account: "" },
       linear: { connected: false, account: "" },
@@ -210,7 +210,7 @@ export const session = {
   revokeApiKey: (id: string) => patch({ apiKeys: state.apiKeys.map((k) => (k.id === id ? { ...k, revoked: true } : k)) }),
   setIntegration: (id: IntegrationId, connected: boolean) =>
     patch({
-      integrations: { ...state.integrations, [id]: { connected, account: connected ? (id === "github" ? "acme" : "acme-product") : "" } },
+      integrations: { ...state.integrations, [id]: { connected, account: connected ? (id === "github" ? "bello" : "bello") : "" } },
     }),
   dismissPromo: () => patch({ promoDismissed: true }),
   /** only for tests / "reset demo" */

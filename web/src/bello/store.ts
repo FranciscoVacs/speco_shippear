@@ -1,14 +1,15 @@
 import { useSyncExternalStore } from "react";
-import { EVENT_SEED, REQUIREMENTS, type Requirement, type Spec, type Status, type TraceEventSeed } from "./data";
+import { EVENT_SEED, REG_CHANGES, REQUIREMENTS, type RegChange, type Requirement, type Spec, type Status, type TraceEventSeed } from "./data";
 
 interface State {
   requirements: Requirement[];
   events: TraceEventSeed[];
+  regChanges: RegChange[];
   /** the person acting in the demo */
   me: string;
 }
 
-let state: State = { requirements: REQUIREMENTS, events: EVENT_SEED, me: "lfernandez" };
+let state: State = { requirements: REQUIREMENTS, events: EVENT_SEED, regChanges: REG_CHANGES, me: "lfernandez" };
 const listeners = new Set<() => void>();
 const emit = () => listeners.forEach((l) => l());
 const subscribe = (l: () => void) => {
@@ -58,6 +59,28 @@ export function setSpecStatus(specId: string, status: Status, actor: string, act
   };
   emit();
   record(actor, action, specId, detail);
+}
+
+export const specsAffectedBy = (change: RegChange, reqs: Requirement[]): Spec[] => allSpecs(reqs).filter((s) => s.rules.includes(change.ruleId));
+
+/** Flags every verified spec reinforced by the changed rule as "en riesgo" so it must be re-verified, and chains the events. */
+export function analyzeRegChange(id: string) {
+  const change = state.regChanges.find((c) => c.id === id);
+  if (!change || change.state === "analizado") return;
+  const affected = specsAffectedBy(change, state.requirements);
+  const toFlag = new Set(affected.filter((s) => s.status === "verified").map((s) => s.id));
+  state = {
+    ...state,
+    regChanges: state.regChanges.map((c) => (c.id === id ? { ...c, state: "analizado" } : c)),
+    requirements: state.requirements.map((r) => ({
+      ...r,
+      specs: r.specs.map((s) => (toFlag.has(s.id) ? { ...s, status: "risk" as Status } : s)),
+    })),
+  };
+  emit();
+  record("agent", "detectó cambio normativo", change.ruleId, `${change.id} · ${change.after}`);
+  record(state.me, "analizó impacto", change.id, `${affected.length} specs alcanzadas · ${toFlag.size} a re-verificar`);
+  for (const sid of toFlag) record("agent", "marcó en riesgo", sid, `Re-verificar por ${change.id}`);
 }
 
 export function nextRequirementId(reqs: Requirement[]): string {

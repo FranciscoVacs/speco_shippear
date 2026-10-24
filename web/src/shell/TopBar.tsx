@@ -32,17 +32,19 @@ function useCrumbs(embedded: boolean): Crumb[] {
     crumbs.push({ label: f?.feature ?? id });
     return crumbs;
   }
-  if (p === "/") return [{ label: t("nav.home") }];
+  if (p === "/") return [{ label: "Inicio" }];
+  if (p === "/dashboard") return [{ label: "Dashboard" }];
+  if (p === "/specs") {
+    const repo = new URLSearchParams(loc.search).get("repo");
+    return repo ? [{ label: "Árbol de specs", to: "/specs" }, { label: repo }] : [{ label: "Árbol de specs" }];
+  }
+  if (p === "/reglas") return [{ label: "Reglas y normativa" }];
+  if (p === "/trazabilidad") return [{ label: "Trazabilidad" }];
   if (p === "/decisions") return [{ label: t("nav.decisions") }];
   if (p === "/ledger") return [{ label: t("nav.ledger") }];
   if (p === "/reviews") return [{ label: t("nav.reviews") }];
   if (rule) return [{ label: t("nav.rules"), to: "/rules" }, { label: decodeURIComponent(rule.params.ruleId ?? "") }];
   if (p === "/rules") return [{ label: t("nav.rules") }];
-  if (p === "/bello") return [{ label: "Bello · Demo" }];
-  if (p.startsWith("/bello/")) {
-    const sub: Record<string, string> = { specs: "Árbol de specs", reglas: "Reglas y normativa", trazabilidad: "Trazabilidad", asistente: "Asistente" };
-    return [{ label: "Bello · Demo", to: "/bello" }, { label: sub[p.slice(7)] ?? p.slice(7) }];
-  }
   if (p === "/connect") return [{ label: t("connect.title") }];
   if (p === "/portrait") return [{ label: t("nav.portrait") }];
   if (p === "/agents") return [{ label: t("nav.agents") }];

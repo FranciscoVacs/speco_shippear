@@ -32,7 +32,7 @@ export default function Overview() {
         <section className="card bl-card">
           <div className="bl-card-h">
             <h2>Estado de verificación</h2>
-            <Link to="/bello/specs" className="bl-link">
+            <Link to="/specs" className="bl-link">
               Ver árbol <ArrowRight size={14} aria-hidden="true" />
             </Link>
           </div>
@@ -62,7 +62,7 @@ export default function Overview() {
         <section className="card bl-card">
           <div className="bl-card-h">
             <h2>Cumplimiento por marco</h2>
-            <Link to="/bello/reglas" className="bl-link">
+            <Link to="/reglas" className="bl-link">
               Reglas <ArrowRight size={14} aria-hidden="true" />
             </Link>
           </div>
@@ -88,7 +88,7 @@ export default function Overview() {
           <ul className="bl-alerts">
             {alerts.map((s) => (
               <li key={s.id}>
-                <Link to={`/bello/specs?spec=${encodeURIComponent(s.id)}`} className={`bl-alert s-${s.status}`}>
+                <Link to={`/specs?spec=${encodeURIComponent(s.id)}`} className={`bl-alert s-${s.status}`}>
                   <TriangleAlert size={16} aria-hidden="true" />
                   <span>
                     <strong>{s.title}</strong>
@@ -102,7 +102,7 @@ export default function Overview() {
             ))}
             {gaps.slice(0, 4).map(({ rule, control }) => (
               <li key={rule.id + control.id}>
-                <Link to={`/bello/reglas?rule=${encodeURIComponent(rule.id)}`} className="bl-alert s-pending">
+                <Link to={`/reglas?rule=${encodeURIComponent(rule.id)}`} className="bl-alert s-pending">
                   <KindIcon kind={rule.kind} size={14} />
                   <span>
                     <strong>
@@ -121,7 +121,7 @@ export default function Overview() {
       <section className="card bl-card">
         <div className="bl-card-h">
           <h2>Requerimientos</h2>
-          <Link to="/bello/asistente" className="btn sm primary bl-btn-brand">
+          <Link to="/" className="btn sm primary bl-btn-brand">
             Nuevo requerimiento
           </Link>
         </div>
@@ -130,7 +130,7 @@ export default function Overview() {
             const design = r.specs.find((s) => s.design)?.design;
             const st = requirementStatus(r);
             return (
-              <Link key={r.id} to={`/bello/specs?req=${encodeURIComponent(r.id)}`} className="bl-req-card">
+              <Link key={r.id} to={`/specs?req=${encodeURIComponent(r.id)}`} className="bl-req-card">
                 <div className="bl-req-thumb">{design ? <img src={design} alt="" loading="lazy" /> : <span className="bl-req-noimg">Sin diseño frontend</span>}</div>
                 <div className="bl-req-body">
                   <div className="bl-req-top">
@@ -152,7 +152,7 @@ export default function Overview() {
       <section className="card bl-card">
         <div className="bl-card-h">
           <h2>Actividad reciente</h2>
-          <Link to="/bello/trazabilidad" className="bl-link">
+          <Link to="/trazabilidad" className="bl-link">
             Cadena completa <ArrowRight size={14} aria-hidden="true" />
           </Link>
         </div>

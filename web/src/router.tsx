@@ -30,7 +30,14 @@ const BelloOverview = lazy(() => import("./bello/pages/Overview"));
 const BelloSpecs = lazy(() => import("./bello/pages/SpecsPage"));
 const BelloRules = lazy(() => import("./bello/pages/RulesPage"));
 const BelloTrace = lazy(() => import("./bello/pages/TracePage"));
-const BelloAssistantPage = lazy(() => import("./bello/pages/AssistantPage"));
+const BelloHome = lazy(() => import("./bello/pages/AssistantPage"));
+
+/** `/bello/specs` → `/specs`, keeping the query, for links shared before the workspace became the whole app */
+function LegacyBelloRedirect() {
+  const { pathname, search } = window.location;
+  const rest = pathname.replace(/^\/bello\/?/, "");
+  return <Navigate to={(rest === "asistente" ? "/" : "/" + rest) + search} replace />;
+}
 const SettingsLayout = lazy(() => import("./pages/settings/SettingsLayout"));
 const General = lazy(() => import("./pages/settings/General"));
 const Members = lazy(() => import("./pages/settings/Members"));
@@ -69,7 +76,23 @@ function buildRoutes(embedded: boolean): RouteObject[] {
       element: cloudEnabled() ? <CloudGate><Shell embedded={embedded} /></CloudGate> : <Shell embedded={embedded} />,
       children: [
         // embedded reports have no agent home: land on the single report
-        { index: true, element: embedded ? <Navigate to="/reviews/report" replace /> : <Home /> },
+        ...(embedded
+          ? [{ index: true, element: <Navigate to="/reviews/report" replace /> } satisfies RouteObject]
+          : [
+              {
+                element: <BelloLayout />,
+                children: [
+                  { index: true, element: <BelloHome /> },
+                  { path: "dashboard", element: <BelloOverview /> },
+                  { path: "specs", element: <BelloSpecs /> },
+                  { path: "reglas", element: <BelloRules /> },
+                  { path: "trazabilidad", element: <BelloTrace /> },
+                ],
+              } satisfies RouteObject,
+              { path: "bello", element: <Navigate to="/dashboard" replace /> } satisfies RouteObject,
+              { path: "bello/*", element: <LegacyBelloRedirect /> } satisfies RouteObject,
+              { path: "speco-home", element: <Home /> } satisfies RouteObject,
+            ]),
         { path: "decisions", element: <DecisionsPage /> },
         ...(embedded ? [] : [{ path: "ledger", element: <LedgerPage /> } satisfies RouteObject]),
         { path: "reviews", element: <ReviewsPage /> },
@@ -79,21 +102,6 @@ function buildRoutes(embedded: boolean): RouteObject[] {
         ...(embedded || !cloudEnabled() ? [] : [{ path: "oauth/consent", element: <AuthorizeClient /> } satisfies RouteObject]),
         ...(embedded || !cloudEnabled() ? [] : [{ path: "agents", element: <AgentsPage /> } satisfies RouteObject]),
         ...(embedded || !cloudEnabled() ? [] : [{ path: "ideas", element: <Ideas /> } satisfies RouteObject, { path: "ideas/:id", element: <Idea /> } satisfies RouteObject]),
-        ...(embedded
-          ? []
-          : [
-              {
-                path: "bello",
-                element: <BelloLayout />,
-                children: [
-                  { index: true, element: <BelloOverview /> },
-                  { path: "specs", element: <BelloSpecs /> },
-                  { path: "reglas", element: <BelloRules /> },
-                  { path: "trazabilidad", element: <BelloTrace /> },
-                  { path: "asistente", element: <BelloAssistantPage /> },
-                ],
-              } satisfies RouteObject,
-            ]),
         { path: "rules", element: <RulesPage /> },
         { path: "rules/:ruleId", element: <RulesPage /> },
         { path: "docs", element: <DocsPage /> },

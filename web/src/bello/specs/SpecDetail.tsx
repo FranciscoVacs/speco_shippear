@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { BadgeCheck, Box, FileCode2, ImageIcon, X } from "lucide-react";
+import { BadgeCheck, Box, FileCode2, X } from "lucide-react";
+import { DesignViewer } from "./DesignViewer";
 import { moduleById, rule as ruleById, type Spec } from "../data";
 import { setSpecStatus, useBello } from "../store";
 import { useChain } from "../hash";
@@ -25,17 +26,7 @@ export function SpecDetail({ spec, onClose }: { spec: Spec; onClose: () => void 
         </button>
       </div>
 
-      <figure className="bl-design">
-        {spec.design ? (
-          <img src={spec.design} alt={`Diseño frontend de ${spec.title}`} />
-        ) : (
-          <div className="bl-design-empty">
-            <ImageIcon size={22} aria-hidden="true" />
-            <span>Esta spec no tiene pantalla: es backend o regulatoria.</span>
-          </div>
-        )}
-        {spec.design && <figcaption>Diseño frontend generado por la spec</figcaption>}
-      </figure>
+      <DesignViewer spec={spec} />
 
       <section className="bl-sec">
         <h3>Requisito (EARS)</h3>
@@ -69,7 +60,7 @@ export function SpecDetail({ spec, onClose }: { spec: Spec; onClose: () => void 
             if (!r) return null;
             return (
               <li key={id}>
-                <Link to={`/bello/reglas?rule=${encodeURIComponent(id)}`}>
+                <Link to={`/reglas?rule=${encodeURIComponent(id)}`}>
                   <KindIcon kind={r.kind} size={14} />
                   <span>{r.title}</span>
                 </Link>
