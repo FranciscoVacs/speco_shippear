@@ -1,0 +1,445 @@
+{
+ "schema_version": 1,
+ "feature": "001-invoice-exports",
+ "summary": {
+  "blocker": 4,
+  "warning": 7,
+  "suggestion": 9
+ },
+ "metrics": {
+  "requirements": 10,
+  "success_criteria": 2,
+  "user_stories": 2,
+  "tasks": 11,
+  "plan_items": 4,
+  "requirements_with_plan_or_tasks_pct": 60,
+  "requirements_with_acceptance_pct": 30,
+  "tasks_without_requirement": 2,
+  "ears_patterns": {
+   "ubiquitous": 7,
+   "event": 3,
+   "state": 0,
+   "unwanted": 0,
+   "optional": 0,
+   "complex": 0,
+   "none": 0
+  }
+ },
+ "notes": [],
+ "decision": {
+  "verdict": "needs_decision",
+  "can_implement": false,
+  "waiting_on": {
+   "decision": 3,
+   "team": 8
+  },
+  "risks": {
+   "intent_drift": 7,
+   "context_decay": 0,
+   "unverifiable": 4
+  },
+  "top_risk": "intent_drift"
+ },
+ "findings": [
+  {
+   "fingerprint": "5589553800ec",
+   "owner": "team",
+   "risk": "intent_drift",
+   "rule": "COV001",
+   "rule_name": "Requisito sin plan",
+   "severity": "blocker",
+   "ids": [
+    "FR-007"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 57
+   },
+   "message": "FR-007 no tiene correlato en el plan ni en las tasks: nadie lo va a implementar.",
+   "fix": "Agregar el paso/task que lo implementa (citando FR-007), o quitar el requisito si ya no aplica",
+   "evidence": [
+    "más cercano: T001 (similitud 0.21)"
+   ]
+  },
+  {
+   "fingerprint": "ae63cab84f45",
+   "owner": "team",
+   "risk": "intent_drift",
+   "rule": "COV001",
+   "rule_name": "Requisito sin plan",
+   "severity": "blocker",
+   "ids": [
+    "FR-008"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 58
+   },
+   "message": "FR-008 no tiene correlato en el plan ni en las tasks: nadie lo va a implementar.",
+   "fix": "Agregar el paso/task que lo implementa (citando FR-008), o quitar el requisito si ya no aplica",
+   "evidence": [
+    "más cercano: T001 (similitud 0.21)"
+   ]
+  },
+  {
+   "fingerprint": "27c7c3b940d7",
+   "owner": "team",
+   "risk": "intent_drift",
+   "rule": "COV001",
+   "rule_name": "Requisito sin plan",
+   "severity": "blocker",
+   "ids": [
+    "FR-009"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 59
+   },
+   "message": "FR-009 no tiene correlato en el plan ni en las tasks: nadie lo va a implementar.",
+   "fix": "Agregar el paso/task que lo implementa (citando FR-009), o quitar el requisito si ya no aplica",
+   "evidence": [
+    "más cercano: T001 (similitud 0.13)"
+   ]
+  },
+  {
+   "fingerprint": "7e1445cf0476",
+   "owner": "team",
+   "risk": "intent_drift",
+   "rule": "COV001",
+   "rule_name": "Requisito sin plan",
+   "severity": "blocker",
+   "ids": [
+    "FR-010"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 60
+   },
+   "message": "FR-010 no tiene correlato en el plan ni en las tasks: nadie lo va a implementar.",
+   "fix": "Agregar el paso/task que lo implementa (citando FR-010), o quitar el requisito si ya no aplica",
+   "evidence": [
+    "más cercano: T001 (similitud 0.26)"
+   ]
+  },
+  {
+   "fingerprint": "340c660c2dce",
+   "owner": "decision",
+   "risk": "intent_drift",
+   "rule": "COV002",
+   "rule_name": "Task sin requisito",
+   "severity": "warning",
+   "ids": [
+    "T006"
+   ],
+   "location": {
+    "file": "tasks.md",
+    "line": 16
+   },
+   "message": "T006 no responde a ningún requisito (introduce: queue, background): posible scope que se coló.",
+   "fix": "Agregar el requisito que lo justifica o eliminar la task",
+   "evidence": [
+    "Queue large exports in a background job in src/exports/queue.ts",
+    "novedad 63%"
+   ]
+  },
+  {
+   "fingerprint": "c678f20d63c0",
+   "owner": "decision",
+   "risk": "intent_drift",
+   "rule": "COV002",
+   "rule_name": "Task sin requisito",
+   "severity": "warning",
+   "ids": [
+    "T008"
+   ],
+   "location": {
+    "file": "tasks.md",
+    "line": 18
+   },
+   "message": "T008 no responde a ningún requisito (introduce: history, screen, filters): posible scope que se coló.",
+   "fix": "Agregar el requisito que lo justifica o eliminar la task",
+   "evidence": [
+    "Add an export history screen with filters in src/ui/ExportHistory.tsx",
+    "novedad 91%"
+   ]
+  },
+  {
+   "fingerprint": "6b68486c2729",
+   "owner": "decision",
+   "risk": "intent_drift",
+   "rule": "COV003",
+   "rule_name": "Paso del plan sin requisito",
+   "severity": "warning",
+   "ids": [
+    "P4"
+   ],
+   "location": {
+    "file": "plan.md",
+    "line": 7
+   },
+   "message": "El plan incluye «Large exports are queued and a notification is sent to the user's Sla…» (P4) que no responde a ningún requisito (introduce: queued, notification, sent, slack).",
+   "fix": "Agregar el requisito que lo justifica o sacarlo del plan",
+   "evidence": [
+    "novedad 73%"
+   ]
+  },
+  {
+   "fingerprint": "43786fe72e47",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA002",
+   "rule_name": "Requisito no testeable",
+   "severity": "warning",
+   "ids": [
+    "FR-005"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 55
+   },
+   "message": "FR-005 no es testeable: usa «quick» sin un umbral medible.",
+   "fix": "Definir un número verificable (p. ej. «p95 < 300 ms», «≥ 99 % de …»)",
+   "evidence": []
+  },
+  {
+   "fingerprint": "e2c51b5941f2",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA006",
+   "rule_name": "Requisito sin criterio de aceptación",
+   "severity": "warning",
+   "ids": [
+    "FR-007"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 57
+   },
+   "message": "FR-007 no tiene criterio de aceptación: ningún escenario ni Success Criterion lo verifica.",
+   "fix": "Agregar un escenario Given/When/Then o un SC medible",
+   "evidence": [
+    "más cercano: US1.2 (similitud 0.08)"
+   ]
+  },
+  {
+   "fingerprint": "f9f47dc19051",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA006",
+   "rule_name": "Requisito sin criterio de aceptación",
+   "severity": "warning",
+   "ids": [
+    "FR-008"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 58
+   },
+   "message": "FR-008 no tiene criterio de aceptación: ningún escenario ni Success Criterion lo verifica.",
+   "fix": "Agregar un escenario Given/When/Then o un SC medible",
+   "evidence": [
+    "más cercano: US1.2 (similitud 0.08)"
+   ]
+  },
+  {
+   "fingerprint": "cd33f54855b7",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA006",
+   "rule_name": "Requisito sin criterio de aceptación",
+   "severity": "warning",
+   "ids": [
+    "FR-009"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 59
+   },
+   "message": "FR-009 no tiene criterio de aceptación: ningún escenario ni Success Criterion lo verifica.",
+   "fix": "Agregar un escenario Given/When/Then o un SC medible",
+   "evidence": [
+    "más cercano: US1.2 (similitud 0.04)"
+   ]
+  },
+  {
+   "fingerprint": "f2cc3bb486cc",
+   "owner": "decision",
+   "risk": "intent_drift",
+   "rule": "COV002",
+   "rule_name": "Task sin requisito",
+   "severity": "suggestion",
+   "ids": [
+    "T007"
+   ],
+   "location": {
+    "file": "tasks.md",
+    "line": 17
+   },
+   "message": "T007 no responde a ningún requisito (introduce: slack, queued): posible scope que se coló.",
+   "fix": "Agregar el requisito que lo justifica o eliminar la task",
+   "evidence": [
+    "Send a Slack message when a queued export finishes in src/integrations/slack.ts",
+    "novedad 46%"
+   ]
+  },
+  {
+   "fingerprint": "f886a44f5101",
+   "owner": "decision",
+   "risk": "intent_drift",
+   "rule": "COV002",
+   "rule_name": "Task sin requisito",
+   "severity": "suggestion",
+   "ids": [
+    "T010"
+   ],
+   "location": {
+    "file": "tasks.md",
+    "line": 23
+   },
+   "message": "T010 no responde a ningún requisito (introduce: button): posible scope que se coló.",
+   "fix": "Agregar el requisito que lo justifica o eliminar la task",
+   "evidence": [
+    "Add the download PDF button to the invoice page in src/ui/InvoicePage.tsx",
+    "novedad 30%"
+   ]
+  },
+  {
+   "fingerprint": "211f14a3d80a",
+   "owner": "team",
+   "risk": "context_decay",
+   "rule": "COV006",
+   "rule_name": "Cobertura sin confirmar",
+   "severity": "suggestion",
+   "ids": [
+    "FR-003"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 53
+   },
+   "message": "No pude confirmar que FR-003 esté implementado: ningún paso o task lo describe con claridad.",
+   "fix": "Citar FR-003 en la task que lo implementa (o correr con --llm para que un modelo lo verifique)",
+   "evidence": [
+    "más cercano: T004 (similitud 0.38)"
+   ]
+  },
+  {
+   "fingerprint": "a86b1f2ee85c",
+   "owner": "team",
+   "risk": "context_decay",
+   "rule": "COV006",
+   "rule_name": "Cobertura sin confirmar",
+   "severity": "suggestion",
+   "ids": [
+    "FR-005"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 55
+   },
+   "message": "No pude confirmar que FR-005 esté implementado: ningún paso o task lo describe con claridad.",
+   "fix": "Citar FR-005 en la task que lo implementa (o correr con --llm para que un modelo lo verifique)",
+   "evidence": [
+    "más cercano: T006 (similitud 0.25)"
+   ]
+  },
+  {
+   "fingerprint": "75174384b53a",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA003",
+   "rule_name": "Forma no EARS",
+   "severity": "suggestion",
+   "ids": [
+    "FR-009"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 59
+   },
+   "message": "FR-009 no sigue un patrón EARS.",
+   "fix": "El disparador está al final: pasarlo al inicio, «When/While/If <condición>, the system MUST …».",
+   "evidence": []
+  },
+  {
+   "fingerprint": "f3ab9150c20c",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA006",
+   "rule_name": "Requisito sin criterio de aceptación",
+   "severity": "suggestion",
+   "ids": [
+    "FR-002"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 52
+   },
+   "message": "No encontré con claridad un criterio de aceptación para FR-002: revisar que algún escenario o SC lo verifique.",
+   "fix": "Agregar un escenario Given/When/Then o un SC medible",
+   "evidence": [
+    "más cercano: US1 (similitud 0.25)"
+   ]
+  },
+  {
+   "fingerprint": "4f9f2913bbe7",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA006",
+   "rule_name": "Requisito sin criterio de aceptación",
+   "severity": "suggestion",
+   "ids": [
+    "FR-005"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 55
+   },
+   "message": "No encontré con claridad un criterio de aceptación para FR-005: revisar que algún escenario o SC lo verifique.",
+   "fix": "Agregar un escenario Given/When/Then o un SC medible",
+   "evidence": [
+    "más cercano: US1 (similitud 0.19)"
+   ]
+  },
+  {
+   "fingerprint": "821c516a98b1",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA006",
+   "rule_name": "Requisito sin criterio de aceptación",
+   "severity": "suggestion",
+   "ids": [
+    "FR-006"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 56
+   },
+   "message": "No encontré con claridad un criterio de aceptación para FR-006: revisar que algún escenario o SC lo verifique.",
+   "fix": "Agregar un escenario Given/When/Then o un SC medible",
+   "evidence": [
+    "más cercano: US1 (similitud 0.26)"
+   ]
+  },
+  {
+   "fingerprint": "3f119c9c6c3a",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA006",
+   "rule_name": "Requisito sin criterio de aceptación",
+   "severity": "suggestion",
+   "ids": [
+    "FR-010"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 60
+   },
+   "message": "No encontré con claridad un criterio de aceptación para FR-010: revisar que algún escenario o SC lo verifique.",
+   "fix": "Agregar un escenario Given/When/Then o un SC medible",
+   "evidence": [
+    "más cercano: US1 (similitud 0.19)"
+   ]
+  }
+ ]
+}

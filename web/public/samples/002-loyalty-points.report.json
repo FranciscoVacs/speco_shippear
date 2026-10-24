@@ -1,0 +1,161 @@
+{
+ "schema_version": 1,
+ "feature": "002-loyalty-points",
+ "summary": {
+  "blocker": 1,
+  "warning": 4,
+  "suggestion": 1
+ },
+ "metrics": {
+  "requirements": 5,
+  "success_criteria": 1,
+  "user_stories": 2,
+  "tasks": 4,
+  "plan_items": 4,
+  "requirements_with_plan_or_tasks_pct": 80,
+  "requirements_with_acceptance_pct": 40,
+  "tasks_without_requirement": 0,
+  "ears_patterns": {
+   "ubiquitous": 2,
+   "event": 3,
+   "state": 0,
+   "unwanted": 0,
+   "optional": 0,
+   "complex": 0,
+   "none": 0
+  }
+ },
+ "notes": [],
+ "decision": {
+  "verdict": "blocked",
+  "can_implement": false,
+  "waiting_on": {
+   "decision": 0,
+   "team": 5
+  },
+  "risks": {
+   "intent_drift": 2,
+   "context_decay": 0,
+   "unverifiable": 3
+  },
+  "top_risk": "unverifiable"
+ },
+ "findings": [
+  {
+   "fingerprint": "2ff665cc4bac",
+   "owner": "team",
+   "risk": "intent_drift",
+   "rule": "COV001",
+   "rule_name": "Requisito sin plan",
+   "severity": "blocker",
+   "ids": [
+    "FR-002"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 46
+   },
+   "message": "FR-002 no tiene correlato en el plan ni en las tasks: nadie lo va a implementar.",
+   "fix": "Agregar el paso/task que lo implementa (citando FR-002), o quitar el requisito si ya no aplica",
+   "evidence": [
+    "más cercano: P1 (similitud 0.29)"
+   ]
+  },
+  {
+   "fingerprint": "51801f0797f3",
+   "owner": "team",
+   "risk": "intent_drift",
+   "rule": "QUA001",
+   "rule_name": "Requisito ambiguo",
+   "severity": "warning",
+   "ids": [
+    "FR-004"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 48
+   },
+   "message": "FR-004 es ambiguo: «appropriately» deja la decisión al implementador.",
+   "fix": "Reemplazar por un comportamiento o valor concreto",
+   "evidence": []
+  },
+  {
+   "fingerprint": "02b50e41aa8d",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA002",
+   "rule_name": "Requisito no testeable",
+   "severity": "warning",
+   "ids": [
+    "FR-003"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 47
+   },
+   "message": "FR-003 no es testeable: usa «fast», «user-friendly» sin un umbral medible.",
+   "fix": "Definir un número verificable (p. ej. «p95 < 300 ms», «≥ 99 % de …»)",
+   "evidence": []
+  },
+  {
+   "fingerprint": "f510379253c0",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA006",
+   "rule_name": "Requisito sin criterio de aceptación",
+   "severity": "warning",
+   "ids": [
+    "FR-003"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 47
+   },
+   "message": "FR-003 no tiene criterio de aceptación: ningún escenario ni Success Criterion lo verifica.",
+   "fix": "Agregar un escenario Given/When/Then o un SC medible",
+   "evidence": [
+    "más cercano: US1 (similitud 0.13)"
+   ]
+  },
+  {
+   "fingerprint": "818bb15c8a01",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA006",
+   "rule_name": "Requisito sin criterio de aceptación",
+   "severity": "warning",
+   "ids": [
+    "FR-004"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 48
+   },
+   "message": "FR-004 no tiene criterio de aceptación: ningún escenario ni Success Criterion lo verifica.",
+   "fix": "Agregar un escenario Given/When/Then o un SC medible",
+   "evidence": [
+    "más cercano: US2 (similitud 0.08)"
+   ]
+  },
+  {
+   "fingerprint": "78dd29f3d058",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA006",
+   "rule_name": "Requisito sin criterio de aceptación",
+   "severity": "suggestion",
+   "ids": [
+    "FR-005"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 49
+   },
+   "message": "No encontré con claridad un criterio de aceptación para FR-005: revisar que algún escenario o SC lo verifique.",
+   "fix": "Agregar un escenario Given/When/Then o un SC medible",
+   "evidence": [
+    "más cercano: US1 (similitud 0.24)"
+   ]
+  }
+ ]
+}

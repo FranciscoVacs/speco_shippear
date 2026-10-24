@@ -1,0 +1,119 @@
+{
+ "schema_version": 1,
+ "feature": "010-auditable-approvals",
+ "summary": {
+  "blocker": 0,
+  "warning": 0,
+  "suggestion": 4
+ },
+ "metrics": {
+  "requirements": 7,
+  "success_criteria": 1,
+  "user_stories": 3,
+  "tasks": 7,
+  "plan_items": 6,
+  "requirements_with_plan_or_tasks_pct": 100,
+  "requirements_with_acceptance_pct": 100,
+  "tasks_without_requirement": 0,
+  "ears_patterns": {
+   "ubiquitous": 1,
+   "event": 3,
+   "state": 1,
+   "unwanted": 2,
+   "optional": 0,
+   "complex": 0,
+   "none": 0
+  }
+ },
+ "notes": [],
+ "decision": {
+  "verdict": "ready",
+  "can_implement": true,
+  "waiting_on": {
+   "decision": 0,
+   "team": 0
+  },
+  "risks": {
+   "intent_drift": 0,
+   "context_decay": 0,
+   "unverifiable": 0
+  },
+  "top_risk": null
+ },
+ "findings": [
+  {
+   "fingerprint": "85217f0ee46f",
+   "owner": "decision",
+   "risk": "intent_drift",
+   "rule": "COV003",
+   "rule_name": "Paso del plan sin requisito",
+   "severity": "suggestion",
+   "ids": [
+    "P1"
+   ],
+   "location": {
+    "file": "plan.md",
+    "line": 7
+   },
+   "message": "El plan incluye «Members with a role and a hashed token are listed in a file of the re…» (P1) que no responde a ningún requisito (introduce: members, token, repository).",
+   "fix": "Agregar el requisito que lo justifica o sacarlo del plan",
+   "evidence": [
+    "novedad 52%"
+   ]
+  },
+  {
+   "fingerprint": "56b927461f6b",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA007",
+   "rule_name": "Requisito no atómico",
+   "severity": "suggestion",
+   "ids": [
+    "FR-003"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 71
+   },
+   "message": "FR-003 contiene varios MUST: probablemente son varios requisitos en uno.",
+   "fix": "Separarlo en requisitos atómicos, cada uno con su criterio de aceptación",
+   "evidence": []
+  },
+  {
+   "fingerprint": "efd7728d17cb",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA007",
+   "rule_name": "Requisito no atómico",
+   "severity": "suggestion",
+   "ids": [
+    "FR-006"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 74
+   },
+   "message": "FR-006 contiene varios MUST: probablemente son varios requisitos en uno.",
+   "fix": "Separarlo en requisitos atómicos, cada uno con su criterio de aceptación",
+   "evidence": []
+  },
+  {
+   "fingerprint": "a1b6761feac4",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA007",
+   "rule_name": "Requisito no atómico",
+   "severity": "suggestion",
+   "ids": [
+    "FR-007"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 75
+   },
+   "message": "FR-007 contiene varios MUST: probablemente son varios requisitos en uno.",
+   "fix": "Separarlo en requisitos atómicos, cada uno con su criterio de aceptación",
+   "evidence": []
+  }
+ ]
+}

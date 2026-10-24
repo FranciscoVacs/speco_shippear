@@ -1,0 +1,99 @@
+{
+ "schema_version": 1,
+ "feature": "011-simple-by-default",
+ "summary": {
+  "blocker": 0,
+  "warning": 0,
+  "suggestion": 3
+ },
+ "metrics": {
+  "requirements": 9,
+  "success_criteria": 2,
+  "user_stories": 3,
+  "tasks": 8,
+  "plan_items": 6,
+  "requirements_with_plan_or_tasks_pct": 100,
+  "requirements_with_acceptance_pct": 100,
+  "tasks_without_requirement": 0,
+  "ears_patterns": {
+   "ubiquitous": 1,
+   "event": 5,
+   "state": 2,
+   "unwanted": 0,
+   "optional": 1,
+   "complex": 0,
+   "none": 0
+  }
+ },
+ "notes": [],
+ "decision": {
+  "verdict": "ready",
+  "can_implement": true,
+  "waiting_on": {
+   "decision": 0,
+   "team": 0
+  },
+  "risks": {
+   "intent_drift": 0,
+   "context_decay": 0,
+   "unverifiable": 0
+  },
+  "top_risk": null
+ },
+ "findings": [
+  {
+   "fingerprint": "c2981e8a5785",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA007",
+   "rule_name": "Requisito no atómico",
+   "severity": "suggestion",
+   "ids": [
+    "NFR-002"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 75
+   },
+   "message": "NFR-002 contiene varios MUST: probablemente son varios requisitos en uno.",
+   "fix": "Separarlo en requisitos atómicos, cada uno con su criterio de aceptación",
+   "evidence": []
+  },
+  {
+   "fingerprint": "fd273cd712b6",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA007",
+   "rule_name": "Requisito no atómico",
+   "severity": "suggestion",
+   "ids": [
+    "NFR-003"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 76
+   },
+   "message": "NFR-003 contiene varios MUST: probablemente son varios requisitos en uno.",
+   "fix": "Separarlo en requisitos atómicos, cada uno con su criterio de aceptación",
+   "evidence": []
+  },
+  {
+   "fingerprint": "6648c7df91be",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA007",
+   "rule_name": "Requisito no atómico",
+   "severity": "suggestion",
+   "ids": [
+    "NFR-005"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 78
+   },
+   "message": "NFR-005 contiene varios MUST: probablemente son varios requisitos en uno.",
+   "fix": "Separarlo en requisitos atómicos, cada uno con su criterio de aceptación",
+   "evidence": []
+  }
+ ]
+}

@@ -1,0 +1,65 @@
+{
+ "schema_version": 1,
+ "feature": "009-product-layer",
+ "summary": {
+  "blocker": 0,
+  "warning": 0,
+  "suggestion": 1
+ },
+ "metrics": {
+  "requirements": 6,
+  "success_criteria": 1,
+  "user_stories": 2,
+  "tasks": 6,
+  "plan_items": 5,
+  "requirements_with_plan_or_tasks_pct": 100,
+  "requirements_with_acceptance_pct": 100,
+  "tasks_without_requirement": 0,
+  "ears_patterns": {
+   "ubiquitous": 0,
+   "event": 4,
+   "state": 0,
+   "unwanted": 0,
+   "optional": 2,
+   "complex": 0,
+   "none": 0
+  }
+ },
+ "notes": [],
+ "decision": {
+  "verdict": "ready",
+  "can_implement": true,
+  "waiting_on": {
+   "decision": 0,
+   "team": 0
+  },
+  "risks": {
+   "intent_drift": 0,
+   "context_decay": 0,
+   "unverifiable": 0
+  },
+  "top_risk": null
+ },
+ "findings": [
+  {
+   "fingerprint": "d30fc3971881",
+   "owner": "decision",
+   "risk": "intent_drift",
+   "rule": "COV003",
+   "rule_name": "Paso del plan sin requisito",
+   "severity": "suggestion",
+   "ids": [
+    "P1"
+   ],
+   "location": {
+    "file": "plan.md",
+    "line": 7
+   },
+   "message": "El plan incluye «A product module reads goals and decisions from a product folder and …» (P1) que no responde a ningún requisito (introduce: reads, ids, header).",
+   "fix": "Agregar el requisito que lo justifica o sacarlo del plan",
+   "evidence": [
+    "novedad 50%"
+   ]
+  }
+ ]
+}

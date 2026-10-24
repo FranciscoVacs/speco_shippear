@@ -1,0 +1,44 @@
+{
+ "schema_version": 1,
+ "feature": "004-onboarding-and-guide",
+ "summary": {
+  "blocker": 0,
+  "warning": 0,
+  "suggestion": 0
+ },
+ "metrics": {
+  "requirements": 11,
+  "success_criteria": 2,
+  "user_stories": 4,
+  "tasks": 15,
+  "plan_items": 5,
+  "requirements_with_plan_or_tasks_pct": 100,
+  "requirements_with_acceptance_pct": 100,
+  "tasks_without_requirement": 0,
+  "ears_patterns": {
+   "ubiquitous": 3,
+   "event": 4,
+   "state": 1,
+   "unwanted": 1,
+   "optional": 2,
+   "complex": 0,
+   "none": 0
+  }
+ },
+ "notes": [],
+ "decision": {
+  "verdict": "ready",
+  "can_implement": true,
+  "waiting_on": {
+   "decision": 0,
+   "team": 0
+  },
+  "risks": {
+   "intent_drift": 0,
+   "context_decay": 0,
+   "unverifiable": 0
+  },
+  "top_risk": null
+ },
+ "findings": []
+}

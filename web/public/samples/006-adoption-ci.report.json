@@ -1,0 +1,139 @@
+{
+ "schema_version": 1,
+ "feature": "006-adoption-ci",
+ "summary": {
+  "blocker": 0,
+  "warning": 0,
+  "suggestion": 5
+ },
+ "metrics": {
+  "requirements": 8,
+  "success_criteria": 1,
+  "user_stories": 2,
+  "tasks": 6,
+  "plan_items": 4,
+  "requirements_with_plan_or_tasks_pct": 100,
+  "requirements_with_acceptance_pct": 75,
+  "tasks_without_requirement": 0,
+  "ears_patterns": {
+   "ubiquitous": 1,
+   "event": 6,
+   "state": 0,
+   "unwanted": 1,
+   "optional": 0,
+   "complex": 0,
+   "none": 0
+  }
+ },
+ "notes": [],
+ "decision": {
+  "verdict": "ready",
+  "can_implement": true,
+  "waiting_on": {
+   "decision": 0,
+   "team": 0
+  },
+  "risks": {
+   "intent_drift": 0,
+   "context_decay": 0,
+   "unverifiable": 0
+  },
+  "top_risk": null
+ },
+ "findings": [
+  {
+   "fingerprint": "42aadbfd4e75",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA006",
+   "rule_name": "Requisito sin criterio de aceptación",
+   "severity": "suggestion",
+   "ids": [
+    "FR-007"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 58
+   },
+   "message": "No encontré con claridad un criterio de aceptación para FR-007: revisar que algún escenario o SC lo verifique.",
+   "fix": "Agregar un escenario Given/When/Then o un SC medible",
+   "evidence": [
+    "más cercano: US2.1 (similitud 0.24)"
+   ]
+  },
+  {
+   "fingerprint": "76f3054c2588",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA006",
+   "rule_name": "Requisito sin criterio de aceptación",
+   "severity": "suggestion",
+   "ids": [
+    "FR-008"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 59
+   },
+   "message": "No encontré con claridad un criterio de aceptación para FR-008: revisar que algún escenario o SC lo verifique.",
+   "fix": "Agregar un escenario Given/When/Then o un SC medible",
+   "evidence": [
+    "más cercano: SC-001 (similitud 0.17)"
+   ]
+  },
+  {
+   "fingerprint": "b0cba9db8898",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA007",
+   "rule_name": "Requisito no atómico",
+   "severity": "suggestion",
+   "ids": [
+    "FR-005"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 56
+   },
+   "message": "FR-005 contiene varios MUST: probablemente son varios requisitos en uno.",
+   "fix": "Separarlo en requisitos atómicos, cada uno con su criterio de aceptación",
+   "evidence": []
+  },
+  {
+   "fingerprint": "df1491ab3db4",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA007",
+   "rule_name": "Requisito no atómico",
+   "severity": "suggestion",
+   "ids": [
+    "FR-006"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 57
+   },
+   "message": "FR-006 contiene varios MUST: probablemente son varios requisitos en uno.",
+   "fix": "Separarlo en requisitos atómicos, cada uno con su criterio de aceptación",
+   "evidence": []
+  },
+  {
+   "fingerprint": "25fbe4adde20",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA007",
+   "rule_name": "Requisito no atómico",
+   "severity": "suggestion",
+   "ids": [
+    "FR-008"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 59
+   },
+   "message": "FR-008 contiene varios MUST: probablemente son varios requisitos en uno.",
+   "fix": "Separarlo en requisitos atómicos, cada uno con su criterio de aceptación",
+   "evidence": []
+  }
+ ]
+}

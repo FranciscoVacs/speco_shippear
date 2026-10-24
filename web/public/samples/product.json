@@ -1,0 +1,433 @@
+[
+ {
+  "repo": "acme/subscriptions",
+  "report": {
+   "goals": [
+    {
+     "id": "G-1",
+     "text": "Increase paid conversion from trial from 8% to 12%",
+     "features": [],
+     "covered": false
+    },
+    {
+     "id": "G-2",
+     "text": "Reduce involuntary churn (failed payments) by 30%",
+     "features": [],
+     "covered": false
+    },
+    {
+     "id": "G-3",
+     "text": "Reach 1,000 teams on annual contracts",
+     "features": [
+      "003-annual-plans"
+     ],
+     "covered": true
+    },
+    {
+     "id": "G-4",
+     "text": "Launch in three new countries",
+     "features": [],
+     "covered": false
+    }
+   ],
+   "decisions": [
+    {
+     "id": "D-001",
+     "title": "Prices are shown in the customer's local currency",
+     "status": "accepted",
+     "date": "2026-06-12"
+    },
+    {
+     "id": "D-002",
+     "title": "No discounts on monthly plans",
+     "status": "accepted",
+     "date": "2026-07-03"
+    },
+    {
+     "id": "D-003",
+     "title": "Annual plans are billed upfront",
+     "status": "superseded",
+     "date": "2026-05-20"
+    },
+    {
+     "id": "D-007",
+     "title": "Annual plans can be billed quarterly",
+     "status": "accepted",
+     "date": "2026-09-14"
+    }
+   ],
+   "features_without_goal": [],
+   "findings": [
+    {
+     "rule": "PRD004",
+     "severity": "warning",
+     "ids": [
+      "G-1"
+     ],
+     "message": "El objetivo G-1 («Increase paid conversion from trial from 8% to 12%») no está cubierto por ninguna feature.",
+     "fix": "Planificar una feature para este objetivo, o decidir que ya no es un objetivo",
+     "location": {
+      "file": "product/goals.md",
+      "line": 3
+     }
+    },
+    {
+     "rule": "PRD004",
+     "severity": "warning",
+     "ids": [
+      "G-2"
+     ],
+     "message": "El objetivo G-2 («Reduce involuntary churn (failed payments) by 30%») no está cubierto por ninguna feature.",
+     "fix": "Planificar una feature para este objetivo, o decidir que ya no es un objetivo",
+     "location": {
+      "file": "product/goals.md",
+      "line": 4
+     }
+    },
+    {
+     "rule": "PRD004",
+     "severity": "warning",
+     "ids": [
+      "G-4"
+     ],
+     "message": "El objetivo G-4 («Launch in three new countries») no está cubierto por ninguna feature.",
+     "fix": "Planificar una feature para este objetivo, o decidir que ya no es un objetivo",
+     "location": {
+      "file": "product/goals.md",
+      "line": 6
+     }
+    }
+   ]
+  }
+ },
+ {
+  "repo": "speco.ia",
+  "report": {
+   "goals": [
+    {
+     "id": "G-1",
+     "text": "Review a spec before any code is written",
+     "features": [
+      "001-spec-review-engine",
+      "002-review-all-features",
+      "009-product-layer"
+     ],
+     "covered": true
+    },
+    {
+     "id": "G-2",
+     "text": "Let a team adopt the review in its pull requests without friction",
+     "features": [
+      "002-review-all-features",
+      "004-onboarding-and-guide",
+      "006-adoption-ci",
+      "026-github-pr-review",
+      "027-decision-loop"
+     ],
+     "covered": true
+    },
+    {
+     "id": "G-3",
+     "text": "Let coding agents check their own spec before they implement it",
+     "features": [
+      "007-agent-mcp",
+      "018-speco-on-speco",
+      "023-developer-onboarding",
+      "028-intent-ledger"
+     ],
+     "covered": true
+    },
+    {
+     "id": "G-4",
+     "text": "Let the person who approves decide at a glance",
+     "features": [
+      "003-conversational-assistant",
+      "005-agent-first-app",
+      "008-decisions-ui",
+      "009-product-layer",
+      "010-auditable-approvals",
+      "011-simple-by-default",
+      "012-activation",
+      "031-decided-numbers-reach-product"
+     ],
+     "covered": true
+    },
+    {
+     "id": "G-5",
+     "text": "Keep every approval auditable",
+     "features": [
+      "010-auditable-approvals",
+      "013-multitenant-backend",
+      "028-intent-ledger",
+      "031-decided-numbers-reach-product"
+     ],
+     "covered": true
+    },
+    {
+     "id": "G-6",
+     "text": "Keep the product visually simple, with more depth available on demand",
+     "features": [
+      "011-simple-by-default"
+     ],
+     "covered": true
+    },
+    {
+     "id": "G-7",
+     "text": "Let a new person understand what the product is for and see a result within five minutes of signing in",
+     "features": [
+      "012-activation",
+      "015-cloud-app",
+      "016-two-doors",
+      "020-free-plan-credits",
+      "023-developer-onboarding",
+      "026-github-pr-review",
+      "027-decision-loop"
+     ],
+     "covered": true
+    },
+    {
+     "id": "G-8",
+     "text": "Let many companies use the product at the same time without ever seeing each other's data",
+     "features": [
+      "013-multitenant-backend",
+      "014-initial-portrait",
+      "015-cloud-app",
+      "017-verified-phone",
+      "018-speco-on-speco",
+      "019-code-providers",
+      "020-free-plan-credits",
+      "024-billing"
+     ],
+     "covered": true
+    },
+    {
+     "id": "G-9",
+     "text": "Let a company see and decide what its software does today, before anything changes it",
+     "features": [
+      "014-initial-portrait",
+      "015-cloud-app",
+      "019-code-providers",
+      "028-intent-ledger",
+      "029-decided-values",
+      "030-continuous-evidence"
+     ],
+     "covered": true
+    },
+    {
+     "id": "G-10",
+     "text": "Welcome both a company that already has software and a person who is building with an AI tool and has no code yet, each with the words and first result that fit them",
+     "features": [
+      "016-two-doors"
+     ],
+     "covered": true
+    },
+    {
+     "id": "G-11",
+     "text": "Make sure every account belongs to a real person who verified a phone number",
+     "features": [
+      "017-verified-phone",
+      "021-referrals"
+     ],
+     "covered": true
+    },
+    {
+     "id": "G-12",
+     "text": "Use Speco on Speco: the product's own repository is the first company connected, so every improvement is first tried on ourselves",
+     "features": [
+      "018-speco-on-speco"
+     ],
+     "covered": true
+    },
+    {
+     "id": "G-13",
+     "text": "Connect the code of a company wherever it lives, starting with GitHub and Bitbucket, with the same reviews and the same portrait",
+     "features": [
+      "019-code-providers"
+     ],
+     "covered": true
+    },
+    {
+     "id": "G-14",
+     "text": "Let anyone reach their first result at no cost, with limits that keep what the free plan spends under a ceiling we chose",
+     "features": [
+      "020-free-plan-credits",
+      "021-referrals",
+      "022-product-metrics",
+      "024-billing"
+     ],
+     "covered": true
+    },
+    {
+     "id": "G-15",
+     "text": "Let every satisfied person bring the next one, and thank them in a way that costs us only what we decided",
+     "features": [
+      "021-referrals",
+      "022-product-metrics"
+     ],
+     "covered": true
+    },
+    {
+     "id": "G-16",
+     "text": "Know, with numbers we trust, whether the product is working before we spend to grow it",
+     "features": [
+      "022-product-metrics",
+      "025-value-delivered"
+     ],
+     "covered": true
+    },
+    {
+     "id": "G-17",
+     "text": "Let a company that reaches its limit pay for more room and see exactly what it pays, without ever being charged for something it did not get",
+     "features": [
+      "024-billing"
+     ],
+     "covered": true
+    },
+    {
+     "id": "G-18",
+     "text": "Show each company, with evidence it can check, the problems the reviews caught before any code was written",
+     "features": [
+      "025-value-delivered"
+     ],
+     "covered": true
+    },
+    {
+     "id": "G-19",
+     "text": "Be the first place a person or an agent goes to learn what the software does today and what is left to build, with evidence anyone can check and a history of who decided each rule",
+     "features": [
+      "028-intent-ledger",
+      "029-decided-values",
+      "030-continuous-evidence",
+      "031-decided-numbers-reach-product",
+      "032-evidence-strength"
+     ],
+     "covered": true
+    }
+   ],
+   "decisions": [
+    {
+     "id": "D-001",
+     "title": "Every review is deterministic and works offline",
+     "status": "accepted",
+     "date": "2026-09-18"
+    },
+    {
+     "id": "D-002",
+     "title": "The tool has no runtime dependencies",
+     "status": "accepted",
+     "date": "2026-09-18"
+    },
+    {
+     "id": "D-003",
+     "title": "A model is an optional layer and never required for a finding to exist",
+     "status": "accepted",
+     "date": "2026-09-19"
+    },
+    {
+     "id": "D-004",
+     "title": "The review does not modify the reviewed repository",
+     "status": "superseded",
+     "date": "2026-09-19"
+    },
+    {
+     "id": "D-005",
+     "title": "Only explicit commands write files, and only the files they announce",
+     "status": "accepted",
+     "date": "2026-10-14"
+    },
+    {
+     "id": "D-006",
+     "title": "Simple by default, depth on demand",
+     "status": "accepted",
+     "date": "2026-10-14"
+    },
+    {
+     "id": "D-007",
+     "title": "The product is the layer where business intent lives, for people who approve and not for people who program",
+     "status": "accepted",
+     "date": "2026-10-15"
+    },
+    {
+     "id": "D-008",
+     "title": "The multi-tenant service is a separate layer on Postgres (Supabase) and the review engine stays dependency-free",
+     "status": "accepted",
+     "date": "2026-10-15"
+    },
+    {
+     "id": "D-009",
+     "title": "Rules found by a model are proposals, and only a person turns them into the company's baseline",
+     "status": "accepted",
+     "date": "2026-10-15"
+    },
+    {
+     "id": "D-010",
+     "title": "One product with two doors: a company with software, and a person with an idea and no code",
+     "status": "accepted",
+     "date": "2026-10-15"
+    },
+    {
+     "id": "D-011",
+     "title": "Registration requires a phone number verified by SMS, so every account is a real person",
+     "status": "accepted",
+     "date": "2026-10-15"
+    },
+    {
+     "id": "D-012",
+     "title": "Agents connected through MCP read and propose, and only a person decides",
+     "status": "accepted",
+     "date": "2026-10-15"
+    },
+    {
+     "id": "D-013",
+     "title": "Code hosting is a provider behind one small read only interface, and a company chooses which of its repositories Speco reads",
+     "status": "accepted",
+     "date": "2026-10-16"
+    },
+    {
+     "id": "D-014",
+     "title": "The free plan limits what a model costs us, never what is deterministic",
+     "status": "accepted",
+     "date": "2026-10-16"
+    },
+    {
+     "id": "D-015",
+     "title": "A referral is rewarded with credits, and only after the person invited gets their first result",
+     "status": "accepted",
+     "date": "2026-10-16"
+    },
+    {
+     "id": "D-016",
+     "title": "Product metrics are derived from what the product already records, and no figure is reported without its sample size",
+     "status": "accepted",
+     "date": "2026-10-16"
+    },
+    {
+     "id": "D-017",
+     "title": "Payment sits behind one small interface, billing is off until the operator turns it on, and a plan change happens only after the charge is accepted",
+     "status": "accepted",
+     "date": "2026-10-16"
+    },
+    {
+     "id": "D-018",
+     "title": "Value delivered is the problems caught before code, counted from the reviews and weighted by what the company says would have shipped",
+     "status": "accepted",
+     "date": "2026-10-20"
+    },
+    {
+     "id": "D-019",
+     "title": "Verification of the code against an approved rule sits behind one small interface, and a rule is never described as proved unless a formal proof exists",
+     "status": "proposed",
+     "date": "2026-10-24"
+    },
+    {
+     "id": "D-020",
+     "title": "A rule is called verified only when a recorded run of the tests that cite it passed for its current text, and an agent may draft and change rules but never approve them",
+     "status": "accepted",
+     "date": "2026-10-24"
+    }
+   ],
+   "features_without_goal": [],
+   "findings": []
+  }
+ }
+]

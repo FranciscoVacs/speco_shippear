@@ -1,0 +1,81 @@
+{
+ "schema_version": 1,
+ "feature": "030-continuous-evidence",
+ "summary": {
+  "blocker": 0,
+  "warning": 0,
+  "suggestion": 2
+ },
+ "metrics": {
+  "requirements": 9,
+  "success_criteria": 2,
+  "user_stories": 3,
+  "tasks": 8,
+  "plan_items": 6,
+  "requirements_with_plan_or_tasks_pct": 100,
+  "requirements_with_acceptance_pct": 100,
+  "tasks_without_requirement": 0,
+  "ears_patterns": {
+   "ubiquitous": 1,
+   "event": 5,
+   "state": 1,
+   "unwanted": 1,
+   "optional": 1,
+   "complex": 0,
+   "none": 0
+  }
+ },
+ "notes": [],
+ "decision": {
+  "verdict": "ready",
+  "can_implement": true,
+  "waiting_on": {
+   "decision": 0,
+   "team": 0
+  },
+  "risks": {
+   "intent_drift": 0,
+   "context_decay": 0,
+   "unverifiable": 0
+  },
+  "top_risk": null
+ },
+ "findings": [
+  {
+   "fingerprint": "35882ff40431",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA003",
+   "rule_name": "Forma no EARS",
+   "severity": "suggestion",
+   "ids": [
+    "FR-009"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 53
+   },
+   "message": "FR-009 no sigue un patrón EARS.",
+   "fix": "El disparador está al final: pasarlo al inicio, «When/While/If <condición>, the system MUST …».",
+   "evidence": []
+  },
+  {
+   "fingerprint": "df1566fc02bd",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA007",
+   "rule_name": "Requisito no atómico",
+   "severity": "suggestion",
+   "ids": [
+    "FR-007"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 51
+   },
+   "message": "FR-007 contiene varios MUST: probablemente son varios requisitos en uno.",
+   "fix": "Separarlo en requisitos atómicos, cada uno con su criterio de aceptación",
+   "evidence": []
+  }
+ ]
+}

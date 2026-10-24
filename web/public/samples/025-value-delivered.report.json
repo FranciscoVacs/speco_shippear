@@ -1,0 +1,153 @@
+{
+ "schema_version": 1,
+ "feature": "025-value-delivered",
+ "summary": {
+  "blocker": 0,
+  "warning": 0,
+  "suggestion": 6
+ },
+ "metrics": {
+  "requirements": 10,
+  "success_criteria": 3,
+  "user_stories": 5,
+  "tasks": 12,
+  "plan_items": 6,
+  "requirements_with_plan_or_tasks_pct": 100,
+  "requirements_with_acceptance_pct": 100,
+  "tasks_without_requirement": 0,
+  "ears_patterns": {
+   "ubiquitous": 5,
+   "event": 3,
+   "state": 0,
+   "unwanted": 0,
+   "optional": 2,
+   "complex": 0,
+   "none": 0
+  }
+ },
+ "notes": [],
+ "decision": {
+  "verdict": "ready",
+  "can_implement": true,
+  "waiting_on": {
+   "decision": 0,
+   "team": 0
+  },
+  "risks": {
+   "intent_drift": 0,
+   "context_decay": 0,
+   "unverifiable": 0
+  },
+  "top_risk": null
+ },
+ "findings": [
+  {
+   "fingerprint": "c16fc4acb012",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA003",
+   "rule_name": "Forma no EARS",
+   "severity": "suggestion",
+   "ids": [
+    "FR-001"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 108
+   },
+   "message": "FR-001 no sigue un patrón EARS.",
+   "fix": "El disparador está al final: pasarlo al inicio, «When/While/If <condición>, the system MUST …».",
+   "evidence": []
+  },
+  {
+   "fingerprint": "6605798cf97a",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA007",
+   "rule_name": "Requisito no atómico",
+   "severity": "suggestion",
+   "ids": [
+    "FR-001"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 108
+   },
+   "message": "FR-001 contiene varios MUST: probablemente son varios requisitos en uno.",
+   "fix": "Separarlo en requisitos atómicos, cada uno con su criterio de aceptación",
+   "evidence": []
+  },
+  {
+   "fingerprint": "3965153a7c62",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA007",
+   "rule_name": "Requisito no atómico",
+   "severity": "suggestion",
+   "ids": [
+    "FR-004"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 111
+   },
+   "message": "FR-004 contiene varios MUST: probablemente son varios requisitos en uno.",
+   "fix": "Separarlo en requisitos atómicos, cada uno con su criterio de aceptación",
+   "evidence": []
+  },
+  {
+   "fingerprint": "d4604db6f4eb",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA007",
+   "rule_name": "Requisito no atómico",
+   "severity": "suggestion",
+   "ids": [
+    "FR-006"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 113
+   },
+   "message": "FR-006 contiene varios MUST: probablemente son varios requisitos en uno.",
+   "fix": "Separarlo en requisitos atómicos, cada uno con su criterio de aceptación",
+   "evidence": []
+  },
+  {
+   "fingerprint": "1ec9c8200218",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA007",
+   "rule_name": "Requisito no atómico",
+   "severity": "suggestion",
+   "ids": [
+    "FR-007"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 114
+   },
+   "message": "FR-007 contiene varios MUST: probablemente son varios requisitos en uno.",
+   "fix": "Separarlo en requisitos atómicos, cada uno con su criterio de aceptación",
+   "evidence": []
+  },
+  {
+   "fingerprint": "58e509b33ee3",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA007",
+   "rule_name": "Requisito no atómico",
+   "severity": "suggestion",
+   "ids": [
+    "FR-010"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 118
+   },
+   "message": "FR-010 contiene varios MUST: probablemente son varios requisitos en uno.",
+   "fix": "Separarlo en requisitos atómicos, cada uno con su criterio de aceptación",
+   "evidence": []
+  }
+ ]
+}

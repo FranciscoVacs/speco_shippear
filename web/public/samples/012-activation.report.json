@@ -1,0 +1,135 @@
+{
+ "schema_version": 1,
+ "feature": "012-activation",
+ "summary": {
+  "blocker": 0,
+  "warning": 0,
+  "suggestion": 5
+ },
+ "metrics": {
+  "requirements": 15,
+  "success_criteria": 4,
+  "user_stories": 4,
+  "tasks": 12,
+  "plan_items": 7,
+  "requirements_with_plan_or_tasks_pct": 100,
+  "requirements_with_acceptance_pct": 100,
+  "tasks_without_requirement": 0,
+  "ears_patterns": {
+   "ubiquitous": 4,
+   "event": 7,
+   "state": 1,
+   "unwanted": 1,
+   "optional": 2,
+   "complex": 0,
+   "none": 0
+  }
+ },
+ "notes": [],
+ "decision": {
+  "verdict": "ready",
+  "can_implement": true,
+  "waiting_on": {
+   "decision": 0,
+   "team": 0
+  },
+  "risks": {
+   "intent_drift": 0,
+   "context_decay": 0,
+   "unverifiable": 0
+  },
+  "top_risk": null
+ },
+ "findings": [
+  {
+   "fingerprint": "b1e00048c411",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA007",
+   "rule_name": "Requisito no atómico",
+   "severity": "suggestion",
+   "ids": [
+    "FR-003"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 95
+   },
+   "message": "FR-003 contiene varios MUST: probablemente son varios requisitos en uno.",
+   "fix": "Separarlo en requisitos atómicos, cada uno con su criterio de aceptación",
+   "evidence": []
+  },
+  {
+   "fingerprint": "4d9e6661a5b0",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA007",
+   "rule_name": "Requisito no atómico",
+   "severity": "suggestion",
+   "ids": [
+    "FR-004"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 96
+   },
+   "message": "FR-004 contiene varios MUST: probablemente son varios requisitos en uno.",
+   "fix": "Separarlo en requisitos atómicos, cada uno con su criterio de aceptación",
+   "evidence": []
+  },
+  {
+   "fingerprint": "dcc42aac3dce",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA007",
+   "rule_name": "Requisito no atómico",
+   "severity": "suggestion",
+   "ids": [
+    "FR-010"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 102
+   },
+   "message": "FR-010 contiene varios MUST: probablemente son varios requisitos en uno.",
+   "fix": "Separarlo en requisitos atómicos, cada uno con su criterio de aceptación",
+   "evidence": []
+  },
+  {
+   "fingerprint": "77608ce33661",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA007",
+   "rule_name": "Requisito no atómico",
+   "severity": "suggestion",
+   "ids": [
+    "NFR-002"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 109
+   },
+   "message": "NFR-002 contiene varios MUST: probablemente son varios requisitos en uno.",
+   "fix": "Separarlo en requisitos atómicos, cada uno con su criterio de aceptación",
+   "evidence": []
+  },
+  {
+   "fingerprint": "d54bee14c8b4",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA007",
+   "rule_name": "Requisito no atómico",
+   "severity": "suggestion",
+   "ids": [
+    "NFR-003"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 110
+   },
+   "message": "NFR-003 contiene varios MUST: probablemente son varios requisitos en uno.",
+   "fix": "Separarlo en requisitos atómicos, cada uno con su criterio de aceptación",
+   "evidence": []
+  }
+ ]
+}

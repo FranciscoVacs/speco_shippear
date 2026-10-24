@@ -1,0 +1,643 @@
+{
+ "code": {
+  "repo": "https://github.com/agustindelmonti/speco.ia",
+  "decisionExample": "## D-003: Los puntos no vencen\n**Status**: accepted\n**Out of scope**: vence, expira, expiry",
+  "setupCmds": "specreview init                                  # specreview.toml + workflow de GitHub Actions\nspecreview baseline                              # la deuda actual se registra; de acá en más sólo ves lo nuevo",
+  "reportCmds": "specreview . -f html -o review.html              # reporte autocontenido para quien no usa la app\nspecreview approvals list                        # quién decidió qué y cuándo\nspecreview approvals verify                      # comprueba que el registro no se editó",
+  "slackCmd": "specreview notify slack . --interactive"
+ },
+ "es": {
+  "sections": {
+   "ciclo": "Dónde se mete",
+   "setup": "Setup en tres niveles",
+   "dia": "Tu día con Speco",
+   "recetas": "Recetas",
+   "cuello": "Cómo no ser el cuello de botella",
+   "limites": "Límites honestos"
+  },
+  "flow": [
+   "Dónde se mete",
+   "Setup",
+   "Tu día",
+   "Recetas",
+   "Sin cuello de botella",
+   "Límites"
+  ],
+  "flowLabel": "Secciones de esta página",
+  "lead": "**Con varios agentes construyendo en paralelo, tu trabajo es decidir rápido y una sola vez, y que lo decidido quede donde los agentes lo lean.** Speco junta lo que espera tu decisión, frena a los agentes antes de construir sobre una spec rota y te avisa cuando algo ya decidido se movió sin que nadie lo decidiera.",
+  "captions": {
+   "terminal": "terminal",
+   "spec": "product/decisions.md",
+   "prompt": "prompt para tu agente"
+  },
+  "ciclo": {
+   "intro": "Antes, producto era el cuello de botella por diseño: implementar tardaba semanas, así que había tiempo de aclarar sobre la marcha. Con agentes implementar tarda minutos y **un agente no aclara: adivina**. Speco se mete en cuatro puntos del ciclo; cada hallazgo tiene un dueño, y a tu cola sólo llega lo que el equipo no puede resolver.",
+   "cols": [
+    "#",
+    "Punto",
+    "Qué hace Speco",
+    "Quién actúa",
+    "Estado"
+   ],
+   "rows": [
+    [
+     "1",
+     "Decidir",
+     "Guarda objetivos (`G-n`) y decisiones (`D-n`) en `product/`; cada spec los cita. Una decisión reemplazada o rechazada que una spec cita **bloquea** (`PRD003`).",
+     "Vos",
+     "Disponible"
+    ],
+    [
+     "2",
+     "Antes de construir",
+     "El agente llama `get_blockers` y el plugin de Claude Code frena `/speckit.implement` si hay bloqueantes. Lo mecánico lo arregla el agente; lo que es de producto vuelve como pregunta cerrada A/B.",
+     "Agente → vos",
+     "Disponible en Claude Code; sin gate en otros clientes"
+    ],
+    [
+     "3",
+     "En el PR",
+     "La GitHub Action revisa sólo las features que el PR tocó y deja **un** comentario que se actualiza, anotaciones y un check.",
+     "CI → equipo",
+     "Disponible"
+    ],
+    [
+     "4",
+     "Después del merge",
+     "Compara las líneas de evidencia de cada regla *confirmada*; si cambiaron, abre un «cambio sin decidir» que nombra la regla y espera tu motivo.",
+     "Servicio → vos",
+     "Piloto"
+    ]
+   ],
+   "after": "Lo que se esconde de tu cola: la cobertura, la calidad de redacción y los pasos mecánicos. Lo que llega: contradicciones (`CON001/002`), preguntas abiertas (`QUA004`), scope colado (`COV002/003`), reglas por confirmar y cambios sin decidir."
+  },
+  "setup": {
+   "intro": "Cada nivel termina con algo visible y se puede parar en cualquiera.",
+   "stepsLabel": "Pasos",
+   "levels": [
+    {
+     "title": "Nivel 0 · Mirarlo sin instalar nada (5 min)",
+     "intro": "Recorré la demo de la app (datos simulados y rotulados): **Inicio → Decisiones → una revisión → Aprobación**. Es el mejor lugar para aprender el vocabulario: *veredicto*, *Tu turno*, *Lista para construir*.",
+     "steps": [],
+     "code": "",
+     "tip": ""
+    },
+    {
+     "title": "Nivel 1 · Tu equipo ya usa Spec Kit (30 min, con un dev)",
+     "intro": "Un dev hace una vez lo técnico; vos hacés lo que sólo vos podés.",
+     "steps": [
+      "**Dev:** `specreview init` y mergear el PR que deja. Cada PR que toque `specs/` recibe un comentario con el veredicto.",
+      "**Dev:** `specreview baseline`. Sin esto, 40 hallazgos viejos y nadie mira el comentario.",
+      "**Vos:** crear `product/goals.md` con 3 a 8 objetivos (`**G-1**: …`). Ahora «¿responde a un objetivo?» es verificable.",
+      "**Vos:** crear `product/decisions.md` con lo ya decidido, cada una con `Status` y, si aplica, `Out of scope`.",
+      "**Vos:** pedir que cada spec nueva abra con `**Goals**: G-1` y `**Decisions**: D-003`. La trazabilidad se cita, no se infiere.",
+      "**Dev:** agregar a `AGENTS.md` / `CLAUDE.md`: «antes de implementar llamá `get_blockers`; lo que sea decisión de producto, preguntalo»."
+     ],
+     "code": "setup",
+     "tip": "Empezá con las pocas decisiones que más dolieron («sin descuentos en planes mensuales», «un usuario = una organización»). Una decisión que nadie cita no protege nada."
+    },
+    {
+     "title": "Nivel 2 · La app conectada a tu código (1 a 2 h)",
+     "intro": "Modo cloud, en piloto: iniciás sesión con teléfono verificado, creás tu empresa e instalás la GitHub App (o Bitbucket) desde **Conectar**. Speco arma el **retrato inicial** de las reglas que tu software cumple hoy, cada una con las líneas que la respaldan.",
+     "steps": [
+      "**Confirmar:** en *Tu turno*, cada regla se confirma, corrige o rechaza (rechazar pide motivo). Queda quién, cuándo y qué cambió.",
+      "**Congelar la línea base:** una foto inmutable de las reglas confirmadas; es el punto de comparación de todo cambio posterior.",
+      "**Consentimiento:** sólo si un owner o admin lo da, un modelo lee un puñado de archivos de código (hasta 30 / 300 KB) para proponer reglas. Lo que propone una máquina es una propuesta.",
+      "**Slack:** un digest que sólo nombra lo que espera tu decisión (y calla si no hay nada), con botones Aprobar y Rechazar. Tu usuario de Slack debe estar vinculado a un `approver`.",
+      "**Tu agente:** conectá Speco como conector MCP a tu Claude (la página **Conectar un agente** trae la dirección). Los agentes leen y proponen; **nunca deciden**, y lo hace cumplir la base de datos."
+     ],
+     "code": "slack",
+     "tip": "Roles: owner, admin y approver deciden; member y viewer leen. Quién puede aprobar es en sí una decisión: revisala."
+    }
+   ]
+  },
+  "dia": {
+   "intro": "Un día tipo con 6 a 8 agentes trabajando en paralelo. Los tiempos son órdenes de magnitud, no mediciones.",
+   "cols": [
+    "Momento",
+    "Qué hacés",
+    "Dónde"
+   ],
+   "rows": [
+    [
+     "Al empezar (10 min)",
+     "Abrís **Decisiones**: contadores por estado (necesita tu decisión, bloqueada, trabajo del equipo, lista para construir) y **Tu turno**, sólo con lo tuyo por feature. Si usás Slack, es el digest de la mañana.",
+     "App / Slack"
+    ],
+    [
+     "Decidir (2 a 5 min c/u)",
+     "Elegís A o B, o respondés la pregunta abierta, y lo anotás **en la spec** con el id, no en el chat. Si aplica a más de una feature, va a `product/decisions.md` con un id nuevo.",
+     "Spec / `product/`"
+    ],
+    [
+     "Durante el día",
+     "Los agentes atascados te devuelven preguntas cerradas. Antes de contestar de memoria, preguntale a tu agente si ya está decidido.",
+     "Tu agente"
+    ],
+    [
+     "Antes de aprobar (3 min c/u)",
+     "El resumen ejecutivo va arriba: veredicto, una frase y qué se arriesga. **Lista para construir** significa que el agente no va a adivinar. Aprobás, aprobás con condiciones, rechazás o delegás, siempre con motivo.",
+     "App"
+    ],
+    [
+     "Cuando algo cambió solo (5 min)",
+     "Llega un cambio sin decidir. Lo reconocés con motivo o pedís revertirlo.",
+     "App / Slack"
+    ],
+    [
+     "Al cerrar (2 min)",
+     "*Copiar resumen* arma el texto para Slack o el standup. Para quien no usa la app, un reporte HTML.",
+     "App / CLI"
+    ]
+   ],
+   "report": "Para dejar constancia o mostrar el estado fuera de la app:",
+   "after": "Si la spec cambia después de tu aprobación, la decisión figura como **vieja** y se nombran los archivos que cambiaron."
+  },
+  "recetas": {
+   "intro": "Cada receta dice cuándo la usás, qué hacés y qué ganás.",
+   "when": "Cuándo",
+   "do": "Qué hacés",
+   "gain": "Qué ganás",
+   "promptLabel": "Prompt para tu agente",
+   "items": [
+    {
+     "title": "Triar tu cola en 10 minutos",
+     "time": "diaria",
+     "when": "A primera hora o cuando llega el digest.",
+     "do": "Abrí *Decisiones → Tu turno*. Primero lo bloqueado por una contradicción, después las preguntas abiertas, después el scope colado. Decidí en una línea, con el id: «se saca T009», «FR-012 queda en 5.000 USD y se elimina FR-011».",
+     "gain": "El agente destrabado no consume horas, y no volvés a explicar lo mismo.",
+     "prompt": ""
+    },
+    {
+     "title": "Que cinco agentes no adivinen lo mismo distinto",
+     "time": "antes de paralelizar",
+     "when": "Lanzás varias features que tocan un mismo concepto: límites, planes, permisos, vencimientos.",
+     "do": "Antes de lanzarlas, escribí la decisión en `product/decisions.md` y hacé que cada spec la cite. Un agente que proponga lo contrario o use un término de su `Out of scope` genera una advertencia que es tuya.",
+     "gain": "Una decisión, una vez, leída por todos. Hoy Speco no detecta que dos specs paralelas se contradigan si ninguna cita una decisión común, por eso hay que elevar el concepto compartido *antes* de paralelizar.",
+     "prompt": ""
+    },
+    {
+     "title": "Preguntarle a tu agente «¿esto ya está decidido?»",
+     "time": "ad hoc",
+     "when": "Alguien te pregunta algo y no te acordás si ya se resolvió.",
+     "do": "Con Speco conectado como conector MCP, o `specreview mcp .` sobre un checkout, pedile:",
+     "gain": "Respuestas con cita a lo decidido, no a la memoria de nadie. El agente no puede aprobar nada por vos.",
+     "prompt": "Llamá `pending_decisions` y decime qué espera mi decisión, agrupado por feature. Para lo que ya está decidido, citá el id (D-xxx / FR-xxx)."
+    },
+    {
+     "title": "Escribir una feature que los agentes puedan construir",
+     "time": "por feature",
+     "when": "Feature nueva. Lo mejor que le podés dar a un agente es una spec que no lo obligue a adivinar.",
+     "do": "Pedile que valide cada requisito antes de escribirlo. Tu parte: responder las preguntas con A/B, fijar los números y declarar `**Goals**` y `**Decisions**`. Apuntá a ver **Lista para construir**.",
+     "gain": "Los criterios de aceptación salen de la spec, no de quien implementa.",
+     "prompt": "Escribí la spec de «<idea>» con requisitos en formato EARS, un criterio de aceptación por user story y la lista de preguntas que no puedo dejar sin responder. Antes de darme el borrador, validá cada requisito con `check_requirement`."
+    },
+    {
+     "title": "Cuando una regla cambió sin que nadie la decidiera",
+     "time": "piloto",
+     "when": "Aparece un cambio sin decidir en el retrato o llega por Slack.",
+     "do": "Abrí la regla: qué decía, el código que la respaldaba, qué cambió. **Reconocé con motivo** (la decisión de negocio cambió y ahora queda registrada) o **pedí revertir** (era slop). Si el cambio es permanente, actualizá la spec o la decisión.",
+     "gain": "Nada de lo decidido se pisa en silencio. Límite: el drift detecta que cambiaron las líneas de evidencia, no que cambió el comportamiento.",
+     "prompt": ""
+    },
+    {
+     "title": "Tengo una idea y no hay código",
+     "time": "piloto",
+     "when": "Estás validando algo con una herramienta de IA y todavía no hay repositorio.",
+     "do": "Elegí «empiezo desde una idea», contá lo que querés y respondé las preguntas de a una. Speco guarda tus decisiones como spec y te da un brief para pegar en tu herramienta. Lo que no sepas queda abierto y marcado como riesgo.",
+     "gain": "El agente no adivina lo que nadie decidió. Cuando conectes el código, se compara con lo que decidiste. La spec de esta puerta todavía está en borrador.",
+     "prompt": ""
+    },
+    {
+     "title": "Mostrar el estado a quien no usa la app",
+     "time": "semanal",
+     "when": "Un stakeholder pregunta qué se decidió y quién lo aprobó.",
+     "do": "*Copiar resumen* para Slack, o un reporte HTML autocontenido, o el registro de aprobaciones con su verificación.",
+     "gain": "Una respuesta auditable a «¿quién aprobó esto, y sobre qué versión?».",
+     "prompt": "",
+     "code": "report"
+    }
+   ]
+  },
+  "cuello": {
+   "intro": "Juntar las decisiones en una cola no las hace más rápidas. Lo que sí podés hacer:",
+   "cols": [
+    "Práctica",
+    "Por qué"
+   ],
+   "rows": [
+    [
+     "Decidí en la spec, no en el chat",
+     "El agente relee la spec; el chat se pierde. Una decisión fuera de la spec no está decidida."
+    ],
+    [
+     "Elevá lo recurrente a `product/decisions.md`",
+     "La segunda vez que contestás lo mismo, era una decisión que debía existir."
+    ],
+    [
+     "Pedí preguntas cerradas (A/B con consecuencia)",
+     "Se contestan en minutos; las abiertas se postergan."
+    ],
+    [
+     "Delegá con nombre y motivo",
+     "Tu cola no depende de tu agenda y queda registrado quién decidió."
+    ],
+    [
+     "Usá `waive` con vencimiento para lo que aceptás",
+     "«Lo decidió producto, vence en Q1» no ensucia el check y se vuelve a mirar."
+    ],
+    [
+     "Fijá un ritmo (bloqueados el mismo día, el resto en 48 h)",
+     "Speco ordena por urgencia y dice quién espera a quién, pero no pone el plazo."
+    ],
+    [
+     "No aprobés con bloqueantes salvo con `override` y motivo",
+     "Queda marcado como excepción consciente, no como descuido."
+    ]
+   ]
+  },
+  "limites": {
+   "intro": "Para producto, estos límites importan más que las capacidades. La garantía de la tesis nunca es mayor que su «cobertura hoy».",
+   "cols": [
+    "Límite",
+    "Consecuencia",
+    "Mientras tanto"
+   ],
+   "rows": [
+    [
+     "Reglas que viven sólo en el código: el drift mira líneas de evidencia, no comportamiento.",
+     "No es «detectamos cualquier cambio de comportamiento».",
+     "Confirmá en el retrato las reglas críticas (dinero, permisos, datos personales)."
+    ],
+    [
+     "Contradicciones: dentro de una feature y contra `product/decisions.md`.",
+     "Dos specs paralelas pueden contradecirse sin que se note.",
+     "Elevá el concepto compartido a decisión antes de paralelizar."
+    ],
+    [
+     "Lo inferido por texto es una pista, no un veredicto.",
+     "Posibles falsos positivos; sólo lo explícito bloquea.",
+     "Citá ids (`FR-005`, `D-003`)."
+    ],
+    [
+     "El gate duro sólo existe en Claude Code.",
+     "En Cursor, VS Code o Codex un agente puede implementar sin consultar.",
+     "Reglas en `AGENTS.md` y el check de PR como red de seguridad."
+    ],
+    [
+     "El MCP y el plugin se probaron por stdio, no en clientes reales.",
+     "Las configuraciones de cada cliente pueden necesitar ajustes.",
+     "Probá un cliente a la vez."
+    ],
+    [
+     "Slack y Jira se probaron contra servidores falsos.",
+     "La firma o los botones pueden fallar al primer uso real.",
+     "Una corrida en un canal de prueba antes de confiar."
+    ],
+    [
+     "Modo cloud: GitHub, OAuth con Supabase y el conector remoto sin verificar contra servicios reales; fuera del retrato, la app muestra datos de demostración rotulados.",
+     "No todo lo que ves en la app cloud es tuyo todavía.",
+     "Tratalo como piloto y fijate en los rótulos «demo»."
+    ],
+    [
+     "El retrato con modelo no se probó con un modelo real.",
+     "Puede faltar alguna regla importante.",
+     "Revisá a mano las reglas de mayor riesgo."
+    ],
+    [
+     "Sólo Spec Kit y sólo objetivos, decisiones y supuestos (no un PRD completo).",
+     "Un PRD largo no se valida.",
+     "Bajá a specs lo que querés que se verifique."
+    ]
+   ]
+  },
+  "guides": "Documentos completos:",
+  "guideLinks": [
+   "Guía para producto (markdown)",
+   "La tesis",
+   "Aprobaciones, Slack y Jira"
+  ],
+  "guideFiles": [
+   "30-product-manager-guide",
+   "16-thesis",
+   "14-approvals-and-connectors"
+  ]
+ },
+ "en": {
+  "sections": {
+   "ciclo": "Where it fits",
+   "setup": "Setup in three levels",
+   "dia": "Your day with Speco",
+   "recetas": "Recipes",
+   "cuello": "How not to be the bottleneck",
+   "limites": "Honest limits"
+  },
+  "flow": [
+   "Where it fits",
+   "Setup",
+   "Your day",
+   "Recipes",
+   "No bottleneck",
+   "Limits"
+  ],
+  "flowLabel": "Sections of this page",
+  "lead": "**With several agents building in parallel, your job is to decide fast and only once, and to leave what you decided where the agents read it.** Speco gathers what is waiting for your decision, stops agents from building on a broken spec, and tells you when something already decided moved without anyone deciding it.",
+  "captions": {
+   "terminal": "terminal",
+   "spec": "product/decisions.md",
+   "prompt": "prompt for your agent"
+  },
+  "ciclo": {
+   "intro": "Product used to be the bottleneck by design: implementing took weeks, so there was time to clarify along the way. With agents, implementing takes minutes and **an agent does not clarify: it guesses**. Speco enters at four points of the cycle; every finding has an owner, and only what the team cannot resolve reaches your queue.",
+   "cols": [
+    "#",
+    "Point",
+    "What Speco does",
+    "Who acts",
+    "Status"
+   ],
+   "rows": [
+    [
+     "1",
+     "Decide",
+     "Keeps goals (`G-n`) and decisions (`D-n`) in `product/`; every spec cites them. A superseded or rejected decision that a spec cites **blocks** (`PRD003`).",
+     "You",
+     "Available"
+    ],
+    [
+     "2",
+     "Before building",
+     "The agent calls `get_blockers` and the Claude Code plugin stops `/speckit.implement` when there are blockers. The agent fixes what is mechanical; what is a product call comes back as a closed A/B question.",
+     "Agent → you",
+     "Available in Claude Code; no gate in other clients"
+    ],
+    [
+     "3",
+     "In the PR",
+     "The GitHub Action reviews only the features the PR touched and leaves **one** comment that updates itself, annotations and a check.",
+     "CI → team",
+     "Available"
+    ],
+    [
+     "4",
+     "After the merge",
+     "Compares the evidence lines of every *confirmed* rule; if they changed it opens an «undecided change» that names the rule and waits for your reason.",
+     "Service → you",
+     "Pilot"
+    ]
+   ],
+   "after": "What is hidden from your queue: coverage, wording quality and mechanical steps. What reaches it: contradictions (`CON001/002`), open questions (`QUA004`), scope creep (`COV002/003`), rules to confirm and undecided changes."
+  },
+  "setup": {
+   "intro": "Each level ends with something visible and you can stop at any of them.",
+   "stepsLabel": "Steps",
+   "levels": [
+    {
+     "title": "Level 0 · Look at it without installing anything (5 min)",
+     "intro": "Walk through the app demo (simulated, labelled data): **Home → Decisions → a review → Approval**. It is the best place to learn the vocabulary: *verdict*, *Your turn*, *Ready to build*.",
+     "steps": [],
+     "code": "",
+     "tip": ""
+    },
+    {
+     "title": "Level 1 · Your team already uses Spec Kit (30 min, with a dev)",
+     "intro": "A dev does the technical part once; you do what only you can.",
+     "steps": [
+      "**Dev:** `specreview init` and merge the PR it leaves. Every PR that touches `specs/` gets a comment with the verdict.",
+      "**Dev:** `specreview baseline`. Without it, 40 old findings and nobody reads the comment.",
+      "**You:** create `product/goals.md` with 3 to 8 goals (`**G-1**: …`). «Does it answer a goal?» is now verifiable.",
+      "**You:** create `product/decisions.md` with what is already decided, each with `Status` and, where it applies, `Out of scope`.",
+      "**You:** ask that every new spec opens with `**Goals**: G-1` and `**Decisions**: D-003`. Traceability is cited, not inferred.",
+      "**Dev:** add to `AGENTS.md` / `CLAUDE.md`: «before implementing call `get_blockers`; if it is a product decision, ask»."
+     ],
+     "code": "setup",
+     "tip": "Start with the few decisions that hurt most («no discounts on monthly plans», «one user = one organization»). A decision nobody cites protects nothing."
+    },
+    {
+     "title": "Level 2 · The app connected to your code (1 to 2 h)",
+     "intro": "Cloud mode, in pilot: you sign in with a verified phone, create your company and install the GitHub App (or Bitbucket) from **Connect**. Speco builds the **initial portrait** of the rules your software follows today, each with the lines that back it.",
+     "steps": [
+      "**Confirm:** in *Your turn*, each rule is confirmed, corrected or rejected (rejecting asks for a reason). Who, when and what changed is recorded.",
+      "**Freeze the baseline:** an immutable snapshot of the confirmed rules; the reference point for every later change.",
+      "**Consent:** only if an owner or admin gives it, a model reads a handful of code files (up to 30 / 300 KB) to propose rules. What a machine proposes is a proposal.",
+      "**Slack:** a digest that only names what waits for your decision (and stays quiet if nothing does), with Approve and Reject buttons. Your Slack user must be linked to an `approver`.",
+      "**Your agent:** connect Speco as an MCP connector to your Claude (the **Connect an agent** page has the address). Agents read and propose; they **never decide**, and the database enforces it."
+     ],
+     "code": "slack",
+     "tip": "Roles: owner, admin and approver decide; member and viewer read. Who may approve is itself a decision: review it."
+    }
+   ]
+  },
+  "dia": {
+   "intro": "A typical day with 6 to 8 agents working in parallel. Times are orders of magnitude, not measurements.",
+   "cols": [
+    "Moment",
+    "What you do",
+    "Where"
+   ],
+   "rows": [
+    [
+     "Start of day (10 min)",
+     "Open **Decisions**: counters by state (needs your decision, blocked, team work, ready to build) and **Your turn**, with only what is yours per feature. If you use Slack, it is the morning digest.",
+     "App / Slack"
+    ],
+    [
+     "Deciding (2 to 5 min each)",
+     "Pick A or B, or answer the open question, and write it **in the spec** with the id, not in chat. If it applies to more than one feature, it goes to `product/decisions.md` with a new id.",
+     "Spec / `product/`"
+    ],
+    [
+     "During the day",
+     "Stuck agents hand you closed questions. Before answering from memory, ask your agent whether it is already decided.",
+     "Your agent"
+    ],
+    [
+     "Before approving (3 min each)",
+     "The executive summary is on top: verdict, one sentence and what is at risk. **Ready to build** means the agent will not guess. You approve, approve with conditions, reject or delegate, always with a reason.",
+     "App"
+    ],
+    [
+     "When something changed by itself (5 min)",
+     "An undecided change arrives. You acknowledge it with a reason or ask for a revert.",
+     "App / Slack"
+    ],
+    [
+     "End of day (2 min)",
+     "*Copy summary* builds the text for Slack or standup. For people outside the app, an HTML report.",
+     "App / CLI"
+    ]
+   ],
+   "report": "To leave a record or show the state outside the app:",
+   "after": "If the spec changes after your approval, the decision shows as **stale** and the changed files are named."
+  },
+  "recetas": {
+   "intro": "Each recipe says when you use it, what you do and what you gain.",
+   "when": "When",
+   "do": "What you do",
+   "gain": "What you gain",
+   "promptLabel": "Prompt for your agent",
+   "items": [
+    {
+     "title": "Triage your queue in 10 minutes",
+     "time": "daily",
+     "when": "First thing, or when the digest arrives.",
+     "do": "Open *Decisions → Your turn*. First what is blocked by a contradiction, then open questions, then scope creep. Decide in one line, with the id: «T009 is removed», «FR-012 stays at 5,000 USD and FR-011 is deleted».",
+     "gain": "An unblocked agent does not burn hours, and you stop explaining the same thing.",
+     "prompt": ""
+    },
+    {
+     "title": "Keep five agents from guessing the same thing differently",
+     "time": "before parallelizing",
+     "when": "You launch several features that touch the same concept: limits, plans, permissions, expiry.",
+     "do": "Before launching them, write the decision in `product/decisions.md` and make every spec cite it. An agent that proposes the opposite or uses a term from its `Out of scope` raises a warning that is yours.",
+     "gain": "One decision, once, read by everyone. Today Speco does not detect two parallel specs contradicting each other if neither cites a common decision, so lift the shared concept to a decision *before* parallelizing.",
+     "prompt": ""
+    },
+    {
+     "title": "Ask your agent «is this already decided?»",
+     "time": "ad hoc",
+     "when": "Someone asks you something and you do not remember whether it was settled.",
+     "do": "With Speco connected as an MCP connector, or `specreview mcp .` on a checkout, ask:",
+     "gain": "Answers that cite what was decided, not anyone's memory. The agent cannot approve anything for you.",
+     "prompt": "Call `pending_decisions` and tell me what is waiting for my decision, grouped by feature. For what is already decided, cite the id (D-xxx / FR-xxx)."
+    },
+    {
+     "title": "Write a feature agents can build",
+     "time": "per feature",
+     "when": "New feature. The best thing you can give an agent is a spec that does not force it to guess.",
+     "do": "Ask it to validate each requirement before writing it. Your part: answer the questions with A/B, fix the numbers and declare `**Goals**` and `**Decisions**`. Aim to see **Ready to build**.",
+     "gain": "Acceptance criteria come from the spec, not from whoever implements.",
+     "prompt": "Write the spec for «<idea>» with EARS requirements, one acceptance criterion per user story and the list of questions I cannot leave unanswered. Before giving me the draft, validate each requirement with `check_requirement`."
+    },
+    {
+     "title": "When a rule changed and nobody decided it",
+     "time": "pilot",
+     "when": "An undecided change appears in the portrait or arrives by Slack.",
+     "do": "Open the rule: what it said, the code that backed it, what changed. **Acknowledge with a reason** (the business decision changed and is now recorded) or **ask for a revert** (it was slop). If the change is permanent, update the spec or the decision.",
+     "gain": "Nothing decided gets overwritten silently. Limit: drift detects that evidence lines changed, not that behavior changed.",
+     "prompt": ""
+    },
+    {
+     "title": "I have an idea and there is no code",
+     "time": "pilot",
+     "when": "You are validating something with an AI tool and there is no repository yet.",
+     "do": "Pick «I start from an idea», tell Speco what you want and answer the questions one at a time. Speco keeps your decisions as a spec and gives you a brief to paste into your tool. What you do not know stays open and marked as a risk.",
+     "gain": "The agent does not guess what nobody decided. When you connect the code, it is compared with what you decided. The spec for this door is still a draft.",
+     "prompt": ""
+    },
+    {
+     "title": "Show the state to someone outside the app",
+     "time": "weekly",
+     "when": "A stakeholder asks what was decided and who approved it.",
+     "do": "*Copy summary* for Slack, or a self-contained HTML report, or the approvals log with its verification.",
+     "gain": "An auditable answer to «who approved this, and on which version?».",
+     "prompt": "",
+     "code": "report"
+    }
+   ]
+  },
+  "cuello": {
+   "intro": "Gathering decisions in one queue does not make them faster. What you can do:",
+   "cols": [
+    "Practice",
+    "Why"
+   ],
+   "rows": [
+    [
+     "Decide in the spec, not in chat",
+     "The agent rereads the spec; chat gets lost. A decision outside the spec is not decided."
+    ],
+    [
+     "Lift what recurs to `product/decisions.md`",
+     "The second time you answer the same thing, it was a decision that should have existed."
+    ],
+    [
+     "Ask for closed questions (A/B with consequence)",
+     "They are answered in minutes; open ones get postponed."
+    ],
+    [
+     "Delegate by name and with a reason",
+     "Your queue does not depend on your calendar and who decided is recorded."
+    ],
+    [
+     "Use `waive` with an expiry for what you accept",
+     "«Product decided, expires in Q1» does not dirty the check and gets looked at again."
+    ],
+    [
+     "Set a rhythm (blocked the same day, the rest within 48 h)",
+     "Speco orders by urgency and says who waits for whom, but does not set the deadline."
+    ],
+    [
+     "Do not approve with blockers unless with `override` and a reason",
+     "It is marked as a conscious exception, not an oversight."
+    ]
+   ]
+  },
+  "limites": {
+   "intro": "For product, these limits matter more than the capabilities. The thesis never promises more than its «coverage today».",
+   "cols": [
+    "Limit",
+    "Consequence",
+    "Meanwhile"
+   ],
+   "rows": [
+    [
+     "Rules that live only in code: drift watches evidence lines, not behavior.",
+     "It is not «we detect any behavior change».",
+     "Confirm the critical rules (money, permissions, personal data) in the portrait."
+    ],
+    [
+     "Contradictions: inside one feature and against `product/decisions.md`.",
+     "Two parallel specs can contradict each other unnoticed.",
+     "Lift the shared concept to a decision before parallelizing."
+    ],
+    [
+     "What is inferred from text is a hint, not a verdict.",
+     "Possible false positives; only what is explicit blocks.",
+     "Cite ids (`FR-005`, `D-003`)."
+    ],
+    [
+     "The hard gate only exists in Claude Code.",
+     "In Cursor, VS Code or Codex an agent can implement without consulting.",
+     "Rules in `AGENTS.md` and the PR check as a safety net."
+    ],
+    [
+     "The MCP and the plugin were tested over stdio, not in real clients.",
+     "Each client's configuration may need adjusting.",
+     "Try one client at a time."
+    ],
+    [
+     "Slack and Jira were tested against fake servers.",
+     "The signature or the buttons may fail on first real use.",
+     "A run in a test channel before relying on it."
+    ],
+    [
+     "Cloud mode: GitHub, OAuth with Supabase and the remote connector are not verified against real services; outside the portrait, the app shows labelled demo data.",
+     "Not everything you see in the cloud app is yours yet.",
+     "Treat it as a pilot and watch for the «demo» labels."
+    ],
+    [
+     "The portrait with a model was not tried with a real model.",
+     "An important rule may be missing.",
+     "Review the highest-risk rules by hand."
+    ],
+    [
+     "Only Spec Kit, and only goals, decisions and assumptions (not a full PRD).",
+     "A long PRD is not validated.",
+     "Bring down to specs what you want verified."
+    ]
+   ]
+  },
+  "guides": "Full documents:",
+  "guideLinks": [
+   "Product guide (markdown)",
+   "The thesis",
+   "Approvals, Slack and Jira"
+  ],
+  "guideFiles": [
+   "30-product-manager-guide",
+   "16-thesis",
+   "14-approvals-and-connectors"
+  ]
+ }
+}

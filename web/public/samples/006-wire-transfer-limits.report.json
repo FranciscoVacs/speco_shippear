@@ -1,0 +1,303 @@
+{
+ "schema_version": 1,
+ "feature": "006-wire-transfer-limits",
+ "summary": {
+  "blocker": 2,
+  "warning": 6,
+  "suggestion": 5
+ },
+ "metrics": {
+  "requirements": 11,
+  "success_criteria": 2,
+  "user_stories": 2,
+  "tasks": 7,
+  "plan_items": 4,
+  "requirements_with_plan_or_tasks_pct": 91,
+  "requirements_with_acceptance_pct": 45,
+  "tasks_without_requirement": 1,
+  "ears_patterns": {
+   "ubiquitous": 6,
+   "event": 5,
+   "state": 0,
+   "unwanted": 0,
+   "optional": 0,
+   "complex": 0,
+   "none": 0
+  }
+ },
+ "notes": [],
+ "decision": {
+  "verdict": "needs_decision",
+  "can_implement": false,
+  "waiting_on": {
+   "decision": 2,
+   "team": 6
+  },
+  "risks": {
+   "intent_drift": 4,
+   "context_decay": 0,
+   "unverifiable": 4
+  },
+  "top_risk": "intent_drift"
+ },
+ "findings": [
+  {
+   "fingerprint": "440a708123d9",
+   "owner": "decision",
+   "risk": "intent_drift",
+   "rule": "CON001",
+   "rule_name": "Contradicción",
+   "severity": "blocker",
+   "ids": [
+    "FR-003",
+    "FR-004"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 53
+   },
+   "message": "FR-003 y FR-004 se contradicen: valores distintos para lo mismo: «5,000 USD» vs «10,000 USD».",
+   "fix": "Decidir cuál vale y eliminar o corregir el otro",
+   "evidence": [
+    "FR-004 en spec.md:54"
+   ]
+  },
+  {
+   "fingerprint": "5c7745ac8079",
+   "owner": "team",
+   "risk": "intent_drift",
+   "rule": "COV001",
+   "rule_name": "Requisito sin plan",
+   "severity": "blocker",
+   "ids": [
+    "FR-007"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 57
+   },
+   "message": "FR-007 no tiene correlato en el plan ni en las tasks: nadie lo va a implementar.",
+   "fix": "Agregar el paso/task que lo implementa (citando FR-007), o quitar el requisito si ya no aplica",
+   "evidence": [
+    "más cercano: T007 (similitud 0.19)"
+   ]
+  },
+  {
+   "fingerprint": "b7a0979b2e68",
+   "owner": "decision",
+   "risk": "intent_drift",
+   "rule": "COV002",
+   "rule_name": "Task sin requisito",
+   "severity": "warning",
+   "ids": [
+    "T007"
+   ],
+   "location": {
+    "file": "tasks.md",
+    "line": 14
+   },
+   "message": "T007 no responde a ningún requisito (introduce: weekly, digest, team): posible scope que se coló.",
+   "fix": "Agregar el requisito que lo justifica o eliminar la task",
+   "evidence": [
+    "Send a weekly digest of held transfers to the compliance team in src/transfers/digest.java",
+    "novedad 64%"
+   ]
+  },
+  {
+   "fingerprint": "e453fb26a655",
+   "owner": "team",
+   "risk": "intent_drift",
+   "rule": "QUA001",
+   "rule_name": "Requisito ambiguo",
+   "severity": "warning",
+   "ids": [
+    "FR-007"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 57
+   },
+   "message": "FR-007 es ambiguo: «appropriately» deja la decisión al implementador.",
+   "fix": "Reemplazar por un comportamiento o valor concreto",
+   "evidence": []
+  },
+  {
+   "fingerprint": "93fe7e70498f",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA002",
+   "rule_name": "Requisito no testeable",
+   "severity": "warning",
+   "ids": [
+    "FR-008"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 58
+   },
+   "message": "FR-008 no es testeable: usa «quickly» sin un umbral medible.",
+   "fix": "Definir un número verificable (p. ej. «p95 < 300 ms», «≥ 99 % de …»)",
+   "evidence": []
+  },
+  {
+   "fingerprint": "29f11250a946",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA006",
+   "rule_name": "Requisito sin criterio de aceptación",
+   "severity": "warning",
+   "ids": [
+    "FR-007"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 57
+   },
+   "message": "FR-007 no tiene criterio de aceptación: ningún escenario ni Success Criterion lo verifica.",
+   "fix": "Agregar un escenario Given/When/Then o un SC medible",
+   "evidence": [
+    "más cercano: US2.1 (similitud 0.11)"
+   ]
+  },
+  {
+   "fingerprint": "1a059621b662",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA006",
+   "rule_name": "Requisito sin criterio de aceptación",
+   "severity": "warning",
+   "ids": [
+    "FR-010"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 60
+   },
+   "message": "FR-010 no tiene criterio de aceptación: ningún escenario ni Success Criterion lo verifica.",
+   "fix": "Agregar un escenario Given/When/Then o un SC medible",
+   "evidence": [
+    "más cercano: US1.1 (similitud 0.07)"
+   ]
+  },
+  {
+   "fingerprint": "7bf811d3fe65",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA006",
+   "rule_name": "Requisito sin criterio de aceptación",
+   "severity": "warning",
+   "ids": [
+    "FR-011"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 61
+   },
+   "message": "FR-011 no tiene criterio de aceptación: ningún escenario ni Success Criterion lo verifica.",
+   "fix": "Agregar un escenario Given/When/Then o un SC medible",
+   "evidence": [
+    "más cercano: US1.2 (similitud 0.10)"
+   ]
+  },
+  {
+   "fingerprint": "d9ad809680e4",
+   "owner": "team",
+   "risk": "context_decay",
+   "rule": "COV006",
+   "rule_name": "Cobertura sin confirmar",
+   "severity": "suggestion",
+   "ids": [
+    "FR-008"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 58
+   },
+   "message": "No pude confirmar que FR-008 esté implementado: ningún paso o task lo describe con claridad.",
+   "fix": "Citar FR-008 en la task que lo implementa (o correr con --llm para que un modelo lo verifique)",
+   "evidence": [
+    "más cercano: T007 (similitud 0.40)"
+   ]
+  },
+  {
+   "fingerprint": "b012f7977300",
+   "owner": "team",
+   "risk": "context_decay",
+   "rule": "COV006",
+   "rule_name": "Cobertura sin confirmar",
+   "severity": "suggestion",
+   "ids": [
+    "FR-011"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 61
+   },
+   "message": "No pude confirmar que FR-011 esté implementado: ningún paso o task lo describe con claridad.",
+   "fix": "Citar FR-011 en la task que lo implementa (o correr con --llm para que un modelo lo verifique)",
+   "evidence": [
+    "más cercano: T005 (similitud 0.31)"
+   ]
+  },
+  {
+   "fingerprint": "eae99b73577a",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA006",
+   "rule_name": "Requisito sin criterio de aceptación",
+   "severity": "suggestion",
+   "ids": [
+    "FR-003"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 53
+   },
+   "message": "No encontré con claridad un criterio de aceptación para FR-003: revisar que algún escenario o SC lo verifique.",
+   "fix": "Agregar un escenario Given/When/Then o un SC medible",
+   "evidence": [
+    "más cercano: US1.2 (similitud 0.21)"
+   ]
+  },
+  {
+   "fingerprint": "3f2b7d8f1251",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA006",
+   "rule_name": "Requisito sin criterio de aceptación",
+   "severity": "suggestion",
+   "ids": [
+    "FR-005"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 55
+   },
+   "message": "No encontré con claridad un criterio de aceptación para FR-005: revisar que algún escenario o SC lo verifique.",
+   "fix": "Agregar un escenario Given/When/Then o un SC medible",
+   "evidence": [
+    "más cercano: US2 (similitud 0.27)"
+   ]
+  },
+  {
+   "fingerprint": "37bba0d6af48",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA006",
+   "rule_name": "Requisito sin criterio de aceptación",
+   "severity": "suggestion",
+   "ids": [
+    "FR-009"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 59
+   },
+   "message": "No encontré con claridad un criterio de aceptación para FR-009: revisar que algún escenario o SC lo verifique.",
+   "fix": "Agregar un escenario Given/When/Then o un SC medible",
+   "evidence": [
+    "más cercano: US1 (similitud 0.20)"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,420 @@
+[
+ {
+  "id": "003-team-invitations",
+  "feature": "003-team-invitations",
+  "repo": "acme/team-app",
+  "summary": {
+   "blocker": 6,
+   "warning": 10,
+   "suggestion": 3
+  },
+  "demo": true
+ },
+ {
+  "id": "001-invoice-exports",
+  "feature": "001-invoice-exports",
+  "repo": "acme/billing",
+  "summary": {
+   "blocker": 4,
+   "warning": 7,
+   "suggestion": 9
+  },
+  "demo": true
+ },
+ {
+  "id": "003-annual-plans",
+  "feature": "003-annual-plans",
+  "repo": "acme/subscriptions",
+  "summary": {
+   "blocker": 1,
+   "warning": 3,
+   "suggestion": 1
+  },
+  "demo": true
+ },
+ {
+  "id": "002-loyalty-points",
+  "feature": "002-loyalty-points",
+  "repo": "acme/loyalty",
+  "summary": {
+   "blocker": 1,
+   "warning": 4,
+   "suggestion": 1
+  },
+  "demo": true
+ },
+ {
+  "id": "006-wire-transfer-limits",
+  "feature": "006-wire-transfer-limits",
+  "repo": "acme/payments",
+  "summary": {
+   "blocker": 2,
+   "warning": 6,
+   "suggestion": 5
+  },
+  "demo": true
+ },
+ {
+  "id": "004-push-notifications",
+  "feature": "004-push-notifications",
+  "repo": "acme/mobile",
+  "summary": {
+   "blocker": 0,
+   "warning": 2,
+   "suggestion": 0
+  },
+  "demo": true
+ },
+ {
+  "id": "001-spec-review-engine",
+  "feature": "001-spec-review-engine",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 0
+  },
+  "demo": false
+ },
+ {
+  "id": "002-review-all-features",
+  "feature": "002-review-all-features",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 0
+  },
+  "demo": false
+ },
+ {
+  "id": "003-conversational-assistant",
+  "feature": "003-conversational-assistant",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 0
+  },
+  "demo": false
+ },
+ {
+  "id": "004-onboarding-and-guide",
+  "feature": "004-onboarding-and-guide",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 0
+  },
+  "demo": false
+ },
+ {
+  "id": "005-agent-first-app",
+  "feature": "005-agent-first-app",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 0
+  },
+  "demo": false
+ },
+ {
+  "id": "006-adoption-ci",
+  "feature": "006-adoption-ci",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 5
+  },
+  "demo": false
+ },
+ {
+  "id": "007-agent-mcp",
+  "feature": "007-agent-mcp",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 0
+  },
+  "demo": false
+ },
+ {
+  "id": "008-decisions-ui",
+  "feature": "008-decisions-ui",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 0
+  },
+  "demo": false
+ },
+ {
+  "id": "009-product-layer",
+  "feature": "009-product-layer",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 1
+  },
+  "demo": false
+ },
+ {
+  "id": "010-auditable-approvals",
+  "feature": "010-auditable-approvals",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 4
+  },
+  "demo": false
+ },
+ {
+  "id": "011-simple-by-default",
+  "feature": "011-simple-by-default",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 3
+  },
+  "demo": false
+ },
+ {
+  "id": "012-activation",
+  "feature": "012-activation",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 5
+  },
+  "demo": false
+ },
+ {
+  "id": "013-multitenant-backend",
+  "feature": "013-multitenant-backend",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 0
+  },
+  "demo": false
+ },
+ {
+  "id": "014-initial-portrait",
+  "feature": "014-initial-portrait",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 0
+  },
+  "demo": false
+ },
+ {
+  "id": "015-cloud-app",
+  "feature": "015-cloud-app",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 1
+  },
+  "demo": false
+ },
+ {
+  "id": "016-two-doors",
+  "feature": "016-two-doors",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 0
+  },
+  "demo": false
+ },
+ {
+  "id": "017-verified-phone",
+  "feature": "017-verified-phone",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 0
+  },
+  "demo": false
+ },
+ {
+  "id": "018-speco-on-speco",
+  "feature": "018-speco-on-speco",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 2
+  },
+  "demo": false
+ },
+ {
+  "id": "019-code-providers",
+  "feature": "019-code-providers",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 6
+  },
+  "demo": false
+ },
+ {
+  "id": "020-free-plan-credits",
+  "feature": "020-free-plan-credits",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 7
+  },
+  "demo": false
+ },
+ {
+  "id": "021-referrals",
+  "feature": "021-referrals",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 5
+  },
+  "demo": false
+ },
+ {
+  "id": "022-product-metrics",
+  "feature": "022-product-metrics",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 7
+  },
+  "demo": false
+ },
+ {
+  "id": "023-developer-onboarding",
+  "feature": "023-developer-onboarding",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 0
+  },
+  "demo": false
+ },
+ {
+  "id": "024-billing",
+  "feature": "024-billing",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 13
+  },
+  "demo": false
+ },
+ {
+  "id": "025-value-delivered",
+  "feature": "025-value-delivered",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 6
+  },
+  "demo": false
+ },
+ {
+  "id": "026-github-pr-review",
+  "feature": "026-github-pr-review",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 2
+  },
+  "demo": false
+ },
+ {
+  "id": "027-decision-loop",
+  "feature": "027-decision-loop",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 0
+  },
+  "demo": false
+ },
+ {
+  "id": "028-intent-ledger",
+  "feature": "028-intent-ledger",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 8
+  },
+  "demo": false
+ },
+ {
+  "id": "029-decided-values",
+  "feature": "029-decided-values",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 0
+  },
+  "demo": false
+ },
+ {
+  "id": "030-continuous-evidence",
+  "feature": "030-continuous-evidence",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 2
+  },
+  "demo": false
+ },
+ {
+  "id": "031-decided-numbers-reach-product",
+  "feature": "031-decided-numbers-reach-product",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 0
+  },
+  "demo": false
+ },
+ {
+  "id": "032-evidence-strength",
+  "feature": "032-evidence-strength",
+  "repo": "speco.ia",
+  "summary": {
+   "blocker": 0,
+   "warning": 0,
+   "suggestion": 0
+  },
+  "demo": false
+ }
+]

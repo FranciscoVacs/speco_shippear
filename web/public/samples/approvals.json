@@ -1,0 +1,185 @@
+{
+ "members": [
+  {
+   "id": "m_sofia",
+   "name": "Sofía Ramos",
+   "role": "approver"
+  },
+  {
+   "id": "m_diego",
+   "name": "Diego Pérez",
+   "role": "approver"
+  },
+  {
+   "id": "m_alex",
+   "name": "Alex Demo",
+   "role": "approver"
+  }
+ ],
+ "me": "m_alex",
+ "entries": [
+  {
+   "v": 1,
+   "id": "a_000001",
+   "feature": "001-spec-review-engine",
+   "decision": "approved",
+   "reason": "",
+   "conditions": [],
+   "delegate_to": null,
+   "override": false,
+   "by": {
+    "id": "m_sofia",
+    "name": "Sofía Ramos",
+    "email": "",
+    "role": "approver",
+    "via": "api"
+   },
+   "at": "2026-10-02T15:10:00Z",
+   "spec_hash": "e6d2d2ed6bd8e7e13520d977762ca94540723bc2871adab9bb4adbd3a7ed34c4",
+   "files": {
+    "spec.md": "ea65f067533c8f96daeb9a78ab9de8dc40f28b3b543c550a1ccdb06f91788cba",
+    "plan.md": "f79b175964ba39766916026bfabca1a3274dafc6a8bd8917e084fed61b8164cd",
+    "tasks.md": "dbb1c3a68f4232fe35b0af5fcd15cbd6abff9140571e35c6a60f8462f6fbf4ba"
+   },
+   "verdict": "ready",
+   "open": {
+    "decision": 0,
+    "team": 0,
+    "blockers": 0
+   },
+   "prev": "genesis",
+   "hash": "b37e2d140050c4a640f43e4317da165c87506c4c57cae365efd93686feb1c628"
+  },
+  {
+   "v": 1,
+   "id": "a_000002",
+   "feature": "003-conversational-assistant",
+   "decision": "approved_with_conditions",
+   "reason": "Listo para construir si el asistente no modifica archivos.",
+   "conditions": [
+    "El asistente solo propone texto: no escribe en el repo"
+   ],
+   "delegate_to": null,
+   "override": false,
+   "by": {
+    "id": "m_sofia",
+    "name": "Sofía Ramos",
+    "email": "",
+    "role": "approver",
+    "via": "api"
+   },
+   "at": "2026-10-05T11:30:00Z",
+   "spec_hash": "9324a550a680089c225907d9188979a32cc394a7bd8d68a7566fbf8da5c7ac1a",
+   "files": {
+    "spec.md": "aaaba50ccd5d54ae754bb7adce40726058e97b3e4e45d5affb41a843a245e8b6",
+    "plan.md": "f0b3b427cd63344a1678e8c48e3e4ad68c6d12619adb16b3dcd4aad040613030",
+    "tasks.md": "770441b7b78b1309e6eb9e756ff3cde1615f4b35ce11c29c117d8c17df306615"
+   },
+   "verdict": "ready",
+   "open": {
+    "decision": 0,
+    "team": 0,
+    "blockers": 0
+   },
+   "prev": "b37e2d140050c4a640f43e4317da165c87506c4c57cae365efd93686feb1c628",
+   "hash": "467733193d56ff419dc339c79cc61df6e21e36e1f498ca9f7a32f550d1ca42f0"
+  },
+  {
+   "v": 1,
+   "id": "a_000003",
+   "feature": "003-team-invitations",
+   "decision": "rejected",
+   "reason": "Las dos reglas de expiración se contradicen: resolver cuál manda y volver a pedir revisión.",
+   "conditions": [],
+   "delegate_to": null,
+   "override": false,
+   "by": {
+    "id": "m_diego",
+    "name": "Diego Pérez",
+    "email": "",
+    "role": "approver",
+    "via": "api"
+   },
+   "at": "2026-10-08T09:45:00Z",
+   "spec_hash": "2499afb53f5c930f33f7adaaa3a40ed32ef440115cdc35b2fc778cb8ee0945b7",
+   "files": {
+    "spec.md": "7cf887fd0b2447675fa4bd0855358a55f2af96d68724c0fa5b0cfaacb2d94e9d",
+    "plan.md": "dc2e22bf5eeab0cba2f1fee6484b473e59720f67f40f95f3654536c82f0ef0fc",
+    "tasks.md": "f5ec6d4ec0666770d66679d29930e01c634d8ce1db2d835babf1d8bfac992599",
+    "data-model.md": "bdbc347c6c5013f67ae1ac00f13d595ea286f6949958bc882185ac683c50d6c8"
+   },
+   "verdict": "needs_decision",
+   "open": {
+    "decision": 5,
+    "team": 11,
+    "blockers": 6
+   },
+   "prev": "467733193d56ff419dc339c79cc61df6e21e36e1f498ca9f7a32f550d1ca42f0",
+   "hash": "4f10ab6aaa1eb307ad32e8411c8613e51b01122eda04f45e5a55198fabbfbaf4"
+  },
+  {
+   "v": 1,
+   "id": "a_000004",
+   "feature": "005-agent-first-app",
+   "decision": "approved",
+   "reason": "",
+   "conditions": [],
+   "delegate_to": null,
+   "override": false,
+   "by": {
+    "id": "m_sofia",
+    "name": "Sofía Ramos",
+    "email": "",
+    "role": "approver",
+    "via": "api"
+   },
+   "at": "2026-10-12T17:05:00Z",
+   "spec_hash": "744499909c51eba71c89a9b2efe3dc0f1bd3b3b77ee28e663354aadca60db3dd",
+   "files": {
+    "spec.md": "1d1f6e36eca5198195d85d451de298d7002179521fae9edc3996f81a2d3906c3",
+    "plan.md": "5765fe6f19e2e38db940a9cf2cc476f4a0d0f0022f42ad9e15abe5eae49515bb",
+    "tasks.md": "0ba565abe1e3cb9e2b2cbe4cae62190ae58964124b3311bbb2bb9256bb9e6795"
+   },
+   "verdict": "needs_work",
+   "open": {
+    "decision": 0,
+    "team": 1,
+    "blockers": 0
+   },
+   "prev": "4f10ab6aaa1eb307ad32e8411c8613e51b01122eda04f45e5a55198fabbfbaf4",
+   "hash": "7405253b8e7845ecfc538d07dd220954a245994bda36269d84c5dfa95b2621c9"
+  },
+  {
+   "v": 1,
+   "id": "a_000005",
+   "feature": "004-push-notifications",
+   "decision": "delegated",
+   "reason": "Lo ve Sofía: conoce el contrato con el proveedor de push.",
+   "conditions": [],
+   "delegate_to": "m_sofia",
+   "override": false,
+   "by": {
+    "id": "m_diego",
+    "name": "Diego Pérez",
+    "email": "",
+    "role": "approver",
+    "via": "api"
+   },
+   "at": "2026-10-13T10:20:00Z",
+   "spec_hash": "5b7d7b9bdffb8a752363d898d9fe4b4b1129e47d2750335d9013fd9874b9581d",
+   "files": {
+    "spec.md": "6ef188c16c5b2035bc96587fad0979c154929ca3e1869abcda39a0f3c7e57e1e",
+    "plan.md": "b9f84696b84652d392e99e1f5e4248b0b4dd013b7cbb17561df8d346341e0433",
+    "tasks.md": "78c46608b5d316d690009af7e65981fba395320c3c08de8eaccc90f35600bef7"
+   },
+   "verdict": "needs_work",
+   "open": {
+    "decision": 0,
+    "team": 2,
+    "blockers": 0
+   },
+   "prev": "7405253b8e7845ecfc538d07dd220954a245994bda36269d84c5dfa95b2621c9",
+   "hash": "e993dbd7059842a65b4324c9f39b43ed56c5e65baadc6ed008cc67d956c096b2"
+  }
+ ]
+}

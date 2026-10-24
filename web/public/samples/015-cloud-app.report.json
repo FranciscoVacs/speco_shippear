@@ -1,0 +1,65 @@
+{
+ "schema_version": 1,
+ "feature": "015-cloud-app",
+ "summary": {
+  "blocker": 0,
+  "warning": 0,
+  "suggestion": 1
+ },
+ "metrics": {
+  "requirements": 16,
+  "success_criteria": 3,
+  "user_stories": 4,
+  "tasks": 10,
+  "plan_items": 9,
+  "requirements_with_plan_or_tasks_pct": 100,
+  "requirements_with_acceptance_pct": 100,
+  "tasks_without_requirement": 0,
+  "ears_patterns": {
+   "ubiquitous": 3,
+   "event": 6,
+   "state": 1,
+   "unwanted": 3,
+   "optional": 3,
+   "complex": 0,
+   "none": 0
+  }
+ },
+ "notes": [],
+ "decision": {
+  "verdict": "ready",
+  "can_implement": true,
+  "waiting_on": {
+   "decision": 0,
+   "team": 0
+  },
+  "risks": {
+   "intent_drift": 0,
+   "context_decay": 0,
+   "unverifiable": 0
+  },
+  "top_risk": null
+ },
+ "findings": [
+  {
+   "fingerprint": "54fe429dba70",
+   "owner": "decision",
+   "risk": "intent_drift",
+   "rule": "COV003",
+   "rule_name": "Paso del plan sin requisito",
+   "severity": "suggestion",
+   "ids": [
+    "P1"
+   ],
+   "location": {
+    "file": "plan.md",
+    "line": 7
+   },
+   "message": "El plan incluye «Cloud mode is switched on at build time by three public addresses (th…» (P1) que no responde a ningún requisito (introduce: mode, three, key).",
+   "fix": "Agregar el requisito que lo justifica o sacarlo del plan",
+   "evidence": [
+    "novedad 35%"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,475 @@
+{
+  "code": {
+    "repo": "https://github.com/agustindelmonti/speco.ia",
+    "demoCmd": "uvx --from git+https://github.com/agustindelmonti/speco.ia specreview demo",
+    "demoOutput": "Spec review · 006-wire-transfer-limits\n11 requisitos · 2 stories · 4 pasos de plan · 7 tasks\n\nBLOQUEANTE  FR-003 + FR-004  spec.md:53  CON001  FR-003 y FR-004 se contradicen: valores distintos para lo mismo: «5,000 USD» vs «10,000 USD».\n            ↳ Decidir cuál vale y eliminar o corregir el otro\nBLOQUEANTE  FR-007           spec.md:57  COV001  FR-007 no tiene correlato en el plan ni en las tasks: nadie lo va a implementar.\n            ↳ Agregar el paso/task que lo implementa (citando FR-007), o quitar el requisito si ya no aplica\n\nResumen: 2 bloqueantes, 0 advertencias, 0 sugerencias",
+    "install": "uv tool install git+https://github.com/agustindelmonti/speco.ia      # comando `specreview` global\npip install git+https://github.com/agustindelmonti/speco.ia          # o con pip",
+    "ownRepo": "cd tu-repo-con-spec-kit\nspecreview .                    # la feature más nueva de specs/\nspecreview . --all              # todas, con tabla resumen\nspecreview . -v                 # + cómo arreglar cada hallazgo\nspecreview --explain COV001     # qué significa una regla (--rules las lista)",
+    "mcpCheck": "printf '%s\\n' \\\n '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"initialize\",\"params\":{\"protocolVersion\":\"2025-06-18\",\"capabilities\":{},\"clientInfo\":{\"name\":\"t\",\"version\":\"0\"}}}' \\\n '{\"jsonrpc\":\"2.0\",\"id\":2,\"method\":\"tools/list\"}' | specreview mcp . | tail -1",
+    "ci": "specreview init           # crea specreview.toml + .github/workflows/specreview.yml\nspecreview baseline       # (si hay deuda) registrar lo actual: de acá en más sólo lo nuevo\ngit add -A && git commit -m \"Add specreview\" && git push",
+    "clients": [
+      {
+        "id": "claude-code",
+        "name": "Claude Code",
+        "lang": "texto",
+        "code": "/plugin marketplace add agustindelmonti/speco.ia\n/plugin install specreview@specreview",
+        "extra": {
+          "lang": "bash",
+          "code": "claude mcp add specreview -- uvx --from git+https://github.com/agustindelmonti/speco.ia specreview mcp ."
+        }
+      },
+      {
+        "id": "cursor",
+        "name": "Cursor",
+        "lang": "json",
+        "code": "{\n  \"mcpServers\": {\n    \"specreview\": {\n      \"command\": \"uvx\",\n      \"args\": [\"--from\", \"git+https://github.com/agustindelmonti/speco.ia\", \"specreview\", \"mcp\", \".\"]\n    }\n  }\n}"
+      },
+      {
+        "id": "vscode",
+        "name": "VS Code",
+        "lang": "json",
+        "code": "{\n  \"servers\": {\n    \"specreview\": {\n      \"type\": \"stdio\",\n      \"command\": \"uvx\",\n      \"args\": [\"--from\", \"git+https://github.com/agustindelmonti/speco.ia\", \"specreview\", \"mcp\", \".\"]\n    }\n  }\n}"
+      },
+      {
+        "id": "claude-desktop",
+        "name": "Claude Desktop",
+        "lang": "json",
+        "code": "{\n  \"mcpServers\": {\n    \"specreview\": {\n      \"command\": \"uvx\",\n      \"args\": [\"--from\", \"git+https://github.com/agustindelmonti/speco.ia\", \"specreview\", \"mcp\", \"/ruta/absoluta/a/tu-repo\"]\n    }\n  }\n}"
+      },
+      {
+        "id": "codex",
+        "name": "Codex CLI",
+        "lang": "toml",
+        "code": "[mcp_servers.specreview]\ncommand = \"uvx\"\nargs = [\"--from\", \"git+https://github.com/agustindelmonti/speco.ia\", \"specreview\", \"mcp\", \"/ruta/absoluta/a/tu-repo\"]"
+      }
+    ],
+    "tools": [
+      "get_blockers(feature?)",
+      "review_feature(feature?, min_severity?)",
+      "list_features()",
+      "check_requirement(text)",
+      "explain_rule(rule)",
+      "product_overview()",
+      "approval_status(feature?)"
+    ],
+    "recipes": [
+      {
+        "id": "gate",
+        "output": "specreview: 006-wire-transfer-limits tiene 2 bloqueante(s); Arreglá estos bloqueantes EN LA SPEC\n(spec.md/plan.md/tasks.md) y volvé a llamar; no implementes todavía.\n  - CON001 FR-003 + FR-004 (spec.md:53): FR-003 y FR-004 se contradicen: valores distintos para lo mismo: «5,000 USD» vs «10,000 USD».\n  - COV001 FR-007 (spec.md:57): FR-007 no tiene correlato en el plan ni en las tasks: nadie lo va a implementar."
+      },
+      {
+        "id": "requisito",
+        "output": "QUA002  no es testeable: usa «fast», «user friendly» sin un umbral medible.\n        → Definir un número verificable (p. ej. «p95 < 300 ms», «≥ 99 % de …»)\nQUA002  usa lenguaje no vinculante («should»)\n        → Usar MUST (obligatorio) o moverlo a Assumptions/ideas si es opcional"
+      },
+      {
+        "id": "scope",
+        "how": "specreview examples/invitations --min-severity warning | grep -E \"COV00[23]\"",
+        "output": "ADVERTENCIA T009  tasks.md:19  COV002  T009 no responde a ningún requisito (introduce: slack, notification): posible scope que se coló.\nADVERTENCIA T010  tasks.md:20  COV002  T010 no responde a ningún requisito (introduce: csv, bulk, import): posible scope que se coló.\nADVERTENCIA P4    plan.md:7    COV003  El plan incluye «We also add a Slack notification channel so admins learn when invitat…» (P4) que no responde a ningún requisito (introduce: slack, notification, channel, learn)."
+      },
+      {
+        "id": "ci",
+        "how": "specreview init\nspecreview . --diff origin/main -f sarif -o specreview.sarif   # lo que corre el CI\nspecreview . --fail-on blocker                                 # exit 1 si hay bloqueantes (pre-push, Makefile, cualquier CI)\nspecreview . -f markdown -o review.md                          # para un ticket o Slack\nspecreview . -f html -o review.html                            # reporte autocontenido para quien no usa terminal\nspecreview . -f json | jq '.findings[] | select(.severity==\"blocker\") | .ids'"
+      },
+      {
+        "id": "baseline",
+        "how": "specreview . --all          # foto de hoy\nspecreview baseline         # registra lo actual en .specreview/baseline.json\nspecreview . --all          # ahora: 0 hallazgos. De acá en más, sólo lo nuevo\nspecreview waive dfbc6da73e4f --reason \"Lo decidió producto: el viejo plan sigue vigente hasta Q1\" --expires 2027-03-31",
+        "output": "baseline: 19 hallazgos registrados en .specreview/baseline.json\nDe ahora en más specreview sólo reporta hallazgos nuevos. Commiteá el archivo."
+      },
+      {
+        "id": "producto",
+        "how": "cd examples/subscriptions && specreview . --only product",
+        "output": "BLOQUEANTE   D-003  spec.md:1   PRD003  La spec se apoya en la decisión D-003 («Annual plans are billed upfront»), que está superseded.\nADVERTENCIA  G-9    spec.md:1   PRD002  La spec cita el objetivo G-9, que no existe en product/goals.md.\nADVERTENCIA  FR-002 + D-002  spec.md:37  PRD003  FR-002 parece ir contra la decisión D-002 («No discounts on monthly plans»)…"
+      }
+    ]
+  },
+  "es": {
+    "sections": {
+      "demo": "1 · Probalo en 60 segundos",
+      "mcp": "2 · Conectá el MCP a tu agente",
+      "ci": "3 · Que lo vea todo el equipo",
+      "recetas": "Qué podés lograr",
+      "prompts": "Prompts para copiar",
+      "problemas": "Si algo no anda"
+    },
+    "flow": [
+      "Probalo en 60 segundos",
+      "Conectá el MCP a tu agente",
+      "Que lo vea todo el equipo"
+    ],
+    "flowLabel": "Los tres pasos",
+    "lead": "**Del cero al primer hallazgo en un minuto, y a tu agente revisando la spec solo en cinco.** Todo corre en tu máquina: es determinista y offline, sin API keys ni cuenta.",
+    "captions": {
+      "terminal": "terminal",
+      "output": "salida real",
+      "install": "instalar",
+      "ownRepo": "sobre tu repo",
+      "prompt": "prompt"
+    },
+    "demo": {
+      "intro": "No hace falta clonar nada ni tener un repo con Spec Kit: `demo` copia una spec de ejemplo incluida en el paquete a una carpeta temporal y la revisa. Necesitás [uv](https://docs.astral.sh/uv/) (Python ≥ 3.11).",
+      "after": "Eso es el producto en miniatura: un límite de transferencias que la spec define con dos valores distintos y un requisito de compliance que ninguna task implementa. Arreglarlo hoy cuesta minutos; después de que el agente lo implementó mal, semanas. Sumá `--all-findings` para ver también advertencias y sugerencias.",
+      "installH": "Instalarlo y usarlo sobre tu repo",
+      "exit": "Sale con exit code `1` si hay bloqueantes y `0` si no, así que ya sirve en un script o en un pre-commit. [Cómo leer el reporte](/docs#guia-leer-reporte)."
+    },
+    "mcp": {
+      "intro": "El MCP deja que **el agente de código se revise la spec solo**, dentro de su propio bucle, antes de implementar. Es un servidor local por stdio y de sólo lectura: no manda tu código a ningún lado. Elegí tu cliente:",
+      "clientsLabel": "Cliente MCP",
+      "checkH": "Comprobar que quedó bien (sin cliente)",
+      "checkAfter": "Debe listar las siete herramientas. En el cliente: Claude Code `/mcp`, Cursor *Settings → MCP*, VS Code *MCP: List Servers*.",
+      "toolsH": "Qué le da al agente",
+      "toolsCols": [
+        "Herramienta",
+        "Cuándo la usa"
+      ],
+      "promptH": "Tu primer prompt",
+      "promptIntro": "Abrí tu repo con el agente y pegá:",
+      "firstPrompt": "Revisá la feature 003 con specreview antes de implementar. Arreglá los bloqueantes en la spec (no en el código) y mostrame las decisiones de producto que no puedas tomar vos como preguntas concretas.",
+      "promptAfter": "Con el plugin de Claude Code alcanza con `/review-spec 003`.",
+      "cloud": "¿Querés que tu agente también consulte las decisiones de tu empresa en Speco (sólo lectura)? [Conectar un agente](/agents).",
+      "clients": [
+        {
+          "where": "Plugin (recomendado): instala el MCP, /review-spec, la skill y el gate de /speckit.implement",
+          "extraLabel": "Sólo el MCP, sin el resto:"
+        },
+        {
+          "where": ".cursor/mcp.json en tu repo"
+        },
+        {
+          "where": ".vscode/mcp.json en tu repo"
+        },
+        {
+          "where": "claude_desktop_config.json",
+          "note": "Acá el directorio de trabajo no es tu repo: usá la ruta absoluta."
+        },
+        {
+          "where": "~/.codex/config.toml"
+        }
+      ],
+      "tools": [
+        "Antes de implementar. Devuelve can_implement y sólo los bloqueantes.",
+        "El reporte completo (el mismo JSON que -f json).",
+        "Qué features hay y cuáles se pueden implementar.",
+        "Al escribir un requisito: patrón EARS, ambigüedad, testeabilidad.",
+        "Qué significa COV001, QUA002… y cómo se arregla.",
+        "Objetivos de producto ↔ features (opt-in, carpeta product/).",
+        "Si una feature está aprobada y si la spec cambió desde entonces. Sólo lectura."
+      ]
+    },
+    "ci": {
+      "intro": "Un comando deja el repo listo para revisar cada PR que toque `specs/**`:",
+      "after": "Queda **un** comentario por PR que se actualiza (no se acumula), anotaciones en el diff vía SARIF y un check que falla si hay bloqueantes. Si tu repo ya tiene deuda, `baseline` hace que el PR sólo hable de lo nuevo."
+    },
+    "recetas": {
+      "intro": "Seis casos concretos, del más inmediato al más ambicioso. Los resultados son salidas reales, corridas sobre los ejemplos del repo.",
+      "problem": "El problema.",
+      "how": "Qué hacés.",
+      "gain": "Qué ganás.",
+      "items": [
+        {
+          "title": "El agente no implementa una spec rota",
+          "problem": "El agente construye lo que está en tasks.md: un requisito sin task no se hace, y de dos requisitos que se contradicen gana el que lea primero.",
+          "uses": "MCP + plugin de Claude Code",
+          "time": "2 min",
+          "howText": "Corré /speckit.implement como siempre. Si la spec tiene bloqueantes, el hook lo frena antes de que el agente toque código. Después /review-spec 006: arregla lo mecánico y te devuelve como pregunta lo que es decisión de producto.",
+          "gain": "El agente deja de adivinar ante una spec ambigua y las decisiones llegan a una persona como preguntas cerradas."
+        },
+        {
+          "title": "Escribir requisitos que ya nacen testeables",
+          "problem": "«El sistema debería ser rápido y fácil de usar» pasa un review humano apurado y es imposible de verificar.",
+          "uses": "MCP",
+          "time": "1 min",
+          "howText": "Pedile al agente: «Usá check_requirement con ‘The system should be fast and user friendly’ y reescribilo hasta que pase».",
+          "gain": "Los criterios de aceptación salen de la spec, no de la cabeza de quien implementa; el test se vuelve casi mecánico."
+        },
+        {
+          "title": "Atrapar scope colado antes de que sea código",
+          "problem": "Alguien agrega «ya que estamos, notificación por Slack» al plan y a dos tasks. Nadie lo pidió, nadie lo va a mantener.",
+          "uses": "CLI o MCP",
+          "time": "30 s",
+          "gain": "El review de scope ocurre en el documento, donde corregir cuesta una línea, no en el diff."
+        },
+        {
+          "title": "Que cada PR de specs se revise solo",
+          "problem": "La revisión de requisitos depende de que alguien se acuerde de hacerla.",
+          "uses": "CLI + CI",
+          "time": "5 min",
+          "gain": "Un solo comentario por PR que se actualiza, anotaciones en el diff (Code Scanning) y un check que falla con bloqueantes."
+        },
+        {
+          "title": "Encender todo en un repo con deuda, sin ruido",
+          "problem": "Tu repo tiene 40 hallazgos viejos. Si el CI los reporta todos, nadie lo mira en una semana.",
+          "uses": "CLI",
+          "time": "3 min",
+          "gain": "Adopción incremental: hoy frenás sólo lo nuevo; baseline y waivers son archivos del repo, se revisan en un PR con autor, motivo y vencimiento."
+        },
+        {
+          "title": "Que la spec respete lo que producto ya decidió",
+          "problem": "La spec se apoya en una decisión ya revocada o cita un objetivo que no existe: el código sale correcto respecto de la spec y equivocado respecto del negocio.",
+          "uses": "CLI o MCP (carpeta product/)",
+          "time": "10 min",
+          "gain": "Las decisiones viven en archivos versionados y el agente las respeta. Un agente puede consultar y proponer, nunca aprobar."
+        }
+      ]
+    },
+    "prompts": {
+      "intro": "Pegáselos a tu agente con el MCP conectado.",
+      "cols": [
+        "Para…",
+        "Pegale al agente"
+      ],
+      "copy": "Copiar",
+      "items": [
+        {
+          "goal": "Empezar el día",
+          "prompt": "Corré list_features y decime cuáles pueden implementarse hoy y cuáles tienen bloqueantes, en una tabla."
+        },
+        {
+          "goal": "Antes de /speckit.implement",
+          "prompt": "Llamá get_blockers para la feature actual. Si can_implement es false, arreglá la spec y repetí."
+        },
+        {
+          "goal": "Entender una regla",
+          "prompt": "Usá explain_rule con COV001 y mostrame un ejemplo de arreglo en mi spec."
+        },
+        {
+          "goal": "Revisar un PR ajeno",
+          "prompt": "Corré review_feature con min_severity: \"warning\" sobre la feature de este PR y resumilo en 5 líneas por regla."
+        },
+        {
+          "goal": "Redactar una story",
+          "prompt": "Escribí los FR de esta story y pasá cada uno por check_requirement hasta que ok sea true."
+        },
+        {
+          "goal": "Cerrar una discusión",
+          "prompt": "Listá las decisiones de producto pendientes que salieron de get_blockers, cada una con 2 opciones y el costo de cada una."
+        }
+      ]
+    },
+    "problemas": {
+      "trouble": [
+        {
+          "q": "error: no encontré features (specs/*/spec.md)",
+          "a": "Pasá la raíz del repo o la carpeta de la feature (specs/003-x). El mensaje busca features cerca y te sugiere el comando; si no hay ninguna, sugiere specreview demo."
+        },
+        {
+          "q": "El cliente MCP dice que no conecta",
+          "a": "Probá el comando a mano (sección «Comprobar que quedó bien»). Si falta uvx: curl -LsSf https://astral.sh/uv/install.sh | sh. En Claude Desktop usá ruta absoluta."
+        },
+        {
+          "q": "El MCP funciona pero ve «0 features»",
+          "a": "El «.» de la config se resuelve contra el directorio donde el cliente lanza el proceso. Poné la ruta absoluta a tu repo."
+        },
+        {
+          "q": "Un hallazgo «inferido por texto» parece un falso positivo",
+          "a": "Spec Kit no vincula tasks con requisitos; se infiere por similitud. Citá el id en la task («… (FR-005)») y desaparece."
+        },
+        {
+          "q": "Quiero silenciar algo a propósito",
+          "a": "specreview waive <fingerprint> --reason \"…\" (queda en el repo, se revisa en el PR) o disable_rules en specreview.toml."
+        }
+      ],
+      "limits": "**Límites honestos.** Sin `--llm`, la cobertura requisito↔plan se infiere por similitud de texto: un hueco inferido es advertencia, no bloquea. Citar `FR-###` en la task lo vuelve explícito. Y la herramienta revisa **specs**, no código: nunca decide por vos. [Qué tan confiable es](/docs#guia-confiable).",
+      "guides": "Guías completas en el repo:",
+      "guideLinks": [
+        "quickstart",
+        "recetas",
+        "MCP y plugin"
+      ]
+    }
+  },
+  "en": {
+    "sections": {
+      "demo": "1 · Try it in 60 seconds",
+      "mcp": "2 · Connect the MCP to your agent",
+      "ci": "3 · Let the whole team see it",
+      "recetas": "What you can achieve",
+      "prompts": "Prompts to copy",
+      "problemas": "If something doesn't work"
+    },
+    "flow": [
+      "Try it in 60 seconds",
+      "Connect the MCP to your agent",
+      "Let the whole team see it"
+    ],
+    "flowLabel": "The three steps",
+    "lead": "**From zero to a first finding in a minute, and your agent reviewing the spec by itself in five.** Everything runs on your machine: it is deterministic and offline, with no API keys and no account.",
+    "captions": {
+      "terminal": "terminal",
+      "output": "real output",
+      "install": "install",
+      "ownRepo": "on your repo",
+      "prompt": "prompt"
+    },
+    "demo": {
+      "intro": "You don't need to clone anything or have a Spec Kit repo: `demo` copies a sample spec bundled in the package to a temporary folder and reviews it. You need [uv](https://docs.astral.sh/uv/) (Python ≥ 3.11). The tool's messages are in Spanish.",
+      "after": "That is the product in miniature: a transfer limit that the spec defines with two different values and a compliance requirement that no task implements. Fixing it today takes minutes; after the agent built it wrong, weeks. Add `--all-findings` to also see warnings and suggestions.",
+      "installH": "Install it and use it on your repo",
+      "exit": "It exits with code `1` when there are blockers and `0` when there are none, so it already works in a script or a pre-commit hook. [How to read the report](/docs#guia-leer-reporte)."
+    },
+    "mcp": {
+      "intro": "The MCP lets **your coding agent review the spec by itself**, inside its own loop, before implementing. It is a local stdio server and read-only: it sends your code nowhere. Pick your client:",
+      "clientsLabel": "MCP client",
+      "checkH": "Check that it works (without a client)",
+      "checkAfter": "It must list the seven tools. In the client: Claude Code `/mcp`, Cursor *Settings → MCP*, VS Code *MCP: List Servers*.",
+      "toolsH": "What it gives the agent",
+      "toolsCols": [
+        "Tool",
+        "When the agent uses it"
+      ],
+      "promptH": "Your first prompt",
+      "promptIntro": "Open your repo with the agent and paste:",
+      "firstPrompt": "Review feature 003 with specreview before implementing. Fix the blockers in the spec (not in the code) and show me, as concrete questions, the product decisions you can't make yourself.",
+      "promptAfter": "With the Claude Code plugin, `/review-spec 003` is enough.",
+      "cloud": "Want your agent to also read your company's decisions in Speco (read-only)? [Connect an agent](/agents).",
+      "clients": [
+        {
+          "where": "Plugin (recommended): installs the MCP, /review-spec, the skill and the /speckit.implement gate",
+          "extraLabel": "Just the MCP, without the rest:"
+        },
+        {
+          "where": ".cursor/mcp.json in your repo"
+        },
+        {
+          "where": ".vscode/mcp.json in your repo"
+        },
+        {
+          "where": "claude_desktop_config.json",
+          "note": "Here the working directory is not your repo: use the absolute path."
+        },
+        {
+          "where": "~/.codex/config.toml"
+        }
+      ],
+      "tools": [
+        "Before implementing. Returns can_implement and only the blockers.",
+        "The full report (the same JSON as -f json).",
+        "Which features exist and which can be implemented.",
+        "When writing a requirement: EARS pattern, ambiguity, testability.",
+        "What COV001, QUA002… mean and how to fix them.",
+        "Product goals ↔ features (opt-in, product/ folder).",
+        "Whether a feature is approved and whether the spec changed since. Read-only."
+      ]
+    },
+    "ci": {
+      "intro": "One command gets the repo ready to review every PR that touches `specs/**`:",
+      "after": "You get **one** comment per PR that updates itself (it does not pile up), annotations on the diff through SARIF and a check that fails when there are blockers. If your repo already has debt, `baseline` makes the PR talk only about what is new."
+    },
+    "recetas": {
+      "intro": "Six concrete cases, from the most immediate to the most ambitious. The results are real outputs, run on the repo's examples.",
+      "problem": "The problem.",
+      "how": "What you do.",
+      "gain": "What you gain.",
+      "items": [
+        {
+          "title": "The agent doesn't implement a broken spec",
+          "problem": "The agent builds what is in tasks.md: a requirement without a task doesn't get done, and of two contradicting requirements the one it reads first wins.",
+          "uses": "MCP + Claude Code plugin",
+          "time": "2 min",
+          "howText": "Run /speckit.implement as usual. If the spec has blockers, the hook stops it before the agent touches code. Then /review-spec 006: it fixes what is mechanical and hands back, as a question, what is a product decision.",
+          "gain": "The agent stops guessing when a spec is ambiguous, and decisions reach a person as closed questions."
+        },
+        {
+          "title": "Write requirements that are testable from the start",
+          "problem": "“The system should be fast and easy to use” gets past a hurried human review and is impossible to verify.",
+          "uses": "MCP",
+          "time": "1 min",
+          "howText": "Ask the agent: “Use check_requirement on ‘The system should be fast and user friendly’ and rewrite it until it passes”.",
+          "gain": "Acceptance criteria come from the spec, not from the head of whoever implements; the test becomes almost mechanical."
+        },
+        {
+          "title": "Catch scope creep before it becomes code",
+          "problem": "Someone adds “while we're at it, a Slack notification” to the plan and two tasks. Nobody asked for it, nobody will maintain it.",
+          "uses": "CLI or MCP",
+          "time": "30 s",
+          "gain": "The scope review happens in the document, where fixing costs one line, not in the diff."
+        },
+        {
+          "title": "Review every spec PR automatically",
+          "problem": "Reviewing requirements depends on someone remembering to do it.",
+          "uses": "CLI + CI",
+          "time": "5 min",
+          "gain": "One comment per PR that updates itself, annotations on the diff (Code Scanning) and a check that fails on blockers."
+        },
+        {
+          "title": "Turn it on in a repo with debt, without noise",
+          "problem": "Your repo has 40 old findings. If CI reports them all, nobody looks at it after a week.",
+          "uses": "CLI",
+          "time": "3 min",
+          "gain": "Incremental adoption: today you only block what is new; baseline and waivers are repo files, reviewed in a PR with author, reason and expiry."
+        },
+        {
+          "title": "Make the spec respect what product already decided",
+          "problem": "The spec relies on a decision that was already revoked or cites a goal that doesn't exist: the code comes out right for the spec and wrong for the business.",
+          "uses": "CLI or MCP (product/ folder)",
+          "time": "10 min",
+          "gain": "Decisions live in versioned files and the agent respects them. An agent can read and propose, never approve."
+        }
+      ]
+    },
+    "prompts": {
+      "intro": "Paste them to your agent with the MCP connected.",
+      "cols": [
+        "To…",
+        "Paste to the agent"
+      ],
+      "copy": "Copy",
+      "items": [
+        {
+          "goal": "Start the day",
+          "prompt": "Run list_features and tell me, in a table, which can be implemented today and which have blockers."
+        },
+        {
+          "goal": "Before /speckit.implement",
+          "prompt": "Call get_blockers for the current feature. If can_implement is false, fix the spec and repeat."
+        },
+        {
+          "goal": "Understand a rule",
+          "prompt": "Use explain_rule with COV001 and show me an example of a fix in my spec."
+        },
+        {
+          "goal": "Review someone else's PR",
+          "prompt": "Run review_feature with min_severity: \"warning\" on this PR's feature and summarize it in 5 lines per rule."
+        },
+        {
+          "goal": "Write a story",
+          "prompt": "Write the FRs for this story and run each through check_requirement until ok is true."
+        },
+        {
+          "goal": "Close a discussion",
+          "prompt": "List the pending product decisions that came out of get_blockers, each with 2 options and the cost of each."
+        }
+      ]
+    },
+    "problemas": {
+      "trouble": [
+        {
+          "q": "error: no encontré features (specs/*/spec.md)",
+          "a": "Pass the repo root or the feature folder (specs/003-x). The message looks for features nearby and suggests the command; if there are none, it suggests specreview demo."
+        },
+        {
+          "q": "The MCP client says it can't connect",
+          "a": "Run the command by hand (section “Check that it works”). If uvx is missing: curl -LsSf https://astral.sh/uv/install.sh | sh. In Claude Desktop use an absolute path."
+        },
+        {
+          "q": "The MCP works but sees “0 features”",
+          "a": "The “.” in the config resolves against the directory where the client launches the process. Use the absolute path to your repo."
+        },
+        {
+          "q": "A “text-inferred” finding looks like a false positive",
+          "a": "Spec Kit does not link tasks to requirements; it is inferred by similarity. Cite the id in the task (“… (FR-005)”) and it goes away."
+        },
+        {
+          "q": "I want to silence something on purpose",
+          "a": "specreview waive <fingerprint> --reason \"…\" (it stays in the repo and is reviewed in the PR) or disable_rules in specreview.toml."
+        }
+      ],
+      "limits": "**Honest limits.** Without `--llm`, the requirement↔plan coverage is inferred from text similarity: an inferred gap is a warning, it does not block. Citing `FR-###` in the task makes it explicit. And the tool reviews **specs**, not code: it never decides for you. [How reliable it is](/docs#guia-confiable).",
+      "guides": "Full guides in the repo:",
+      "guideLinks": [
+        "quickstart",
+        "recipes",
+        "MCP and plugin"
+      ]
+    }
+  }
+}

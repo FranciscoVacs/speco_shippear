@@ -1,0 +1,85 @@
+{
+ "schema_version": 1,
+ "feature": "004-push-notifications",
+ "summary": {
+  "blocker": 0,
+  "warning": 2,
+  "suggestion": 0
+ },
+ "metrics": {
+  "requirements": 4,
+  "success_criteria": 1,
+  "user_stories": 1,
+  "tasks": 4,
+  "plan_items": 4,
+  "requirements_with_plan_or_tasks_pct": 100,
+  "requirements_with_acceptance_pct": 50,
+  "tasks_without_requirement": 0,
+  "ears_patterns": {
+   "ubiquitous": 1,
+   "event": 2,
+   "state": 0,
+   "unwanted": 0,
+   "optional": 1,
+   "complex": 0,
+   "none": 0
+  }
+ },
+ "notes": [],
+ "decision": {
+  "verdict": "needs_work",
+  "can_implement": true,
+  "waiting_on": {
+   "decision": 0,
+   "team": 2
+  },
+  "risks": {
+   "intent_drift": 0,
+   "context_decay": 0,
+   "unverifiable": 2
+  },
+  "top_risk": "unverifiable"
+ },
+ "findings": [
+  {
+   "fingerprint": "e61f9b59cbaf",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA006",
+   "rule_name": "Requisito sin criterio de aceptación",
+   "severity": "warning",
+   "ids": [
+    "FR-003"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 33
+   },
+   "message": "FR-003 no tiene criterio de aceptación: ningún escenario ni Success Criterion lo verifica.",
+   "fix": "Agregar un escenario Given/When/Then o un SC medible",
+   "evidence": [
+    "más cercano: US1.1 (similitud 0.06)"
+   ]
+  },
+  {
+   "fingerprint": "8b686b477e6a",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA006",
+   "rule_name": "Requisito sin criterio de aceptación",
+   "severity": "warning",
+   "ids": [
+    "FR-004"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 34
+   },
+   "message": "FR-004 no tiene criterio de aceptación: ningún escenario ni Success Criterion lo verifica.",
+   "fix": "Agregar un escenario Given/When/Then o un SC medible",
+   "evidence": [
+    "más cercano: US1.1 (similitud 0.09)"
+   ]
+  }
+ ]
+}

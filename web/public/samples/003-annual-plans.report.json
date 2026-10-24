@@ -1,0 +1,142 @@
+{
+ "schema_version": 1,
+ "feature": "003-annual-plans",
+ "summary": {
+  "blocker": 1,
+  "warning": 3,
+  "suggestion": 1
+ },
+ "metrics": {
+  "requirements": 3,
+  "success_criteria": 1,
+  "user_stories": 1,
+  "tasks": 3,
+  "plan_items": 3,
+  "requirements_with_plan_or_tasks_pct": 100,
+  "requirements_with_acceptance_pct": 67,
+  "tasks_without_requirement": 0,
+  "ears_patterns": {
+   "ubiquitous": 1,
+   "event": 2,
+   "state": 0,
+   "unwanted": 0,
+   "optional": 0,
+   "complex": 0,
+   "none": 0
+  }
+ },
+ "notes": [],
+ "decision": {
+  "verdict": "needs_decision",
+  "can_implement": false,
+  "waiting_on": {
+   "decision": 3,
+   "team": 1
+  },
+  "risks": {
+   "intent_drift": 1,
+   "context_decay": 3,
+   "unverifiable": 0
+  },
+  "top_risk": "context_decay"
+ },
+ "findings": [
+  {
+   "fingerprint": "04b0f44899f9",
+   "owner": "decision",
+   "risk": "context_decay",
+   "rule": "PRD003",
+   "rule_name": "Contradice una decisión de producto",
+   "severity": "blocker",
+   "ids": [
+    "D-003"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 1
+   },
+   "message": "La spec se apoya en la decisión D-003 («Annual plans are billed upfront»), que está superseded.",
+   "fix": "Citar la decisión vigente que la reemplaza, o reabrir la decisión",
+   "evidence": [
+    "D-003 en product/decisions.md:12"
+   ]
+  },
+  {
+   "fingerprint": "7c5ed8f968b2",
+   "owner": "team",
+   "risk": "context_decay",
+   "rule": "PRD002",
+   "rule_name": "Referencia de producto inexistente",
+   "severity": "warning",
+   "ids": [
+    "G-9"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 1
+   },
+   "message": "La spec cita el objetivo G-9, que no existe en product/goals.md.",
+   "fix": "Corregir el id o agregar el objetivo",
+   "evidence": []
+  },
+  {
+   "fingerprint": "63ae49a3b9f7",
+   "owner": "decision",
+   "risk": "context_decay",
+   "rule": "PRD003",
+   "rule_name": "Contradice una decisión de producto",
+   "severity": "warning",
+   "ids": [
+    "FR-002",
+    "D-002"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 37
+   },
+   "message": "FR-002 parece ir contra la decisión D-002 («No discounts on monthly plans»): menciona «discount», que esa decisión deja fuera.",
+   "fix": "Confirmar si contradice; si es así, reabrir la decisión o cambiar el requisito",
+   "evidence": [
+    "D-002 en product/decisions.md:7"
+   ]
+  },
+  {
+   "fingerprint": "f78bf83ed1f0",
+   "owner": "decision",
+   "risk": "intent_drift",
+   "rule": "PRD005",
+   "rule_name": "Supuesto de usuario sin evidencia",
+   "severity": "warning",
+   "ids": [
+    "003-annual-plans"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 46
+   },
+   "message": "Supuesto sobre el usuario sin evidencia: «Admins prefer paying once a year because it simplifies their expense reports».",
+   "fix": "Citar de dónde sale (entrevista, datos, encuesta) o marcarlo como hipótesis a validar",
+   "evidence": []
+  },
+  {
+   "fingerprint": "26648c204812",
+   "owner": "team",
+   "risk": "unverifiable",
+   "rule": "QUA006",
+   "rule_name": "Requisito sin criterio de aceptación",
+   "severity": "suggestion",
+   "ids": [
+    "FR-002"
+   ],
+   "location": {
+    "file": "spec.md",
+    "line": 37
+   },
+   "message": "No encontré con claridad un criterio de aceptación para FR-002: revisar que algún escenario o SC lo verifique.",
+   "fix": "Agregar un escenario Given/When/Then o un SC medible",
+   "evidence": [
+    "más cercano: US1 (similitud 0.22)"
+   ]
+  }
+ ]
+}

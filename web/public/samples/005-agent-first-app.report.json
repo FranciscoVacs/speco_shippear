@@ -1,0 +1,44 @@
+{
+ "schema_version": 1,
+ "feature": "005-agent-first-app",
+ "summary": {
+  "blocker": 0,
+  "warning": 0,
+  "suggestion": 0
+ },
+ "metrics": {
+  "requirements": 20,
+  "success_criteria": 3,
+  "user_stories": 6,
+  "tasks": 22,
+  "plan_items": 8,
+  "requirements_with_plan_or_tasks_pct": 100,
+  "requirements_with_acceptance_pct": 100,
+  "tasks_without_requirement": 0,
+  "ears_patterns": {
+   "ubiquitous": 4,
+   "event": 11,
+   "state": 4,
+   "unwanted": 0,
+   "optional": 1,
+   "complex": 0,
+   "none": 0
+  }
+ },
+ "notes": [],
+ "decision": {
+  "verdict": "ready",
+  "can_implement": true,
+  "waiting_on": {
+   "decision": 0,
+   "team": 0
+  },
+  "risks": {
+   "intent_drift": 0,
+   "context_decay": 0,
+   "unverifiable": 0
+  },
+  "top_risk": null
+ },
+ "findings": []
+}

@@ -1,0 +1,44 @@
+{
+ "schema_version": 1,
+ "feature": "013-multitenant-backend",
+ "summary": {
+  "blocker": 0,
+  "warning": 0,
+  "suggestion": 0
+ },
+ "metrics": {
+  "requirements": 22,
+  "success_criteria": 4,
+  "user_stories": 5,
+  "tasks": 19,
+  "plan_items": 13,
+  "requirements_with_plan_or_tasks_pct": 100,
+  "requirements_with_acceptance_pct": 100,
+  "tasks_without_requirement": 0,
+  "ears_patterns": {
+   "ubiquitous": 7,
+   "event": 8,
+   "state": 1,
+   "unwanted": 6,
+   "optional": 0,
+   "complex": 0,
+   "none": 0
+  }
+ },
+ "notes": [],
+ "decision": {
+  "verdict": "ready",
+  "can_implement": true,
+  "waiting_on": {
+   "decision": 0,
+   "team": 0
+  },
+  "risks": {
+   "intent_drift": 0,
+   "context_decay": 0,
+   "unverifiable": 0
+  },
+  "top_risk": null
+ },
+ "findings": []
+}
