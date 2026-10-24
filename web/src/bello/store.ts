@@ -182,6 +182,18 @@ export function analyzeRegChange(id: string) {
   });
 }
 
+/** Generates a new design version for the spec on the server (needs the live database). Resolves with an error message or null. */
+export async function generateDesign(specId: string, note: string): Promise<string | null> {
+  if (state.sync === "offline") return "Generar diseños requiere la base de datos conectada.";
+  try {
+    apply(await call<Remote>("design", "POST", { specId, note, actor: state.me }));
+    return null;
+  } catch (e) {
+    const msg = (e as Error).message;
+    return msg === "offline" ? "Generar diseños requiere la base de datos conectada." : msg;
+  }
+}
+
 export function resetDemo() {
   return mutate("reset", "POST", {}, () => set({ requirements: REQUIREMENTS, events: EVENT_SEED, regChanges: REG_CHANGES }));
 }

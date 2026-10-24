@@ -64,10 +64,10 @@ export default defineConfig(({ mode }) => {
   // `false`, so the sign-in library behind it is dropped from the bundle (NFR-001) and the exported report stays one small file.
   const env = loadEnv(mode, ".", "VITE_");
   const cloud = !single && !!(env.VITE_CLOUD_URL && env.VITE_SUPABASE_URL && env.VITE_SUPABASE_ANON_KEY);
-  // the dev API needs the server-only DATABASE_URL, which v0 writes to the repo root
-  if (!process.env.DATABASE_URL) {
-    const serverEnv = { ...loadEnv(mode, "..", ""), ...loadEnv(mode, ".", "") };
-    if (serverEnv.DATABASE_URL) process.env.DATABASE_URL = serverEnv.DATABASE_URL;
+  // the dev API needs server-only secrets (database + AI Gateway auth), which v0 writes to the repo root
+  const serverEnv = { ...loadEnv(mode, "..", ""), ...loadEnv(mode, ".", "") };
+  for (const key of ["DATABASE_URL", "AI_GATEWAY_API_KEY", "VERCEL_OIDC_TOKEN"]) {
+    if (!process.env[key] && serverEnv[key]) process.env[key] = serverEnv[key];
   }
   return {
     define: { __CLOUD_BUILD__: JSON.stringify(cloud) },

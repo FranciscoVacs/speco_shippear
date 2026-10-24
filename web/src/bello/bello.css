@@ -397,6 +397,17 @@
 /* ---------- design viewer ---------- */
 .bl-design-bar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding-top: 8px; }
 .bl-seg-sm button { padding: 3px 10px; font-size: 12px; }
+.bl-gen-row { padding: 8px 10px 10px; }
+.bl-gen { display: flex; flex-direction: column; gap: 8px; margin: 8px 10px 10px; padding: 12px; border: 1px dashed color-mix(in srgb, var(--bl-brand) 45%, var(--border)); border-radius: 10px; background: color-mix(in srgb, var(--bl-brand) 5%, var(--surface)); }
+.bl-gen p { margin: 0; }
+.bl-gen-head { display: flex; align-items: center; gap: 6px; color: var(--bl-brand); font-size: 13px; }
+.bl-gen-head strong { color: var(--text); }
+.bl-gen-pattern { display: flex; flex-wrap: wrap; gap: 4px; list-style: none; margin: 0; padding: 0; }
+.bl-gen-pattern li { font-size: 11px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); }
+.bl-gen .bl-input { width: 100%; resize: vertical; border: 1px solid var(--border-strong); border-radius: 8px; padding: 8px 10px; background: var(--surface); color: var(--text); font: inherit; font-size: 13px; }
+.bl-gen .bl-input:focus { outline: none; border-color: var(--bl-brand); box-shadow: 0 0 0 3px color-mix(in srgb, var(--bl-brand) 25%, transparent); }
+.bl-gen-actions { display: flex; justify-content: flex-end; gap: 6px; }
+.bl-gen-error { color: var(--danger, #dc2626); font-size: 12px; }
 .bl-design-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding-top: 6px; }
 .bl-chip.on { border-color: var(--bl-brand); color: var(--bl-brand); }
 .bl-compare { position: relative; border-radius: 10px; overflow: hidden; line-height: 0; user-select: none; }

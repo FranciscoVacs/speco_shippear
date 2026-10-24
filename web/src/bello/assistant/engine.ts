@@ -52,13 +52,13 @@ const TOPICS: Topic[] = [
   },
   {
     match: ["alta", "onboarding", "registro", "kyc", "abrir cuenta", "cuenta nueva", "cliente nuevo"],
-    rules: ["UIF-30", "LEY-25326"],
+    rules: ["UIF-14", "LEY-25326"],
     impacts: [
       { module: "onboarding-svc", level: "alto", note: "Nuevo paso de alta." },
       { module: "risk-engine", level: "medio", note: "Screening PEP / sanciones." },
     ],
     specs: () => [
-      { title: "Debida diligencia del cliente", ears: "When a prospect completes the form, the system MUST validate identity and screen PEP and sanctions lists before activating the account.", rules: ["UIF-30"] },
+      { title: "Debida diligencia del cliente", ears: "When a prospect completes the form, the system MUST validate identity and screen PEP and sanctions lists before activating the account.", rules: ["UIF-14"] },
       { title: "Consentimiento registrado", ears: "When the prospect accepts terms, the system MUST store a versioned, timestamped consent.", rules: ["LEY-25326"] },
     ],
   },

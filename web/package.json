@@ -12,6 +12,7 @@
   "dependencies": {
     "@assistant-ui/react": "0.15.28",
     "@supabase/supabase-js": "^2.117.3",
+    "ai": "^7.0.152",
     "lucide-react": "1.57.0",
     "pg": "^8.23.1",
     "qrcode-generator": "^1.4.4",
