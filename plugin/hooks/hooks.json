@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "p=$(cat); case \"$p\" in *speckit.implement*|*/implement*) printf %s \"$p\" | uvx --from git+https://github.com/agustindelmonti/speco.ia specreview gate --hook \"$CLAUDE_PROJECT_DIR\" ;; esac"
+          }
+        ]
+      }
+    ]
+  }
+}

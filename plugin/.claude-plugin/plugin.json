@@ -1,0 +1,7 @@
+{
+  "name": "specreview",
+  "version": "0.2.0",
+  "description": "Spec Reviewer for Claude Code: the agent checks the spec (coverage, EARS quality, contradictions) before it writes code.",
+  "author": { "name": "speco.ia" },
+  "homepage": "https://github.com/agustindelmonti/speco.ia"
+}

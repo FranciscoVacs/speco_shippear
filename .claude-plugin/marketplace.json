@@ -1,0 +1,11 @@
+{
+  "name": "specreview",
+  "owner": { "name": "speco.ia" },
+  "plugins": [
+    {
+      "name": "specreview",
+      "source": "./plugin",
+      "description": "Review Spec Kit specs before implementing them: MCP tools, /review-spec command and an implement gate."
+    }
+  ]
+}

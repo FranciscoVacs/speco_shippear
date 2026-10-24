@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "specreview": {
+      "command": "python3",
+      "args": ["-m", "specreview.cli", "mcp", "."],
+      "env": { "PYTHONPATH": "src" }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "specreview": {
+      "command": "uvx",
+      "args": ["--from", "git+https://github.com/agustindelmonti/speco.ia", "specreview", "mcp"]
+    }
+  }
+}
