@@ -43,7 +43,7 @@ interface Props {
   checklist?: boolean;
 }
 
-export function Sidebar({ embedded, drawerOpen, onCloseDrawer, checklist }: Props) {
+export function Sidebar({ embedded, drawerOpen, onCloseDrawer }: Props) {
   const t = useT();
   const s = useSession();
   const ui = useUI();

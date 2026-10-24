@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
+import { Database, RotateCcw } from "lucide-react";
 import { RULES } from "./data";
-import { allSpecs, useBello, verifiedRatio } from "./store";
+import { allSpecs, resetDemo, useBello, verifiedRatio } from "./store";
 import "./bello.css";
 
 export function BelloMark({ size = 40 }: { size?: number }) {
@@ -16,6 +18,32 @@ const HEADERS: Record<string, { title: string; lead: string }> = {
   "/reglas": { title: "Reglas y normativa", lead: "Normativa externa, certificaciones, reglas nativas del código y políticas propias de Bello que refuerzan cada spec." },
   "/trazabilidad": { title: "Trazabilidad", lead: "Quién hizo qué y cuándo, encadenado con hash para que ningún evento pueda alterarse sin dejar rastro." },
 };
+
+const SYNC_LABEL = { loading: "Conectando…", live: "Neon · en vivo", saving: "Guardando…", offline: "Sin conexión · cambios locales" } as const;
+
+export function SyncBadge() {
+  const { sync } = useBello();
+  const [busy, setBusy] = useState(false);
+  const reset = async () => {
+    if (!window.confirm("¿Restaurar los datos de ejemplo de Bello? Se borran las specs, requerimientos y eventos agregados.")) return;
+    setBusy(true);
+    await resetDemo();
+    setBusy(false);
+  };
+  return (
+    <div className="bl-sync">
+      <span className={`bl-sync-pill s-${sync}`} role="status">
+        <Database size={12} aria-hidden="true" />
+        {SYNC_LABEL[sync]}
+      </span>
+      {sync !== "offline" && (
+        <button type="button" className="bl-link bl-sm" onClick={reset} disabled={busy}>
+          <RotateCcw size={12} aria-hidden="true" /> Restaurar demo
+        </button>
+      )}
+    </div>
+  );
+}
 
 function DashboardHero() {
   const { requirements } = useBello();
@@ -44,7 +72,7 @@ function DashboardHero() {
             <strong>{verifiedRatio(specs)}%</strong> verificado
           </li>
         </ul>
-        <span className="bl-demo">Datos de demostración</span>
+        <SyncBadge />
       </div>
     </header>
   );
@@ -66,7 +94,10 @@ export default function BelloLayout() {
         <DashboardHero />
       ) : header ? (
         <header className="bl-pagehead">
-          <h1>{header.title}</h1>
+          <div className="bl-pagehead-row">
+            <h1>{header.title}</h1>
+            <SyncBadge />
+          </div>
           <p className="muted">{header.lead}</p>
         </header>
       ) : null}

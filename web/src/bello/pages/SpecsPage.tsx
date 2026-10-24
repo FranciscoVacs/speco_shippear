@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { FolderGit2, ListTree, Network, Search, X } from "lucide-react";
+import { FolderGit2, ListTree, Network, Plus, Search, X } from "lucide-react";
+import { NewSpecDialog } from "../specs/NewSpecDialog";
 import { MODULES, STATUS_LABEL, STATUS_ORDER, type Status } from "../data";
 import { allSpecs, useBello } from "../store";
 import { statusCounts } from "../metrics";
@@ -16,6 +17,7 @@ export default function SpecsPage() {
   const [view, setView] = useState<"tree" | "map">("tree");
   const [filter, setFilter] = useState<Set<Status>>(() => new Set(STATUS_ORDER));
   const [q, setQ] = useState("");
+  const [creating, setCreating] = useState(false);
   const specs = allSpecs(requirements);
   const counts = statusCounts(specs);
 
@@ -69,7 +71,21 @@ export default function SpecsPage() {
             <Network size={14} aria-hidden="true" /> Mapa de impacto
           </button>
         </div>
+        <button type="button" className="btn primary bl-btn-brand bl-push-right" onClick={() => setCreating(true)}>
+          <Plus size={15} aria-hidden="true" /> Nueva spec
+        </button>
       </div>
+      <NewSpecDialog
+        open={creating}
+        onClose={() => setCreating(false)}
+        defaultRequirement={selectedSpec?.id.split("/")[0]}
+        onCreated={(id) => {
+          setCreating(false);
+          setQ("");
+          setFilter(new Set(STATUS_ORDER));
+          select(id);
+        }}
+      />
 
       {repo && (
         <div className="bl-repo-filter">

@@ -1,5 +1,7 @@
 // Bello workspace demo: a Speco instance tailored for a fintech. All content is sample data, labelled as such in the UI.
 
+import type { SpecAnalysis } from "./analysis.js";
+
 export type Status = "verified" | "progress" | "risk" | "failing" | "pending";
 export type RuleKind = "certification" | "regulation" | "native" | "bello";
 export type Level = "alto" | "medio" | "bajo";
@@ -311,6 +313,8 @@ export interface Spec {
   files: string[];
   tests: { passed: number; total: number };
   updatedAt: string;
+  /** impact analysis computed when the spec was created from the app */
+  analysis?: SpecAnalysis;
 }
 
 export interface Requirement {

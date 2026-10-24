@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { BadgeCheck, Box, FileCode2, X } from "lucide-react";
+import { AlertTriangle, BadgeCheck, Box, FileCode2, X } from "lucide-react";
 import { DesignViewer } from "./DesignViewer";
 import { moduleById, rule as ruleById, type Spec } from "../data";
 import { setSpecStatus, useBello } from "../store";
@@ -93,6 +93,34 @@ export function SpecDetail({ spec, onClose }: { spec: Spec; onClose: () => void 
           </ul>
         )}
       </section>
+
+      {spec.analysis && (
+        <section className="bl-sec">
+          <h3>Análisis de impacto · riesgo {spec.analysis.risk}/100</h3>
+          <p className="bl-sm">{spec.analysis.summary}</p>
+          {spec.analysis.related.length > 0 && (
+            <ul className="bl-mini-list bl-related">
+              {spec.analysis.related.map((r) => (
+                <li key={r.id} className={r.relation === "contradicción" ? "is-conflict" : ""}>
+                  <AlertTriangle size={13} className={r.relation === "contradicción" ? "bl-warn-text" : "muted"} aria-hidden="true" />
+                  <div>
+                    <Link to={`/specs?spec=${encodeURIComponent(r.id)}`} className="bl-id">
+                      {r.id}
+                    </Link>{" "}
+                    <strong className="bl-sm">{r.relation}</strong>
+                    <div className="bl-sm muted">{r.note}</div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+          {spec.analysis.gaps.length > 0 && (
+            <p className="bl-sm muted">
+              {spec.analysis.gaps.length} control{spec.analysis.gaps.length > 1 ? "es" : ""} sin cubrir · {spec.analysis.testsSuggested} tests sugeridos
+            </p>
+          )}
+        </section>
+      )}
 
       <section className="bl-sec">
         <h3>Trazabilidad</h3>

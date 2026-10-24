@@ -24,6 +24,39 @@ const appScriptAfterMarker = (): Plugin => ({
   },
 });
 
+// In dev, serve the Vercel functions under web/api/bello/* (Web-standard GET/POST/PATCH exports) before the /api proxy kicks in.
+const belloApi = (): Plugin => ({
+  name: "bello-api-dev",
+  apply: "serve",
+  configureServer(server) {
+    server.middlewares.use(async (req, res, next) => {
+      const url = new URL(req.url ?? "/", "http://localhost");
+      const m = url.pathname.match(/^\/api\/bello\/([a-z-]+)$/);
+      if (!m) return next();
+      try {
+        const mod = (await server.ssrLoadModule(`/api/bello/${m[1]}.ts`)) as Record<string, (r: Request) => Promise<Response>>;
+        const handler = mod[req.method ?? "GET"];
+        if (!handler) {
+          res.statusCode = 405;
+          return res.end();
+        }
+        const chunks: Buffer[] = [];
+        for await (const c of req) chunks.push(c as Buffer);
+        const body = chunks.length && req.method !== "GET" ? Buffer.concat(chunks) : undefined;
+        const out = await handler(new Request(url, { method: req.method, headers: req.headers as Record<string, string>, body }));
+        res.statusCode = out.status;
+        out.headers.forEach((v, k) => res.setHeader(k, v));
+        res.end(Buffer.from(await out.arrayBuffer()));
+      } catch (e) {
+        server.config.logger.error(`[bello-api] ${(e as Error).stack ?? e}`);
+        res.statusCode = 500;
+        res.setHeader("content-type", "application/json");
+        res.end(JSON.stringify({ error: "dev api error" }));
+      }
+    });
+  },
+});
+
 // `vite build --mode single` -> one self-contained dist-single/index.html, unminified.
 export default defineConfig(({ mode }) => {
   const single = mode === "single";
@@ -31,9 +64,14 @@ export default defineConfig(({ mode }) => {
   // `false`, so the sign-in library behind it is dropped from the bundle (NFR-001) and the exported report stays one small file.
   const env = loadEnv(mode, ".", "VITE_");
   const cloud = !single && !!(env.VITE_CLOUD_URL && env.VITE_SUPABASE_URL && env.VITE_SUPABASE_ANON_KEY);
+  // the dev API needs the server-only DATABASE_URL, which v0 writes to the repo root
+  if (!process.env.DATABASE_URL) {
+    const serverEnv = { ...loadEnv(mode, "..", ""), ...loadEnv(mode, ".", "") };
+    if (serverEnv.DATABASE_URL) process.env.DATABASE_URL = serverEnv.DATABASE_URL;
+  }
   return {
     define: { __CLOUD_BUILD__: JSON.stringify(cloud) },
-    plugins: [react(), ...(single ? [viteSingleFile(), appScriptAfterMarker()] : [])],
+    plugins: [react(), ...(single ? [viteSingleFile(), appScriptAfterMarker()] : [belloApi()])],
     // Exported single-file pages have no agent (no panel, no home): the lazy runtime module (assistant-ui + engines + cards) is replaced by an empty stub.
     resolve: { alias: single ? [{ find: /^\.\/agent-runtime$/, replacement: stub }] : [] },
     // In single mode samples are not embedded: the exporter injects window.__SPECREVIEW__.
