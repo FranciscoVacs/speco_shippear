@@ -1,0 +1,64 @@
+name: "Spec Reviewer"
+description: "Code review for Spec Kit specs on every pull request: coverage, quality (EARS) and contradictions, before any code is written."
+author: "speco.ia"
+branding: { icon: check-square, color: blue }
+
+inputs:
+  path:        { description: "Repo root (or feature folder) to review", default: "." }
+  fail-on:     { description: "blocker | warning | suggestion | never", default: "blocker" }
+  diff-base:   { description: "Only review features changed against this ref. Empty = all features. On pull_request events the base branch is used.", default: "auto" }
+  sarif:       { description: "Upload findings to GitHub Code Scanning (needs security-events: write)", default: "true" }
+  comment:     { description: "Post / update one summary comment on the PR (needs pull-requests: write)", default: "true" }
+  version:     { description: "specreview version to install (empty = this action's own source)", default: "" }
+
+outputs:
+  exit-code: { description: "0 = ok, 1 = findings at or above fail-on, 2 = error", value: "${{ steps.run.outputs.exit-code }}" }
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-python@v5
+      with: { python-version: "3.12" }
+    - name: Install specreview
+      shell: bash
+      run: |
+        if [ -n "${{ inputs.version }}" ]; then pip install -q "specreview==${{ inputs.version }}"; else pip install -q "${{ github.action_path }}"; fi
+    - name: Review specs
+      id: run
+      shell: bash
+      env:
+        BASE: ${{ inputs.diff-base == 'auto' && (github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || '') || inputs.diff-base }}
+      run: |
+        set +e
+        ARGS=(--all --color never --fail-on "${{ inputs.fail-on }}")
+        if [ -n "$BASE" ]; then ARGS+=(--diff "$BASE"); fi
+        specreview "${{ inputs.path }}" "${ARGS[@]}" -f sarif -o "$RUNNER_TEMP/specreview.sarif"
+        CODE=$?
+        specreview "${{ inputs.path }}" "${ARGS[@]}" -f markdown -o "$RUNNER_TEMP/specreview.md"
+        { echo "<!-- specreview -->"; cat "$RUNNER_TEMP/specreview.md"; } > "$RUNNER_TEMP/specreview-comment.md"
+        cat "$RUNNER_TEMP/specreview.md" >> "$GITHUB_STEP_SUMMARY"
+        echo "exit-code=$CODE" >> "$GITHUB_OUTPUT"
+        exit 0
+    - name: Upload to Code Scanning
+      if: inputs.sarif == 'true' && github.event_name != 'pull_request_target'
+      continue-on-error: true
+      uses: github/codeql-action/upload-sarif@v3
+      with: { sarif_file: "${{ runner.temp }}/specreview.sarif", category: specreview }
+    - name: Comment on the PR
+      if: inputs.comment == 'true' && github.event_name == 'pull_request'
+      continue-on-error: true
+      uses: actions/github-script@v7
+      env: { BODY_FILE: "${{ runner.temp }}/specreview-comment.md" }
+      with:
+        script: |
+          const body = require('fs').readFileSync(process.env.BODY_FILE, 'utf8');
+          const { owner, repo } = context.repo, issue_number = context.issue.number;
+          const all = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number });
+          const mine = all.find(c => c.body && c.body.startsWith('<!-- specreview -->'));
+          if (mine) await github.rest.issues.updateComment({ owner, repo, comment_id: mine.id, body });
+          else await github.rest.issues.createComment({ owner, repo, issue_number, body });
+    - name: Fail on findings
+      if: steps.run.outputs.exit-code != '0'
+      shell: bash
+      run: |
+        echo "specreview exit code ${{ steps.run.outputs.exit-code }}"; exit ${{ steps.run.outputs.exit-code }}

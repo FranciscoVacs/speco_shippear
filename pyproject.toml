@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "specreview"
+version = "0.2.0"
+description = "Code review for Spec Kit specs: coverage, quality (EARS) and contradictions, before any code is written."
+readme = "README.md"
+requires-python = ">=3.11"
+keywords = ["spec-driven-development", "spec-kit", "requirements", "EARS", "code-review", "ci"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Topic :: Software Development :: Quality Assurance",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/agustindelmonti/speco.ia"
+Issues = "https://github.com/agustindelmonti/speco.ia/issues"
+
+[project.optional-dependencies]
+anthropic = ["anthropic>=0.40"]
+dev = ["pytest", "hypothesis"]
+
+[project.scripts]
+specreview = "specreview.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+specreview = ["demo_data/**/*.md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

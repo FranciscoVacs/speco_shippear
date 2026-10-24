@@ -1,0 +1,17 @@
+# Dogfooding (spec 028): `specreview ledger . --verify 028/FR-002` runs the tests that cite that rule.
+# {files}, not {nodes}: some cloud test modules share one environment and depend on the order of their tests, so a single
+# test can fail alone. Running the whole citing files is conservative: any failure in them marks the rule as failing.
+[ledger]
+verify = "python -m pytest -q {files}"
+passed_pattern = "\\d+ passed"   # exit 0 with every test skipped is not a pass
+# Spec 030: `specreview ledger . --verify-all` runs the suite once and records every rule from its JUnit report.
+suite = "python -m pytest -q --junitxml {junit}"
+
+# Spec 029: the numbers product decided, bound to the line of code that holds them. Every build of the ledger reads them (no test
+# runs): if the code holds another number, the rule shows as broken with the commit that changed it.
+[values]
+"021/FR-005" = { file = "supabase/migrations/20261018000002_referrals.sql", match = "'referral_reward',\\s*(\\d+)" }
+"021/FR-008" = { file = "supabase/migrations/20261018000002_referrals.sql", match = "'referral_monthly_cap',\\s*(\\d+)" }
+"021/FR-009" = { file = "supabase/migrations/20261018000002_referrals.sql", match = "'referral_expiry_months',\\s*(\\d+)" }
+"021/FR-013" = { file = "supabase/migrations/20261018000002_referrals.sql", match = "'referral_held_months',\\s*(\\d+)" }
+"021/FR-003" = { file = "web/src/cloud/referral.ts", match = "KEEP_MS = (\\d+) \\*" }
