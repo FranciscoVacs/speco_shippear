@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { CircleCheck, CircleDashed, FolderGit2 } from "lucide-react";
 import { KIND_HINT, KIND_LABEL, RULES, type RuleKind } from "../data";
-import { allSpecs, useBello } from "../store";
+import { allSpecs, useBelo } from "../store";
 import { linkedSpecs, ruleCompliance } from "../metrics";
 import { sha256 } from "../hash";
 import { HashChip, KindIcon, PersonChip, Ring, StatusDot, statusFromPct } from "../ui";
@@ -23,7 +23,7 @@ function useRuleHashes() {
 }
 
 export default function RulesPage() {
-  const { requirements } = useBello();
+  const { requirements } = useBelo();
   const specs = allSpecs(requirements);
   const [params] = useSearchParams();
   const focus = params.get("rule");

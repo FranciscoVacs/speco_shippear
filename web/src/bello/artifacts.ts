@@ -52,7 +52,7 @@ export function buildSpecDoc(spec: Spec, req?: Requirement): SpecDoc {
     "Evidencia trazable en el ledger con hash encadenado.",
   ];
   return {
-    story: req ? `Como cliente de Bello, quiero ${req.goal.charAt(0).toLowerCase()}${req.goal.slice(1)}` : spec.title,
+    story: req ? `Como cliente de Belo, quiero ${req.goal.charAt(0).toLowerCase()}${req.goal.slice(1)}` : spec.title,
     ears: spec.ears,
     criteria,
     outcomes,

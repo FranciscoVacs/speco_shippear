@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, CircleAlert, FlaskConical, Fingerprint, ShieldCheck, TriangleAlert } from "lucide-react";
 import { RULES, STATUS_LABEL, VERIFICATION_TREND, rule as ruleById } from "../data";
-import { allSpecs, requirementStatus, useBello, verifiedRatio } from "../store";
+import { allSpecs, requirementStatus, useBelo, verifiedRatio } from "../store";
 import { ruleCompliance, statusCounts, testRatio } from "../metrics";
 import { useChain, short } from "../hash";
 import { Bar, Donut, HashChip, KindIcon, LineChart, PersonChip, StackBar, StatusBadge, StatusDot, statusFromPct } from "../ui";
 
 export default function Overview() {
-  const { requirements, events } = useBello();
+  const { requirements, events } = useBelo();
   const specs = allSpecs(requirements);
   const counts = statusCounts(specs);
   const tests = testRatio(specs);

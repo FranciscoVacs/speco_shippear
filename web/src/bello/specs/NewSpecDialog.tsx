@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { AlertTriangle, CheckCircle2, GitBranch, Loader2, Sparkles, X } from "lucide-react";
 import { MODULES, PEOPLE, rule as ruleById, moduleById } from "../data";
 import { analyzeSpec } from "../analysis";
-import { addSpec, useBello } from "../store";
+import { addSpec, useBelo } from "../store";
 import { KindIcon, StatusDot } from "../ui";
 
 const NEW_REQ = "__new__";
@@ -15,7 +15,7 @@ const EXAMPLE = {
 };
 
 export function NewSpecDialog({ open, onClose, onCreated, defaultRequirement }: { open: boolean; onClose: () => void; onCreated: (id: string) => void; defaultRequirement?: string }) {
-  const { requirements, me, error } = useBello();
+  const { requirements, me, error } = useBelo();
   const ref = useRef<HTMLDialogElement>(null);
   const [reqId, setReqId] = useState(defaultRequirement ?? requirements[0]?.id ?? NEW_REQ);
   const [newReqTitle, setNewReqTitle] = useState("");

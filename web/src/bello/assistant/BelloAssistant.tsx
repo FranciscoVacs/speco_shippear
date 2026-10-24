@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUp, CircleCheck, CircleDashed, Plus, Sparkles } from "lucide-react";
 import { rule as ruleById, type Requirement } from "../data";
-import { addRequirement, useBello } from "../store";
+import { addRequirement, useBelo } from "../store";
 import { SUGGESTIONS, answer, type Reply } from "./engine";
 import { KindIcon, PersonChip, Ring, StatusBadge, statusFromPct } from "../ui";
 
@@ -37,7 +37,7 @@ function send(text: string, reqs: Requirement[]) {
 }
 
 export function BelloAssistant({ compact = false, home }: { compact?: boolean; home?: React.ReactNode }) {
-  const { requirements } = useBello();
+  const { requirements } = useBelo();
   const list = useSyncExternalStore(sub, snap);
   const busy = useSyncExternalStore(sub, snapThinking);
   const [text, setText] = useState("");
@@ -93,9 +93,9 @@ export function BelloAssistant({ compact = false, home }: { compact?: boolean; h
           <span className="bl-home-orb" aria-hidden="true">
             <Sparkles size={26} />
           </span>
-          <h1>Hola, Lucía. ¿Qué construimos hoy en Bello?</h1>
+          <h1>Hola, Lucía. ¿Qué construimos hoy en Belo?</h1>
           <p className="muted">
-            Describí un requerimiento y lo convierto en specs reforzadas por la normativa BCRA y UIF, PCI DSS, ISO 27001 y las reglas del código de Bello. O preguntame por el estado de cualquier spec.
+            Describí un requerimiento y lo convierto en specs reforzadas por la normativa BCRA y UIF, PCI DSS, ISO 27001 y las reglas del código de Belo. O preguntame por el estado de cualquier spec.
           </p>
         </div>
         <div className="bl-home-composer">{composer}</div>
@@ -119,9 +119,9 @@ export function BelloAssistant({ compact = false, home }: { compact?: boolean; h
             <span className="bl-asst-badge" aria-hidden="true">
               <Sparkles size={20} />
             </span>
-            <h2>Asistente de Bello</h2>
+            <h2>Asistente de Belo</h2>
             <p className="muted">
-              Describí lo que necesitás y lo convierto en specs reforzadas por la normativa, las certificaciones y las reglas del código de Bello. También podés consultar el estado de cualquier requerimiento.
+              Describí lo que necesitás y lo convierto en specs reforzadas por la normativa, las certificaciones y las reglas del código de Belo. También podés consultar el estado de cualquier requerimiento.
             </p>
           </div>
         )}

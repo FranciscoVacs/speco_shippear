@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Link2, LoaderCircle, ShieldAlert, ShieldCheck } from "lucide-react";
 import { PEOPLE } from "../data";
-import { useBello } from "../store";
+import { useBelo } from "../store";
 import { GENESIS, short, useChain } from "../hash";
 import { HashChip, PersonChip } from "../ui";
 
 export default function TracePage() {
-  const { events } = useBello();
+  const { events } = useBelo();
   const [tamper, setTamper] = useState(false);
   const [who, setWho] = useState<string>("all");
   const tampered = tamper ? { index: 6, detail: "Cumple BCRA-SNP LIM (editado sin registro)" } : undefined;

@@ -3,7 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { FolderGit2, ListTree, Network, Plus, Search, X } from "lucide-react";
 import { NewSpecDialog } from "../specs/NewSpecDialog";
 import { MODULES, STATUS_LABEL, STATUS_ORDER, type Status } from "../data";
-import { allSpecs, useBello } from "../store";
+import { allSpecs, useBelo } from "../store";
 import { statusCounts } from "../metrics";
 import { StatusDot } from "../ui";
 import { SpecTree } from "../specs/SpecTree";
@@ -11,7 +11,7 @@ import { ImpactMap } from "../specs/ImpactMap";
 import { SpecDetail } from "../specs/SpecDetail";
 
 export default function SpecsPage() {
-  const { requirements } = useBello();
+  const { requirements } = useBelo();
   const [params, setParams] = useSearchParams();
   const selected = params.get("spec");
   const [view, setView] = useState<"tree" | "map">("tree");
