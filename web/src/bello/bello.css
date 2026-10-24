@@ -44,6 +44,31 @@
 .bl-tab { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; font-size: 13.5px; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; margin-bottom: -1px; }
 .bl-tab:hover { color: var(--text); }
 .bl-tab.on { color: var(--text); border-color: var(--bl-brand); font-weight: 600; }
+button.bl-tab { background: none; border-top: 0; border-left: 0; border-right: 0; cursor: pointer; font: inherit; font-size: 13px; }
+
+/* spec artifacts (spec.md / plan.md / tasks.md) */
+.bl-art { border: 1px solid var(--border); border-radius: 10px; padding: 4px 12px 12px; }
+.bl-art-tabs { margin-bottom: 10px; }
+.bl-art-count { font-size: 11px; padding: 0 6px; border-radius: 999px; background: var(--border); color: var(--muted); font-weight: 500; }
+.bl-art-panel h4 { font-size: 12px; font-weight: 600; margin: 12px 0 4px; }
+.bl-art-panel h4:first-of-type { margin-top: 4px; }
+.bl-art-file { display: flex; align-items: center; gap: 6px; margin: 0 0 6px; font-size: 11px; color: var(--muted); }
+.bl-art-list { margin: 0; padding-left: 18px; font-size: 12.5px; display: flex; flex-direction: column; gap: 4px; line-height: 1.45; }
+.bl-art-dl { margin: 0; display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; }
+.bl-art-dl div { display: flex; gap: 8px; }
+.bl-art-dl dt { color: var(--muted); min-width: 110px; flex: none; }
+.bl-art-dl dd { margin: 0; }
+.bl-art-gates { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; }
+.bl-art-gates li { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.bl-art-gates li > .muted { margin-left: auto; }
+.bl-art-tree { margin: 0; padding: 8px 10px; border-radius: 8px; background: var(--border); font-size: 11.5px; overflow-x: auto; }
+.bl-art-progress { height: 4px; border-radius: 999px; background: var(--border); overflow: hidden; margin-bottom: 4px; }
+.bl-art-progress span { display: block; height: 100%; background: var(--bl-brand); }
+.bl-art-tasks ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.bl-art-tasks li { display: flex; gap: 8px; align-items: flex-start; font-size: 12.5px; line-height: 1.4; }
+.bl-art-tasks li svg { flex: none; margin-top: 2px; }
+.bl-art-tasks li.is-done > div > span { color: var(--muted); }
+.bl-art-path { display: block; font-size: 11px; color: var(--muted); margin-top: 2px; }
 
 /* status primitives */
 .bl-dot { display: inline-block; border-radius: 50%; flex: none; }
