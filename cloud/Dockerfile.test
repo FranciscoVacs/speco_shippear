@@ -1,0 +1,14 @@
+# The cloud test suite with the PostgreSQL it needs. Each run starts a throwaway cluster (tests/cloud/cluster_fixture.py) and deletes it after.
+#   docker build -f cloud/Dockerfile.test -t speco-test . && docker run --rm speco-test
+#   docker run --rm speco-test pytest -q tests/cloud/test_service.py      # one file
+FROM python:3.12-bookworm
+RUN apt-get update && apt-get install -y --no-install-recommends postgresql && rm -rf /var/lib/apt/lists/*
+WORKDIR /repo
+COPY pyproject.toml README.md ./
+COPY src ./src
+COPY cloud ./cloud
+RUN pip install --no-cache-dir -e '.[dev]' ./cloud
+COPY . .
+# a Windows checkout has CRLF files; CI (Linux) has LF, and the approval hashes are of the bytes
+RUN find examples specs product -name '*.md' -exec sed -i 's/$//' {} +
+CMD ["pytest", "-q", "tests/cloud"]

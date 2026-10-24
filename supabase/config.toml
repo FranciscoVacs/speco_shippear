@@ -1,0 +1,11 @@
+# Local Supabase stack (`supabase start`). Migrations in ./migrations are the source of truth for the schema.
+project_id = "speco"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public"]
+
+[db]
+port = 54322
+major_version = 15
