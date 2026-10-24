@@ -2,9 +2,10 @@
 import { cloudEnabled } from "../cloud/config";
 import { useEffect, useRef, type ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { BookOpen, Bell, ChevronLeft, ChevronRight, Bot, Gavel, FolderGit2, GaugeCircle, Home, Lightbulb, Receipt, KeyRound, ListChecks, Plug, Scale, ScrollText, Search, ShieldCheck, Settings, Users, UserRound, X } from "lucide-react";
+import { BookOpen, Bell, ChevronLeft, Fingerprint, FolderGit2, GaugeCircle, Home, Receipt, KeyRound, LayoutDashboard, ListChecks, ListTree, Plug, Scale, Search, Settings, Users, UserRound, X } from "lucide-react";
 import { useT, type Key } from "../i18n";
-import { DEMO_REPOS, session, useSession } from "./session";
+import { DEMO_REPOS, useSession } from "./session";
+import { useBello } from "../bello/store";
 import { TenantSwitcher } from "./TenantSwitcher";
 import { UserMenu } from "./UserMenu";
 import { Notifications } from "./Notifications";
@@ -12,11 +13,7 @@ import { Avatar } from "./ui";
 import { Logo } from "./Logo";
 import { useUI } from "./UIContext";
 import { useData } from "../DataContext";
-import { Checklist } from "../activation/Checklist";
 import { mod } from "./platform";
-import { mine, useDecisions } from "../decision/useDecisions";
-import { tn } from "../decision/ui";
-import { useDisclosure } from "./Collapsible";
 
 const ICON = 16;
 
@@ -46,20 +43,17 @@ interface Props {
   checklist?: boolean;
 }
 
-export function Sidebar({ embedded, drawerOpen, onCloseDrawer, checklist }: Props) {
+export function Sidebar({ embedded, drawerOpen, onCloseDrawer }: Props) {
   const t = useT();
   const s = useSession();
   const ui = useUI();
   const { loader } = useData();
-  const pending = useDecisions().items.reduce((n, x) => n + mine(x.report).length, 0);
+  const pendingChanges = useBello().regChanges.filter((c) => c.state === "nuevo").length;
   const loc = useLocation();
   const ref = useRef<HTMLDivElement>(null);
   const path = loc.pathname;
   const repoParam = new URLSearchParams(loc.search).get("repo");
   const inSettings = path.startsWith("/settings");
-  // Simple by default (NFR-001, NFR-008): three entries; the rest sits behind "Más", remembered, and open while you are on it.
-  const onSecondary = path.startsWith("/rules") || path.startsWith("/docs") || !!repoParam;
-  const [more, setMore] = useDisclosure("nav-more", false, onSecondary);
 
   // Drawer: Esc closes it, and focus moves inside when it opens.
   useEffect(() => {
@@ -144,61 +138,24 @@ export function Sidebar({ embedded, drawerOpen, onCloseDrawer, checklist }: Prop
           </>
         ) : (
           <>
-            {nav("/", "nav.home", <Home size={ICON} />, path === "/")}
-            <SbLink to="/decisions" label={t("nav.decisions")} icon={<Gavel size={ICON} />} active={path.startsWith("/decisions")} onNavigate={onCloseDrawer} badge={pending || undefined} badgeLabel={pending ? tn(t, "dec.badge", pending) : undefined} />
-            {nav("/ledger", "nav.ledger", <ScrollText size={ICON} />, path.startsWith("/ledger"))}
-            {nav("/reviews", "nav.reviews", <ListChecks size={ICON} />, path.startsWith("/reviews") && !(path === "/reviews" && repoParam))}
-            {cloudEnabled() && nav("/ideas", "nav.ideas", <Lightbulb size={ICON} />, path.startsWith("/ideas"))}
-            <button type="button" className="sb-more" aria-expanded={more} aria-controls="sb-secondary" onClick={() => setMore(!more)} data-tip={t(more ? "nav.less" : "nav.more")}>
-              <span className="sb-ico" aria-hidden="true">
-                <ChevronRight size={ICON} />
-              </span>
-              <span className="sb-label">{t(more ? "nav.less" : "nav.more")}</span>
-            </button>
-            <div id="sb-secondary" hidden={!more}>
-              {more && (
-                <>
-                  {nav("/portrait", "nav.portrait", <ShieldCheck size={ICON} />, path.startsWith("/portrait"))}
-                  {cloudEnabled() && nav("/agents", "nav.agents", <Bot size={ICON} />, path.startsWith("/agents"))}
-                  {nav("/rules", "nav.rules", <Scale size={ICON} />, path.startsWith("/rules"))}
-                  {nav("/docs", "nav.docs", <BookOpen size={ICON} />, path.startsWith("/docs"))}
-                  {nav("/settings/general", "nav.settings", <Settings size={ICON} />, false)}
-                  <div className="sb-section" role="group" aria-labelledby="sb-repos">
-                    <div className="sb-heading" id="sb-repos">
-                      {t("nav.repos")}
-                    </div>
-                    {repoList.map((r) => (
-                      <SbLink key={r} to={`/reviews?repo=${encodeURIComponent(r)}`} label={r} icon={<FolderGit2 size={ICON} />} active={path === "/reviews" && repoParam === r} onNavigate={onCloseDrawer} />
-                    ))}
-                  </div>
-                </>
-              )}
+            <SbLink to="/" label="Inicio" icon={<Home size={ICON} />} active={path === "/"} onNavigate={onCloseDrawer} />
+            <SbLink to="/dashboard" label="Dashboard" icon={<LayoutDashboard size={ICON} />} active={path === "/dashboard"} onNavigate={onCloseDrawer} />
+            <SbLink to="/specs" label="Árbol de specs" icon={<ListTree size={ICON} />} active={path === "/specs" && !repoParam} onNavigate={onCloseDrawer} />
+            <SbLink to="/reglas" label="Reglas y normativa" icon={<Scale size={ICON} />} active={path === "/reglas"} onNavigate={onCloseDrawer} badge={pendingChanges || undefined} badgeLabel={pendingChanges ? `${pendingChanges} cambios normativos sin analizar` : undefined} />
+            <SbLink to="/trazabilidad" label="Trazabilidad" icon={<Fingerprint size={ICON} />} active={path === "/trazabilidad"} onNavigate={onCloseDrawer} />
+            <div className="sb-section" role="group" aria-labelledby="sb-repos">
+              <div className="sb-heading" id="sb-repos">
+                {t("nav.repos")}
+              </div>
+              {repoList.map((r) => (
+                <SbLink key={r} to={`/specs?repo=${encodeURIComponent(r)}`} label={r} icon={<FolderGit2 size={ICON} />} active={path === "/specs" && repoParam === r} onNavigate={onCloseDrawer} />
+              ))}
             </div>
+            <SbLink to="/settings/general" label={t("nav.settings")} icon={<Settings size={ICON} />} active={false} onNavigate={onCloseDrawer} />
           </>
         )}
       </nav>
 
-      {!embedded && checklist && <Checklist />}
-
-      {!embedded && !s.promoDismissed && more && (
-        <div className="promo" role="region" aria-label={t("promo.title")}>
-          <button type="button" className="icon-btn ghost sm promo-x" onClick={() => session.dismissPromo()} aria-label={t("promo.dismiss")}>
-            <X size={14} aria-hidden="true" />
-          </button>
-          <strong>{t("promo.title")}</strong>
-          <p>{t("promo.body")}</p>
-          <button
-            type="button"
-            className="btn primary block"
-            onClick={() => {
-              ui.toast(t("promo.installed"));
-              session.dismissPromo();
-            }}
-          >
-            {t("promo.install")}
-          </button>
-        </div>
-      )}
 
       {!embedded && (
         <div className="sb-user">

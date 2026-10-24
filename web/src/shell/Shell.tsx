@@ -15,6 +15,9 @@ import { agentEnabled } from "../agent/store";
 import { Checklist, useActivationWatcher } from "../activation/Checklist";
 import { SurveyPrompt } from "../cloud/SurveyPrompt";
 import { ValueCheck } from "../cloud/ValueCheck";
+import { BelloAssistant } from "../bello/assistant/BelloAssistant";
+
+const isBelloRoute = (p: string) => ["/", "/dashboard", "/specs", "/reglas", "/trazabilidad"].includes(p);
 
 export const SIDEBAR_KEY = "sr-sidebar";
 const MOBILE_Q = "(max-width: 900px)";
@@ -162,7 +165,7 @@ function Frame({ embedded }: { embedded: boolean }) {
                     </button>
                   </div>
                   <div className="rp-body">
-                    <AgentSlot variant="panel" context={context} />
+                    {isBelloRoute(p) ? <BelloAssistant compact /> : <AgentSlot variant="panel" context={context} />}
                   </div>
                 </aside>
               </>

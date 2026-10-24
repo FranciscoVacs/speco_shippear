@@ -32,7 +32,14 @@ function useCrumbs(embedded: boolean): Crumb[] {
     crumbs.push({ label: f?.feature ?? id });
     return crumbs;
   }
-  if (p === "/") return [{ label: t("nav.home") }];
+  if (p === "/") return [{ label: "Inicio" }];
+  if (p === "/dashboard") return [{ label: "Dashboard" }];
+  if (p === "/specs") {
+    const repo = new URLSearchParams(loc.search).get("repo");
+    return repo ? [{ label: "Árbol de specs", to: "/specs" }, { label: repo }] : [{ label: "Árbol de specs" }];
+  }
+  if (p === "/reglas") return [{ label: "Reglas y normativa" }];
+  if (p === "/trazabilidad") return [{ label: "Trazabilidad" }];
   if (p === "/decisions") return [{ label: t("nav.decisions") }];
   if (p === "/ledger") return [{ label: t("nav.ledger") }];
   if (p === "/reviews") return [{ label: t("nav.reviews") }];
