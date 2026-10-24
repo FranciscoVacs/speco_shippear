@@ -1,0 +1,164 @@
+{
+  "_comment": "Verdad conocida del fixture. Cada entrada: regla + ubicación que el reviewer DEBE reportar.",
+  "must_find": [
+    {
+      "rule": "COV001",
+      "location": "FR-005",
+      "why": "audit log: ningún task/plan lo cubre"
+    },
+    {
+      "rule": "COV001",
+      "location": "FR-006",
+      "why": "dashboard de pendientes: ningún task lo cubre"
+    },
+    {
+      "rule": "COV001",
+      "location": "FR-009",
+      "why": "escalabilidad: sin cobertura"
+    },
+    {
+      "rule": "COV001",
+      "location": "FR-010",
+      "why": "rate limit: sin cobertura"
+    },
+    {
+      "rule": "COV002",
+      "location": "T009",
+      "why": "Slack notification: sin requisito"
+    },
+    {
+      "rule": "COV002",
+      "location": "T010",
+      "why": "CSV bulk import: sin requisito"
+    },
+    {
+      "rule": "QUA001",
+      "location": "FR-009",
+      "why": "'scalable', 'appropriately' vagos"
+    },
+    {
+      "rule": "QUA004",
+      "location": "FR-010",
+      "why": "NEEDS CLARIFICATION abierto"
+    },
+    {
+      "rule": "QUA005",
+      "location": "US3",
+      "why": "story sin Acceptance Scenarios"
+    },
+    {
+      "rule": "CON001",
+      "location": "FR-003,FR-007",
+      "why": "7 días vs 30 días"
+    },
+    {
+      "rule": "COV003",
+      "location": "P4",
+      "why": "el plan agrega Slack sin requisito"
+    },
+    {
+      "rule": "QUA002",
+      "location": "FR-006",
+      "why": "'fast'/'user-friendly' sin umbral medible"
+    },
+    {
+      "rule": "QUA002",
+      "location": "FR-009",
+      "why": "'scalable' sin umbral medible"
+    },
+    {
+      "rule": "QUA006",
+      "location": "FR-005",
+      "why": "audit log: ningún escenario ni SC lo verifica"
+    },
+    {
+      "rule": "QUA006",
+      "location": "FR-008",
+      "why": "revocar: US3 no tiene escenarios"
+    },
+    {
+      "rule": "QUA006",
+      "location": "FR-010",
+      "why": "rate limit sin AC"
+    },
+    {
+      "rule": "QUA003",
+      "location": "FR-008",
+      "why": "'Admins MUST be able to' está centrado en el actor, no EARS"
+    }
+  ],
+  "must_not_find": [
+    {
+      "rule": "COV001",
+      "location": "FR-001"
+    },
+    {
+      "rule": "COV001",
+      "location": "FR-002"
+    },
+    {
+      "rule": "COV001",
+      "location": "FR-003"
+    },
+    {
+      "rule": "COV001",
+      "location": "FR-004"
+    },
+    {
+      "rule": "COV001",
+      "location": "FR-008"
+    },
+    {
+      "rule": "COV002",
+      "location": "T001"
+    },
+    {
+      "rule": "COV002",
+      "location": "T003"
+    },
+    {
+      "rule": "COV002",
+      "location": "T014"
+    },
+    {
+      "rule": "COV003",
+      "location": "P5"
+    },
+    {
+      "rule": "QUA006",
+      "location": "FR-001"
+    },
+    {
+      "rule": "QUA006",
+      "location": "FR-002"
+    },
+    {
+      "rule": "QUA006",
+      "location": "FR-003"
+    },
+    {
+      "rule": "QUA006",
+      "location": "FR-004"
+    },
+    {
+      "rule": "QUA004",
+      "location": "FR-001"
+    },
+    {
+      "rule": "QUA001",
+      "location": "FR-002"
+    },
+    {
+      "rule": "QUA002",
+      "location": "FR-002"
+    },
+    {
+      "rule": "QUA003",
+      "location": "FR-002"
+    },
+    {
+      "rule": "QUA003",
+      "location": "FR-004"
+    }
+  ]
+}
