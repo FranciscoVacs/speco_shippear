@@ -38,7 +38,9 @@ const norm = (s: string) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u
 const KEYWORD_RULES: { words: string[]; rules: string[]; modules: string[] }[] = [
   { words: ["transfer", "pago", "pagar", "debito", "monto", "saldo", "limite", "dinero"], rules: ["BCRA-SNP", "BEL-MNY-02", "BEL-ARCH-01"], modules: ["payments-api", "core-ledger"] },
   { words: ["tarjeta", "card", "pan", "cvv"], rules: ["PCI-DSS", "BEL-SEC-03"], modules: ["cards-svc"] },
-  { words: ["kyc", "onboarding", "alta", "identidad", "pep", "sancion", "lavado"], rules: ["UIF-30"], modules: ["onboarding-svc", "risk-engine"] },
+  { words: ["kyc", "onboarding", "alta", "identidad", "sancion", "lavado", "monitoreo"], rules: ["UIF-14"], modules: ["onboarding-svc", "risk-engine"] },
+  { words: ["pep", "expuesta", "politicamente"], rules: ["UIF-PEP", "UIF-14"], modules: ["onboarding-svc", "risk-engine"] },
+  { words: ["tasa", "tna", "tea", "comision", "costo", "reclamo", "comprobante"], rules: ["BCRA-PUSF"], modules: [] },
   { words: ["dato personal", "datos personales", "consentimiento", "privacidad", "email", "telefono", "domicilio"], rules: ["LEY-25326"], modules: ["onboarding-svc"] },
   { words: ["login", "clave", "contrasena", "2fa", "factor", "otp", "biometr", "sesion", "dispositivo"], rules: ["BCRA-7724", "ISO-27001"], modules: ["app-mobile"] },
   { words: ["log", "auditor", "registro", "traza"], rules: ["SOC2", "BEL-OBS-04"], modules: [] },
@@ -48,8 +50,8 @@ const KEYWORD_RULES: { words: string[]; rules: string[]; modules: string[] }[] =
 const MODULE_RULES: Record<string, string[]> = {
   "core-ledger": ["BEL-ARCH-01", "BEL-MNY-02"],
   "payments-api": ["BCRA-SNP", "BEL-MNY-02"],
-  "risk-engine": ["UIF-30"],
-  "onboarding-svc": ["UIF-30", "LEY-25326"],
+  "risk-engine": ["UIF-14"],
+  "onboarding-svc": ["UIF-14", "UIF-PEP", "LEY-25326"],
   "cards-svc": ["PCI-DSS", "BEL-SEC-03"],
   "app-mobile": ["BEL-UX-05"],
   "web-banking": ["BEL-UX-05"],
@@ -57,7 +59,7 @@ const MODULE_RULES: Record<string, string[]> = {
 };
 
 const ALWAYS = ["SPC-EARS", "SPC-COV", "BEL-OBS-04"];
-const HIGH_RISK_RULES = new Set(["PCI-DSS", "BCRA-SNP", "UIF-30", "BCRA-7724"]);
+const HIGH_RISK_RULES = new Set(["PCI-DSS", "BCRA-SNP", "UIF-14", "BCRA-7724"]);
 
 const EARS_RE = /^(when|while|if|where|cuando|mientras|si|donde)\b.*\b(must|shall|debe|deberá|debera)\b/i;
 

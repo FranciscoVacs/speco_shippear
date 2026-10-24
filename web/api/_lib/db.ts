@@ -37,7 +37,14 @@ const DDL = [
   `CREATE INDEX IF NOT EXISTS bello_specs_req_idx ON bello_specs (requirement_id, position)`,
   `CREATE TABLE IF NOT EXISTS bello_events (seq integer PRIMARY KEY, at text NOT NULL, actor text NOT NULL, action text NOT NULL, target text NOT NULL, detail text NOT NULL, prev_hash text NOT NULL, hash text NOT NULL)`,
   `CREATE TABLE IF NOT EXISTS bello_reg_changes (id text PRIMARY KEY, position integer NOT NULL, state text NOT NULL, data jsonb NOT NULL)`,
+  `CREATE TABLE IF NOT EXISTS bello_designs (id serial PRIMARY KEY, spec_id text NOT NULL, mime text NOT NULL, data bytea NOT NULL, created_at timestamptz NOT NULL DEFAULT now())`,
 ];
+
+export async function query<T>(text: string, params: unknown[] = []): Promise<T[]> {
+  await ready();
+  const { rows } = await getPool().query(text, params);
+  return rows as T[];
+}
 
 let readyPromise: Promise<void> | null = null;
 function ready(): Promise<void> {
@@ -115,7 +122,7 @@ async function seed() {
 
 export async function resetDemo() {
   await ready();
-  await getPool().query("TRUNCATE bello_requirements, bello_specs, bello_events, bello_reg_changes");
+  await getPool().query("TRUNCATE bello_requirements, bello_specs, bello_events, bello_reg_changes, bello_designs RESTART IDENTITY");
   await seed();
 }
 
