@@ -1,0 +1,53 @@
+name: deploy the service
+# The webs rebuild on every push to main (Vercel's git connection); the service does not, because its project is not connected to git
+# (scripts/deploy_vercel_bundle.sh). Without this workflow a merge that adds an endpoint leaves the web calling routes the service
+# lacks until someone deploys by hand (2026-10-24). Order: cloud tests, migrations, deploy, then a check that every route answers.
+#
+# Secrets (environment `production`): VERCEL_TOKEN, VERCEL_SCOPE (the team slug that owns speco-api) and POSTGRES_URL_NON_POOLING.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "cloud/**"
+      - "src/**"                       # the engine is bundled into the service
+      - "pyproject.toml"
+      - "supabase/migrations/**"
+      - "deploy/vercel-api/**"
+      - "scripts/deploy_api.sh"
+      - "scripts/deploy_vercel_bundle.sh"
+      - "scripts/apply_migrations.py"
+      - "scripts/smoke_api.py"
+      - ".github/workflows/deploy-api.yml"
+  workflow_dispatch:
+permissions: { contents: read }
+concurrency: { group: deploy-api, cancel-in-progress: false }   # never two migrations at once; a newer push waits for the running deploy
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -f cloud/Dockerfile.test -t speco-test . && docker run --rm speco-test
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      SERVICE_URL: https://speco-api.vercel.app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - run: pip install 'psycopg[binary]>=3.1'
+      - name: migrations (before the code that needs them)
+        run: python scripts/apply_migrations.py
+        env:
+          POSTGRES_URL_NON_POOLING: ${{ secrets.POSTGRES_URL_NON_POOLING }}
+      - name: deploy speco-api
+        run: scripts/deploy_api.sh "$GITHUB_SHA"
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_SCOPE: ${{ secrets.VERCEL_SCOPE }}
+      - name: every route of app.py answers
+        run: python scripts/smoke_api.py "$SERVICE_URL"

@@ -1,0 +1,32 @@
+name: specreview (dogfooding)
+on:
+  pull_request:
+    paths: ["specs/**", ".specify/**", "specreview.toml", ".specreview/**", "action.yml", "src/**"]
+permissions: { contents: read, pull-requests: write, security-events: write }
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: ./
+        with: { fail-on: blocker }
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -e '.[dev]' && pytest -q --junitxml=report.xml
+      # Spec 030: the same run, read as rules. When a test fails, the summary names what the product decided and the change breaks.
+      - if: always() && hashFiles('report.xml') != ''
+        run: specreview ledger . --junit report.xml --no-record | tee -a "$GITHUB_STEP_SUMMARY"
+  # D-008: the multi-tenant service has its own dependencies and needs a real Postgres; the core job above stays dependency-free
+  cloud:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: sudo apt-get update && sudo apt-get install -y postgresql
+      - run: pip install -e '.[dev]' ./cloud && pytest -q tests/cloud
