@@ -1,4 +1,4 @@
-// Bello workspace demo: a Speco instance tailored for a fintech. All content is sample data, labelled as such in the UI.
+// Belo workspace demo: a Speco instance tailored for a fintech. All content is sample data, labelled as such in the UI.
 
 import type { SpecAnalysis } from "./analysis.js";
 
@@ -20,29 +20,29 @@ export const KIND_LABEL: Record<RuleKind, string> = {
   certification: "Certificación",
   regulation: "Regulación externa",
   native: "Regla nativa Speco",
-  bello: "Regla propia Bello",
+  bello: "Regla propia Belo",
 };
 
 export const KIND_HINT: Record<RuleKind, string> = {
-  certification: "Estándares que Bello certifica o mantiene. Cargados por Speco al configurar el workspace.",
+  certification: "Estándares que Belo certifica o mantiene. Cargados por Speco al configurar el workspace.",
   regulation: "Normativa del regulador y leyes que alcanzan a la entidad. Se actualizan cuando cambia el texto oficial.",
   native: "Reglas del motor de Speco: cobertura, calidad EARS y contradicciones. Aplican a toda spec.",
-  bello: "Reglas extraídas del código y la arquitectura de Bello: cómo está construido hoy su sistema.",
+  bello: "Reglas extraídas del código y la arquitectura de Belo: cómo está construido hoy su sistema.",
 };
 
 export interface Person {
   id: string;
   name: string;
   role: string;
-  org: "Bello" | "Speco";
+  org: "Belo" | "Speco";
   bot?: boolean;
 }
 
 export const PEOPLE: Person[] = [
-  { id: "lfernandez", name: "Lucía Fernández", role: "Product Owner", org: "Bello" },
-  { id: "msosa", name: "Martín Sosa", role: "Compliance Officer", org: "Bello" },
-  { id: "cruiz", name: "Carla Ruiz", role: "Tech Lead", org: "Bello" },
-  { id: "dpaz", name: "Diego Paz", role: "QA Lead", org: "Bello" },
+  { id: "lfernandez", name: "Lucía Fernández", role: "Product Owner", org: "Belo" },
+  { id: "msosa", name: "Martín Sosa", role: "Compliance Officer", org: "Belo" },
+  { id: "cruiz", name: "Carla Ruiz", role: "Tech Lead", org: "Belo" },
+  { id: "dpaz", name: "Diego Paz", role: "QA Lead", org: "Belo" },
   { id: "agomez", name: "Ana Gómez", role: "Consultora regulatoria", org: "Speco" },
   { id: "agent", name: "Agente Speco", role: "Asistente", org: "Speco", bot: true },
 ];
@@ -57,7 +57,7 @@ export interface Rule {
   version: string;
   summary: string;
   controls: { id: string; text: string; ok: boolean }[];
-  /** for Bello rules: where in the code the rule was extracted from */
+  /** for Belo rules: where in the code the rule was extracted from */
   source?: { repo: string; path: string; occurrences: number };
   loadedBy: string;
   loadedAt: string;
@@ -86,7 +86,7 @@ export const RULES: Rule[] = [
     title: "ISO/IEC 27001:2022",
     authority: "ISO / IEC",
     version: "2022 · Anexo A",
-    summary: "Sistema de gestión de seguridad de la información. Se mapean los controles del Anexo A que aplican al desarrollo de software de Bello.",
+    summary: "Sistema de gestión de seguridad de la información. Se mapean los controles del Anexo A que aplican al desarrollo de software de Belo.",
     controls: [
       { id: "A.5.15", text: "Control de acceso: reglas de acceso según necesidad y mínimo privilegio.", ok: true },
       { id: "A.8.16", text: "Actividades de monitoreo: detección de comportamiento anómalo.", ok: true },
@@ -246,7 +246,7 @@ export const RULES: Rule[] = [
     id: "BEL-ARCH-01",
     kind: "bello",
     title: "Todo movimiento pasa por core-ledger",
-    authority: "Arquitectura Bello",
+    authority: "Arquitectura Belo",
     version: "main@4f2a91c",
     summary: "Ningún servicio escribe saldos directamente: todo débito o crédito es un asiento en core-ledger con clave de idempotencia.",
     controls: [
@@ -261,7 +261,7 @@ export const RULES: Rule[] = [
     id: "BEL-MNY-02",
     kind: "bello",
     title: "Montos en centavos (int64)",
-    authority: "Convención de código Bello",
+    authority: "Convención de código Belo",
     version: "main@4f2a91c",
     summary: "Los importes se representan como enteros en centavos con moneda ISO 4217; nunca como float.",
     controls: [{ id: "INT", text: "Sin tipos float en importes.", ok: true }],
@@ -273,7 +273,7 @@ export const RULES: Rule[] = [
     id: "BEL-SEC-03",
     kind: "bello",
     title: "Datos sensibles nunca en logs",
-    authority: "Seguridad Bello",
+    authority: "Seguridad Belo",
     version: "main@4f2a91c",
     summary: "PAN, CVV, DNI y tokens se redactan en el logger central; un lint bloquea el PR si aparecen.",
     controls: [
@@ -288,7 +288,7 @@ export const RULES: Rule[] = [
     id: "BEL-OBS-04",
     kind: "bello",
     title: "Evento de auditoría por operación sensible",
-    authority: "Plataforma Bello",
+    authority: "Plataforma Belo",
     version: "main@4f2a91c",
     summary: "Toda operación sensible publica audit.event con actor, recurso y resultado en el bus de eventos.",
     controls: [{ id: "AUDIT", text: "audit.event emitido y persistido 7 años.", ok: true }],
@@ -300,7 +300,7 @@ export const RULES: Rule[] = [
     id: "BEL-UX-05",
     kind: "bello",
     title: "Accesibilidad WCAG 2.2 AA",
-    authority: "Design System Bello",
+    authority: "Design System Belo",
     version: "ds@3.2",
     summary: "Toda pantalla nueva usa componentes del design system y pasa contraste AA y navegación por teclado/lector.",
     controls: [{ id: "AA", text: "Contraste y foco visibles en todos los componentes.", ok: true }],
@@ -641,7 +641,7 @@ export interface RegChange {
   state: "nuevo" | "analizado";
 }
 
-/** Sample alerts from the regulatory watch Speco runs for Bello. Texts are illustrative, not official. */
+/** Sample alerts from the regulatory watch Speco runs for Belo. Texts are illustrative, not official. */
 export const REG_CHANGES: RegChange[] = [
   {
     id: "CHG-2026-14",

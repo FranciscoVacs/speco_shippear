@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import { BookOpen, Bell, ChevronLeft, Fingerprint, FolderGit2, GaugeCircle, Home, Receipt, KeyRound, LayoutDashboard, ListChecks, ListTree, Plug, Scale, Search, Settings, Users, UserRound, X } from "lucide-react";
 import { useT, type Key } from "../i18n";
 import { DEMO_REPOS, useSession } from "./session";
-import { useBello } from "../bello/store";
+import { useBelo } from "../bello/store";
 import { TenantSwitcher } from "./TenantSwitcher";
 import { UserMenu } from "./UserMenu";
 import { Notifications } from "./Notifications";
@@ -48,7 +48,7 @@ export function Sidebar({ embedded, drawerOpen, onCloseDrawer }: Props) {
   const s = useSession();
   const ui = useUI();
   const { loader } = useData();
-  const pendingChanges = useBello().regChanges.filter((c) => c.state === "nuevo").length;
+  const pendingChanges = useBelo().regChanges.filter((c) => c.state === "nuevo").length;
   const loc = useLocation();
   const ref = useRef<HTMLDivElement>(null);
   const path = loc.pathname;

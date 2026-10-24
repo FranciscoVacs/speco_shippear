@@ -1,18 +1,18 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, BellRing, Fingerprint, ListTree } from "lucide-react";
 import { BelloAssistant } from "../assistant/BelloAssistant";
-import { allSpecs, useBello, verifiedRatio } from "../store";
+import { allSpecs, useBelo, verifiedRatio } from "../store";
 import { Ring, statusFromPct } from "../ui";
 
 function HomeCards() {
-  const { requirements, regChanges, events } = useBello();
+  const { requirements, regChanges, events } = useBelo();
   const specs = allSpecs(requirements);
   const pct = verifiedRatio(specs);
   const risk = specs.filter((s) => s.status === "failing").length;
   const pending = regChanges.filter((c) => c.state === "nuevo");
 
   return (
-    <ul className="bl-home-cards" aria-label="Estado de Bello">
+    <ul className="bl-home-cards" aria-label="Estado de Belo">
       <li>
         <Link to="/dashboard" className="bl-home-card">
           <Ring value={pct} status={statusFromPct(pct)} size={44} stroke={5} />

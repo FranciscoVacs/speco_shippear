@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { Database, RotateCcw } from "lucide-react";
 import { RULES } from "./data";
-import { allSpecs, resetDemo, useBello, verifiedRatio } from "./store";
+import { allSpecs, resetDemo, useBelo, verifiedRatio } from "./store";
 import "./bello.css";
 
 export function BelloMark({ size = 40 }: { size?: number }) {
@@ -15,17 +15,17 @@ export function BelloMark({ size = 40 }: { size?: number }) {
 
 const HEADERS: Record<string, { title: string; lead: string }> = {
   "/specs": { title: "Árbol de specs", lead: "Requerimientos, specs y su estado de verificación. Elegí una spec para ver diseño, reglas, impacto y firmas." },
-  "/reglas": { title: "Reglas y normativa", lead: "Normativa externa, certificaciones, reglas nativas del código y políticas propias de Bello que refuerzan cada spec." },
+  "/reglas": { title: "Reglas y normativa", lead: "Normativa externa, certificaciones, reglas nativas del código y políticas propias de Belo que refuerzan cada spec." },
   "/trazabilidad": { title: "Trazabilidad", lead: "Quién hizo qué y cuándo, encadenado con hash para que ningún evento pueda alterarse sin dejar rastro." },
 };
 
 const SYNC_LABEL = { loading: "Conectando…", live: "Neon · en vivo", saving: "Guardando…", offline: "Sin conexión · cambios locales" } as const;
 
 export function SyncBadge() {
-  const { sync } = useBello();
+  const { sync } = useBelo();
   const [busy, setBusy] = useState(false);
   const reset = async () => {
-    if (!window.confirm("¿Restaurar los datos de ejemplo de Bello? Se borran las specs, requerimientos y eventos agregados.")) return;
+    if (!window.confirm("¿Restaurar los datos de ejemplo de Belo? Se borran las specs, requerimientos y eventos agregados.")) return;
     setBusy(true);
     await resetDemo();
     setBusy(false);
@@ -46,7 +46,7 @@ export function SyncBadge() {
 }
 
 function DashboardHero() {
-  const { requirements } = useBello();
+  const { requirements } = useBelo();
   const specs = allSpecs(requirements);
   return (
     <header className="bl-hero" style={{ backgroundImage: "url(/bello/cover.png)" }}>
@@ -55,7 +55,7 @@ function DashboardHero() {
           <BelloMark size={44} />
           <div>
             <div className="bl-hero-kicker">Workspace a medida · Speco Enterprise</div>
-            <h1>Bello · Banca digital</h1>
+            <h1>Belo · Banca digital</h1>
           </div>
         </div>
         <ul className="bl-hero-stats" aria-label="Resumen del workspace">

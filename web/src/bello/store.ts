@@ -39,7 +39,7 @@ const subscribe = (l: () => void) => {
   return () => listeners.delete(l);
 };
 
-export function useBello(): State {
+export function useBelo(): State {
   return useSyncExternalStore(subscribe, () => state);
 }
 

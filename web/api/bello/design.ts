@@ -11,7 +11,7 @@ interface Body {
   note?: string;
 }
 
-/** Generates a new frontend design for a spec following the Bello visual pattern, versions the previous one and chains the event. */
+/** Generates a new frontend design for a spec following the Belo visual pattern, versions the previous one and chains the event. */
 export async function POST(request: Request) {
   const body = await readJson<Body>(request);
   if (!body || !isPerson(body.actor) || typeof body.specId !== "string") return bad("Datos inválidos");
@@ -52,7 +52,7 @@ export async function POST(request: Request) {
       const today = new Date().toISOString().slice(0, 10);
       const next: Spec = { ...s, design: src, designHistory: history, designMeta: { by: actor, date: today, note: note ? `Generado con IA: ${note}` : "Generado con IA desde la spec.", generated: true } };
       await c.query("UPDATE bello_specs SET data = $2, updated_at = now() WHERE id = $1", [specId, next]);
-      await appendEvents(c, [{ actor, action: "generó diseño", target: specId, detail: `v${history.length + 1} · patrón visual Bello${note ? ` · ${note.slice(0, 80)}` : ""}` }]);
+      await appendEvents(c, [{ actor, action: "generó diseño", target: specId, detail: `v${history.length + 1} · patrón visual Belo${note ? ` · ${note.slice(0, 80)}` : ""}` }]);
       return loadState(c);
     });
     return json(state, 201);

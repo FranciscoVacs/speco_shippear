@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, BellRing, CheckCheck, Radar } from "lucide-react";
 import { rule as ruleById } from "../data";
-import { analyzeRegChange, specsAffectedBy, useBello } from "../store";
+import { analyzeRegChange, specsAffectedBy, useBelo } from "../store";
 import { KindIcon, StatusDot } from "../ui";
 
 export function RegChanges() {
-  const { regChanges, requirements } = useBello();
+  const { regChanges, requirements } = useBelo();
   const pending = regChanges.filter((c) => c.state === "nuevo").length;
 
   return (
@@ -25,7 +25,7 @@ export function RegChanges() {
         )}
       </div>
       <p className="muted bl-sm bl-regwatch-lead">
-        Speco monitorea la normativa cargada para Bello. Cuando cambia un texto, muestra qué specs refuerza esa regla y las marca para re-verificar.
+        Speco monitorea la normativa cargada para Belo. Cuando cambia un texto, muestra qué specs refuerza esa regla y las marca para re-verificar.
       </p>
       <ul className="bl-changes">
         {regChanges.map((c) => {

@@ -141,7 +141,7 @@ function status(t: string, reqs: Requirement[]): Reply {
   return {
     kind: "status",
     pct: verifiedRatio(specs),
-    text: `El workspace de Bello tiene ${reqs.length} requerimientos y ${specs.length} specs: ${verifiedRatio(specs)}% verificado, ${specs.filter((s) => s.status === "failing").length} fallando y ${specs.filter((s) => s.status === "risk").length} en riesgo.`,
+    text: `El workspace de Belo tiene ${reqs.length} requerimientos y ${specs.length} specs: ${verifiedRatio(specs)}% verificado, ${specs.filter((s) => s.status === "failing").length} fallando y ${specs.filter((s) => s.status === "risk").length} en riesgo.`,
     specs: specs.filter((s) => s.status !== "verified"),
   };
 }
@@ -155,7 +155,7 @@ function draft(raw: string, t: string, reqs: Requirement[]): Reply {
   if (!topics.length) {
     return {
       kind: "text",
-      text: "No encontré reglas de Bello que apliquen directamente. Contame si involucra dinero, tarjetas, alta de clientes, datos personales, autenticación o inversiones, y lo armo reforzado con la normativa cargada.",
+      text: "No encontré reglas de Belo que apliquen directamente. Contame si involucra dinero, tarjetas, alta de clientes, datos personales, autenticación o inversiones, y lo armo reforzado con la normativa cargada.",
     };
   }
 
@@ -178,7 +178,7 @@ function draft(raw: string, t: string, reqs: Requirement[]): Reply {
   const checks: Check[] = ruleIds.map((rid) => {
     const r = ruleById(rid)!;
     const gap = r.controls.find((c) => !c.ok);
-    return { ruleId: rid, ok: !gap, note: gap ? `${gap.id} aún sin cubrir en Bello: ${gap.text}` : `Controles inyectados en ${specs.filter((s) => s.rules.includes(rid)).length} specs.` };
+    return { ruleId: rid, ok: !gap, note: gap ? `${gap.id} aún sin cubrir en Belo: ${gap.text}` : `Controles inyectados en ${specs.filter((s) => s.rules.includes(rid)).length} specs.` };
   });
 
   if (has(t, ["dolar", "usd", "divisa", "moneda extranjera"])) {
@@ -191,7 +191,7 @@ function draft(raw: string, t: string, reqs: Requirement[]): Reply {
 
   return {
     kind: "draft",
-    intro: `Armé ${id} con ${specs.length} specs en formato EARS. Apliqué ${ruleIds.length} reglas del workspace: normativa, certificaciones y convenciones del código de Bello.`,
+    intro: `Armé ${id} con ${specs.length} specs en formato EARS. Apliqué ${ruleIds.length} reglas del workspace: normativa, certificaciones y convenciones del código de Belo.`,
     req: { id, title, goal: raw, requestedBy: "lfernandez", createdAt: new Date().toISOString().slice(0, 10), specs },
     checks,
   };

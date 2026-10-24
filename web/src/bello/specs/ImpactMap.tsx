@@ -55,7 +55,7 @@ export function ImpactMap({
         <span style={{ left: COL[1] }}>Spec</span>
         <span style={{ left: COL[2] }}>Módulo impactado</span>
       </div>
-      <svg viewBox={`0 0 ${W} ${height}`} width={W} height={height} className="bl-map" role="img" aria-label="Mapa de impacto de specs sobre módulos de Bello">
+      <svg viewBox={`0 0 ${W} ${height}`} width={W} height={height} className="bl-map" role="img" aria-label="Mapa de impacto de specs sobre módulos de Belo">
         {specs.map((s) => {
           const ry = reqY.get(s.req)! + NODE_H / 2;
           const sy = specY.get(s.id)! + NODE_H / 2;

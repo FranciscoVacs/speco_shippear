@@ -1,6 +1,6 @@
 import type { Spec } from "./data.js";
 
-/** The fixed visual pattern every Bello spec design follows, so generated screens match the seeded ones. */
+/** The fixed visual pattern every Belo spec design follows, so generated screens match the seeded ones. */
 export const DESIGN_STYLE = [
   "Photorealistic product mockup of a single modern black smartphone, front view, perfectly centered, upright, with a soft natural drop shadow.",
   "Flat pale mint green background (#DDF3EA), nothing else in the scene: no hands, no props, no text outside the phone.",

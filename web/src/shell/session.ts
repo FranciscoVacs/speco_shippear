@@ -72,8 +72,8 @@ function defaults(): SessionState {
     signedIn: true,
     user: { name: "Lucía Fernández", email: "lucia.fernandez@bello.com.ar" },
     tenants: [
-      { id: "bello", name: "Bello", slug: "bello", plan: "Team", usage: { reviews: 418, messages: 3120 } },
-      { id: "bello-sandbox", name: "Bello · Sandbox", slug: "bello-sandbox", plan: "Pro", usage: { reviews: 52, messages: 240 } },
+      { id: "bello", name: "Belo", slug: "bello", plan: "Team", usage: { reviews: 418, messages: 3120 } },
+      { id: "bello-sandbox", name: "Belo · Sandbox", slug: "bello-sandbox", plan: "Pro", usage: { reviews: 52, messages: 240 } },
     ],
     tenantId: "bello",
     members: [

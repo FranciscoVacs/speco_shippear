@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Columns2, ImageIcon, Loader2, Sparkles } from "lucide-react";
 import type { Spec } from "../data";
 import { DESIGN_PATTERN_POINTS } from "../designStyle";
-import { generateDesign, useBello } from "../store";
+import { generateDesign, useBelo } from "../store";
 import { PersonChip } from "../ui";
 
 export function DesignViewer({ spec }: { spec: Spec }) {
@@ -22,7 +22,7 @@ export function DesignViewer({ spec }: { spec: Spec }) {
       <figure className="bl-design">
         <div className="bl-design-empty">
           <ImageIcon size={22} aria-hidden="true" />
-          <span>Esta spec todavía no tiene pantalla. Si tiene interfaz, generala con el patrón visual de Bello.</span>
+          <span>Esta spec todavía no tiene pantalla. Si tiene interfaz, generala con el patrón visual de Belo.</span>
         </div>
         <DesignGenerator spec={spec} hasDesign={false} onDone={() => setPicked(null)} />
       </figure>
@@ -83,7 +83,7 @@ export function DesignViewer({ spec }: { spec: Spec }) {
 }
 
 function DesignGenerator({ spec, hasDesign, onDone }: { spec: Spec; hasDesign: boolean; onDone: () => void }) {
-  const { sync } = useBello();
+  const { sync } = useBelo();
   const [open, setOpen] = useState(false);
   const [note, setNote] = useState("");
   const [busy, setBusy] = useState(false);
@@ -118,7 +118,7 @@ function DesignGenerator({ spec, hasDesign, onDone }: { spec: Spec; hasDesign: b
         <Sparkles size={14} aria-hidden="true" />
         <strong>Generar diseño desde la spec</strong>
       </div>
-      <p className="muted bl-sm">Se genera a partir del título y del requisito EARS, siguiendo el patrón visual de Bello:</p>
+      <p className="muted bl-sm">Se genera a partir del título y del requisito EARS, siguiendo el patrón visual de Belo:</p>
       <ul className="bl-gen-pattern" aria-label="Patrón visual">
         {DESIGN_PATTERN_POINTS.map((p) => (
           <li key={p}>{p}</li>
