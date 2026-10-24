@@ -1,0 +1,21 @@
+# Product goals
+
+- **G-1**: Review a spec before any code is written
+- **G-2**: Let a team adopt the review in its pull requests without friction
+- **G-3**: Let coding agents check their own spec before they implement it
+- **G-4**: Let the person who approves decide at a glance
+- **G-5**: Keep every approval auditable
+- **G-6**: Keep the product visually simple, with more depth available on demand
+- **G-7**: Let a new person understand what the product is for and see a result within five minutes of signing in
+- **G-8**: Let many companies use the product at the same time without ever seeing each other's data
+- **G-9**: Let a company see and decide what its software does today, before anything changes it
+- **G-10**: Welcome both a company that already has software and a person who is building with an AI tool and has no code yet, each with the words and first result that fit them
+- **G-11**: Make sure every account belongs to a real person who verified a phone number
+- **G-12**: Use Speco on Speco: the product's own repository is the first company connected, so every improvement is first tried on ourselves
+- **G-13**: Connect the code of a company wherever it lives, starting with GitHub and Bitbucket, with the same reviews and the same portrait
+- **G-14**: Let anyone reach their first result at no cost, with limits that keep what the free plan spends under a ceiling we chose
+- **G-15**: Let every satisfied person bring the next one, and thank them in a way that costs us only what we decided
+- **G-16**: Know, with numbers we trust, whether the product is working before we spend to grow it
+- **G-17**: Let a company that reaches its limit pay for more room and see exactly what it pays, without ever being charged for something it did not get
+- **G-18**: Show each company, with evidence it can check, the problems the reviews caught before any code was written
+- **G-19**: Be the first place a person or an agent goes to learn what the software does today and what is left to build, with evidence anyone can check and a history of who decided each rule

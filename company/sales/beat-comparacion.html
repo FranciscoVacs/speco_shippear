@@ -1,0 +1,134 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Claude contra Speco</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one projected slide. A headline, then two columns that answer each other: what the agent decided alone (its own words) | what Speco had flagged before any agent started. */
+:root {
+  --bg: #f5f6f4;
+  --surface: #ffffff;
+  --fg: #1b2420;
+  --muted: #5a675f;
+  --line: #d8dedb;
+  --agent: #8a4b00;
+  --agent-bg: #fbeed6;
+  --speco: #1d5c4a;
+  --speco-bg: #e1f1ea;
+  --warn: #9a6200;
+  --gap: #b3341f;
+  --gap-bg: #fbe4df;
+  --display: "Fraunces", Georgia, serif;
+  --body: "IBM Plex Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121714; --surface: #1a211d; --fg: #e8eeea; --muted: #9baba2; --line: #2c3731;
+    --agent: #f0b35a; --agent-bg: #382a10; --speco: #6fd1ae; --speco-bg: #15322a; --warn: #e5b04a; --gap: #ff9585; --gap-bg: #3d1d17;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121714; --surface: #1a211d; --fg: #e8eeea; --muted: #9baba2; --line: #2c3731;
+  --agent: #f0b35a; --agent-bg: #382a10; --speco: #6fd1ae; --speco-bg: #15322a; --warn: #e5b04a; --gap: #ff9585; --gap-bg: #3d1d17;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.5; margin: 0;
+  padding-block: 40px 56px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+main { max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+h1, h2 { font-family: var(--display); font-weight: 600; margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+h1 { font-size: clamp(30px, 5.2vw, 52px); line-height: 1.08; }
+h2 { font-size: 20px; }
+p { margin: 0; }
+.kicker { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+.sub { color: var(--muted); font-size: 18px; max-width: 60ch; margin-top: 12px; }
+.cols { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); align-items: start; }
+.col { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 20px; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.col header { display: flex; flex-direction: column; gap: 4px; }
+.tag { align-self: flex-start; font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 9px; border-radius: 99px; }
+.agent .tag { background: var(--agent-bg); color: var(--agent); }
+.speco .tag { background: var(--speco-bg); color: var(--speco); }
+.col h2 + p { color: var(--muted); font-size: 14px; }
+blockquote { margin: 0; padding: 12px 14px; border-left: 3px solid var(--agent); background: var(--agent-bg); border-radius: 0 6px 6px 0; font-size: 15px; display: flex; flex-direction: column; gap: 6px; }
+blockquote q { quotes: none; display: block; overflow-wrap: anywhere; }
+blockquote cite { font-style: normal; font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+.punch { font-weight: 600; font-size: 17px; }
+.agent .punch { color: var(--agent); }
+.finding { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; padding: 10px 0; border-top: 1px solid var(--line); align-items: baseline; }
+.finding:first-of-type { border-top: 0; }
+.sev { font-family: var(--mono); font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
+.sev.b { background: var(--gap-bg); color: var(--gap); }
+.sev.w { background: var(--agent-bg); color: var(--warn); }
+.finding strong { font-weight: 600; }
+.finding code { font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
+.finding .why { grid-column: 2; color: var(--muted); font-size: 14px; overflow-wrap: anywhere; }
+.verdict { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; background: var(--speco-bg); color: var(--speco); border-radius: 6px; padding: 12px 14px; font-weight: 600; }
+.verdict span { font-weight: 400; color: var(--fg); font-size: 14px; }
+.table { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: 14.5px; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+th { font-family: var(--mono); font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 500; }
+td.n { font-variant-numeric: tabular-nums; white-space: nowrap; }
+td .yes { color: var(--speco); font-weight: 600; }
+td .half { color: var(--warn); font-weight: 600; }
+.close { border-top: 2px solid var(--fg); padding-top: 18px; display: flex; flex-direction: column; gap: 10px; }
+.close .big { font-family: var(--display); font-size: clamp(22px, 3.2vw, 32px); line-height: 1.2; text-wrap: balance; }
+.fine { color: var(--muted); font-size: 13px; max-width: 80ch; }
+</style></head><body>
+
+<main>
+  <header>
+    <div class="kicker">Experimento del 21/10/2026 · spec bancaria de transferencias</div>
+    <h1>Claude decidió solo. Speco lo había visto antes.</h1>
+    <p class="sub">Le dimos a un agente una spec con una contradicción. Las tres veces eligió qué valía y qué no construir, y lo contó al final de su respuesta. Esta vez acertó el límite. Nadie lo decidió.</p>
+  </header>
+
+  <div class="cols">
+    <section class="col agent" aria-labelledby="a">
+      <header>
+        <span class="tag">Agente, sin revisión · 3 de 3 corridas</span>
+        <h2 id="a">Lo que decidió por su cuenta</h2>
+        <p>Sus propias palabras, de la sección «Assumptions» de su último mensaje.</p>
+      </header>
+      <blockquote><q>I used 5,000 because FR-003 also defines tier 2.</q><cite>Corrida A2 · el límite de tier 1: FR-003 dice 5,000 y FR-004 dice 10,000</cite></blockquote>
+      <blockquote><q>I ignored FR-007 ("handle suspicious transfers appropriately") and FR-008 ("process reviews quickly"). Neither is testable.</q><cite>Corrida A1 · la regla de fraude</cite></blockquote>
+      <blockquote><q>I also left out FR-011, which has 5-year retention alongside deletion on customer request. The two conflict.</q><cite>Corrida A2 · la auditoría</cite></blockquote>
+      <p class="punch">Lo avisó. En el último párrafo de un chat que, con agentes en paralelo, nadie lee. Y lo decidió el agente.</p>
+    </section>
+
+    <section class="col speco" aria-labelledby="s">
+      <header>
+        <span class="tag">Speco · antes de que empiece cualquier agente</span>
+        <h2 id="s">Lo que ya estaba marcado en la spec</h2>
+        <p>La misma spec, sin código, revisada en 0,2 segundos y sin modelo.</p>
+      </header>
+      <div>
+        <div class="finding"><span class="sev b">Bloqueante</span><div><strong>FR-003 y FR-004 se contradicen</strong> <code>CON001</code></div><p class="why">«5,000 USD» frente a «10,000 USD». Decidir cuál vale.</p></div>
+        <div class="finding"><span class="sev b">Bloqueante</span><div><strong>FR-007 nadie lo va a implementar</strong> <code>COV001</code></div><p class="why">El requisito de fraude no tiene tarea ni paso del plan.</p></div>
+        <div class="finding"><span class="sev w">Advertencia</span><div><strong>FR-008 no es testeable</strong> <code>QUA002</code></div><p class="why">Dice «quickly» sin un umbral medible.</p></div>
+        <div class="finding"><span class="sev w">Advertencia</span><div><strong>FR-011 sin criterio de aceptación</strong> <code>QUA006</code></div><p class="why">Nada verifica que la retención de auditoría se cumpla.</p></div>
+      </div>
+      <div class="verdict">Espera una decisión <span>Una persona decide, y queda registrado con quién, cuándo y sobre qué versión.</span></div>
+    </section>
+  </div>
+
+  <div class="table" role="region" aria-label="Qué decidió el agente y qué había marcado Speco" tabindex="0">
+    <table>
+      <thead><tr><th>Lo que el agente decidió solo</th><th>Corridas</th><th>¿Speco lo había marcado antes?</th></tr></thead>
+      <tbody>
+        <tr><td>El límite de tier 1 es 5,000, no 10,000</td><td class="n">3 de 3</td><td><span class="yes">Sí</span> · bloqueante <code>CON001</code></td></tr>
+        <tr><td>No construir la regla de fraude (FR-007)</td><td class="n">3 de 3</td><td><span class="yes">Sí</span> · bloqueante <code>COV001</code>, más <code>QUA001</code> y <code>QUA006</code></td></tr>
+        <tr><td>No construir «revisar rápido» (FR-008)</td><td class="n">3 de 3</td><td><span class="yes">Sí</span> · advertencia <code>QUA002</code></td></tr>
+        <tr><td>No construir el resumen semanal (T007), por «no tiene requisito»</td><td class="n">1 de 3</td><td><span class="yes">Sí</span> · advertencia <code>COV002</code></td></tr>
+        <tr><td>No construir la retención de auditoría (FR-011), porque «se contradice»</td><td class="n">2 de 3</td><td><span class="half">A medias</span> · avisó la falta de criterio (<code>QUA006</code>), no detectó la contradicción interna</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="close">
+    <p class="big">Claude puede opinar. Speco hace que decida una persona y que quede registrado.</p>
+    <p class="fine">Es un resultado de 3 corridas por condición, con un solo modelo y una sola feature, y la contradicción era fácil de desempatar. El agente acertó el límite las tres veces. No hubo diferencia de costo ni de tokens entre revisar y no revisar, así que no se afirma ningún ahorro. Material: <code>company/positioning/EXPERIMENTO_RETRABAJO.md</code>.</p>
+  </div>
+</main>
+</body></html>

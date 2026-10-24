@@ -1,0 +1,10 @@
+Implement the feature described in specs/006-wire-transfer-limits/ (spec.md, plan.md, tasks.md). The specs/ folder is the source of truth.
+
+Implement it in Python as module `wires.py` at the workspace root, exposing exactly:
+- fee(amount: Decimal) -> Decimal
+- daily_limit(tier: int) -> Decimal
+- check_wire(tier: int, sent_today: Decimal, amount: Decimal) -> str   # one of "rejected", "held", "queued"
+- refund(amount: Decimal) -> Decimal   # what goes back to the customer when a queued wire is rejected by the bank
+
+tasks.md mentions Java paths; implement in Python instead. Write your own pytest tests and run them.
+You cannot ask questions. If something is ambiguous, choose and list your assumptions at the end of your final message.

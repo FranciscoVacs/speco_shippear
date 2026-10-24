@@ -1,0 +1,10 @@
+Spec review · specs_B
+10 requisitos · 2 stories · 4 pasos de plan · 9 tasks
+
+ADVERTENCIA T007    tasks.md:16  COV002  T007 no responde a ningún requisito (introduce: weekly, digest, team): posible scope que se coló.
+ADVERTENCIA FR-010  spec.md:59   QUA006  FR-010 no tiene criterio de aceptación: ningún escenario ni Success Criterion lo verifica.
+
+Resumen: 0 bloqueantes, 2 advertencias, 0 sugerencias
+(5 hallazgos de menor severidad ocultos; usar --min-severity suggestion para verlos)
+Métricas: cobertura requisito→plan/tasks 100% · con criterio de aceptación 50% · EARS 10/10
+exit=0

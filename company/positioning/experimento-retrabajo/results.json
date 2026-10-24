@@ -1,0 +1,251 @@
+{
+  "model": "claude-sonnet-5-5",
+  "cli": "2.1.306",
+  "n_per_condition": 3,
+  "runs": {
+    "A1": {
+      "condition": "A",
+      "rounds": [
+        {
+          "round": 1,
+          "session_id": "ca632c29-6c8f-4688-b28d-d3025e103a6c",
+          "is_error": false,
+          "subtype": "success",
+          "cost_usd": 0.0868145,
+          "num_turns": 9,
+          "duration_ms": 30713,
+          "input_tokens": 10,
+          "output_tokens": 3491,
+          "cache_read": 115525,
+          "cache_creation": 10083,
+          "permission_denials": 0,
+          "hidden_passed": 10,
+          "final_message": "I implemented `wires.py` at the workspace root with the four functions you listed. I also wrote `test_wires.py`, and all 9 pytest tests pass.\n\n**Assumptions**\n- **Conflicting tier 1 limit:** FR-003 says 5,000 USD for tier 1 and FR-004 says 10,000 USD. I used FR-003. It is the only one that also covers tier 2, and FR-004's 10,000 matches the hold threshold, so it looks like a stray edit. Limits are 5,000 for tier 1 and 25,000 for tier 2.\n- **Vague requirements:** I ignored FR-007 (\"handle suspicious transfers appropriately\") and FR-008 (\"process reviews quickly\"). Neither is testable.\n- **Out of scope:** FR-006 (analyst decision logging), FR-011 (audit retention) and T007 (weekly digest) need storage or workflow code. They are not part of the four functions you asked for.\n- **Fee:** The fee is `amount × 0.005`, rounded half-up to the cent, with a 2.00 minimum. The minimum is applied after rounding.\n- **Check order:** `check_wire` rejects first, then holds. A wire is rejected if `sent_today + amount` is greater than the daily limit, so landing exactly on the limit is allowed. Otherwise it is held if the amount is greater than 10,000, so exactly 10,000 is queued. A wire over the limit is therefore never held, which follows SC-002.\n- **`sent_today`:** The caller supplies it. A wire rejected by the bank after being queued is excluded from it, which is my reading of the spec's open edge case.\n- **Refund:** `refund(amount)` returns the amount plus the fee (FR-009).\n- **Invalid input:** `fee`, `check_wire` and `refund` raise `ValueError` for an amount of zero or less. `daily_limit` and `check_wire` raise `ValueError` for a tier other than 1 or 2.\n- **Currency:** Everything is in USD. I did nothing about the exchange-rate edge case."
+        }
+      ],
+      "total": {
+        "cost_usd": 0.0868145,
+        "num_turns": 9,
+        "duration_ms": 30713,
+        "input_tokens": 10,
+        "output_tokens": 3491,
+        "cache_read": 115525,
+        "cache_creation": 10083,
+        "permission_denials": 0,
+        "total_tokens": 129109,
+        "rounds": 1,
+        "final_hidden_passed": 10
+      },
+      "noticed_contradiction_FR003_FR004": true
+    },
+    "A2": {
+      "condition": "A",
+      "rounds": [
+        {
+          "round": 1,
+          "session_id": "2386bd95-f3be-4cba-99ac-4722883b6bfc",
+          "is_error": false,
+          "subtype": "success",
+          "cost_usd": 0.097107,
+          "num_turns": 9,
+          "duration_ms": 31750,
+          "input_tokens": 12,
+          "output_tokens": 4226,
+          "cache_read": 144430,
+          "cache_creation": 10095,
+          "permission_denials": 1,
+          "hidden_passed": 10,
+          "final_message": "I wrote `wires.py` with `fee`, `daily_limit`, `check_wire` and `refund`, plus `test_wires.py`. All 5 pytest tests pass.\n\nOnly the four functions you listed are implemented. The review queue, audit log, refund job and weekly digest tasks in `tasks.md` aren't covered. That includes FR-006 and FR-011.\n\n**Assumptions**\n- **Tier 1 limit:** FR-003 says 5,000 USD and FR-004 says 10,000 USD for tier 1. I used 5,000 because FR-003 also defines tier 2. Tier 2 is 25,000.\n- **Unknown tier:** `daily_limit` raises `ValueError`.\n- **Limit check:** a wire is rejected only if `sent_today + amount` is strictly above the limit. Landing exactly on the limit is allowed.\n- **Hold threshold:** a wire is held only if `amount` is strictly above 10,000. The limit check runs first, so a wire over both the limit and 10,000 is \"rejected\", not \"held\".\n- **Held wires:** the function doesn't know whether a held wire counts toward `sent_today`. That's up to the caller.\n- **Fee:** 0.5% of the amount, rounded half-up to the cent, with a 2.00 minimum.\n- **Refund:** `refund` returns amount plus fee, per FR-009.\n- **Invalid amount:** an amount of zero or less raises `ValueError`.\n- **Vague requirements:** I ignored FR-007 and FR-008 (\"appropriately\", \"quickly\") because they aren't testable.\n- **Audit retention:** I also left out FR-011, which has 5-year retention alongside deletion on customer request. The two conflict."
+        }
+      ],
+      "total": {
+        "cost_usd": 0.097107,
+        "num_turns": 9,
+        "duration_ms": 31750,
+        "input_tokens": 12,
+        "output_tokens": 4226,
+        "cache_read": 144430,
+        "cache_creation": 10095,
+        "permission_denials": 1,
+        "total_tokens": 158763,
+        "rounds": 1,
+        "final_hidden_passed": 10
+      },
+      "noticed_contradiction_FR003_FR004": true
+    },
+    "A3": {
+      "condition": "A",
+      "rounds": [
+        {
+          "round": 1,
+          "session_id": "00861f8b-3be5-44d5-9d47-d1abbb194794",
+          "is_error": false,
+          "subtype": "success",
+          "cost_usd": 0.08363499999999999,
+          "num_turns": 10,
+          "duration_ms": 28240,
+          "input_tokens": 12,
+          "output_tokens": 3222,
+          "cache_read": 143910,
+          "cache_creation": 9250,
+          "permission_denials": 1,
+          "hidden_passed": 10,
+          "final_message": "I implemented `wires.py` at the workspace root with `fee`, `daily_limit`, `check_wire` and `refund`. I also wrote `test_wires.py`, and all 5 pytest tests pass.\n\n**Assumptions**\n- **Tier 1 limit:** FR-003 says 5,000 USD and FR-004 says 10,000 USD for tier 1. I used 5,000 because it's the more conservative figure and FR-003 also covers tier 2. If 10,000 is correct, change one value in `_LIMITS`.\n- **Check order:** The limit check runs before the hold check. A wire that pushes the day's total over the limit is `\"rejected\"`, even if it is also above 10,000 USD.\n- **Limit boundary:** A day's total exactly equal to the limit is allowed (`\"queued\"`). Only a total strictly above the limit is rejected.\n- **Hold boundary:** A wire is held only when it is strictly above 10,000 USD.\n- **Fee:** It is 0.5% of the amount, rounded half-up to the cent, with a 2.00 USD minimum. The 2.00 minimum applies after rounding. A negative amount raises `ValueError`.\n- **Refund:** `refund(amount)` returns the amount plus its fee (FR-009).\n- **Unknown tier:** Any tier other than 1 or 2 raises `ValueError`.\n- **Held wires:** The 10,000 USD hold applies to every tier, as FR-005 states no tier.\n- **Left out of scope:**\n  - FR-006: audit log of analyst decisions\n  - FR-007 and FR-008: both too vague to implement\n  - FR-011: has an internal conflict (keep for 5 years, but allow deletion on request)\n  - T007: weekly digest, which has no FR behind it\n  - Whether a bank-rejected wire counts toward the daily limit"
+        }
+      ],
+      "total": {
+        "cost_usd": 0.08363499999999999,
+        "num_turns": 10,
+        "duration_ms": 28240,
+        "input_tokens": 12,
+        "output_tokens": 3222,
+        "cache_read": 143910,
+        "cache_creation": 9250,
+        "permission_denials": 1,
+        "total_tokens": 156394,
+        "rounds": 1,
+        "final_hidden_passed": 10
+      },
+      "noticed_contradiction_FR003_FR004": true
+    },
+    "B1": {
+      "condition": "B",
+      "rounds": [
+        {
+          "round": 1,
+          "session_id": "4e113703-b298-4cf3-ae65-6687eb62548c",
+          "is_error": false,
+          "subtype": "success",
+          "cost_usd": 0.09167600000000001,
+          "num_turns": 10,
+          "duration_ms": 34526,
+          "input_tokens": 12,
+          "output_tokens": 3496,
+          "cache_read": 143720,
+          "cache_creation": 10580,
+          "permission_denials": 0,
+          "hidden_passed": 10,
+          "final_message": "I wrote `wires.py` with `fee`, `daily_limit`, `check_wire` and `refund`, plus `test_wires.py`. All 12 pytest tests pass.\n\nThe first run had one failure, and the mistake was in my test, not the code. I had worked out the rounding example wrong, so I fixed the test.\n\nThe module covers only the four functions you named. The review queue, audit log, refund job and weekly digest tasks from `tasks.md` are not part of it.\n\n**Assumptions**\n- **Fee:** 0.5% of the amount, rounded half-up to the cent, with a floor of 2.00. A fee of exactly 5.005 rounds to 5.01.\n- **Limits:** tier 1 is 5,000 and tier 2 is 25,000. Any other tier raises `ValueError`.\n- **Limit check:** a wire is rejected only if `sent_today + amount` is strictly above the tier limit, so reaching the limit exactly is allowed.\n- **Hold threshold:** a wire is held only if it is strictly above 10,000, so exactly 10,000 is queued. Tier 1 can never reach a hold, because its limit is 5,000.\n- **Precedence:** a wire over the limit is \"rejected\" even if it is also over 10,000. This matches the spec saying a wire over the limit must be rejected. The spec doesn't state the order itself.\n- **Invalid input:** a zero or negative amount, or a negative `sent_today`, raises `ValueError`.\n- **Refund:** `refund(amount)` returns `amount + fee(amount)` (FR-009).\n- **Fraud rules:** FR-007 is not implemented, because the spec doesn't define the rules. `check_wire` therefore never holds a wire for a fraud-rule match.\n- **Inputs only:** the FR-008 4-business-hour resolution target, the exchange-rate edge case and FR-011 retention don't affect these functions, so they are left out.\n- **Rejected wires and the daily total:** it is unspecified whether a wire the bank rejects still counts toward `sent_today`. The caller decides what to pass in."
+        }
+      ],
+      "total": {
+        "cost_usd": 0.09167600000000001,
+        "num_turns": 10,
+        "duration_ms": 34526,
+        "input_tokens": 12,
+        "output_tokens": 3496,
+        "cache_read": 143720,
+        "cache_creation": 10580,
+        "permission_denials": 0,
+        "total_tokens": 157808,
+        "rounds": 1,
+        "final_hidden_passed": 10
+      }
+    },
+    "B2": {
+      "condition": "B",
+      "rounds": [
+        {
+          "round": 1,
+          "session_id": "90507e46-5aca-4317-954d-0ef3eeec58a3",
+          "is_error": false,
+          "subtype": "success",
+          "cost_usd": 0.08670599999999999,
+          "num_turns": 10,
+          "duration_ms": 32489,
+          "input_tokens": 12,
+          "output_tokens": 3422,
+          "cache_read": 144460,
+          "cache_creation": 9504,
+          "permission_denials": 1,
+          "hidden_passed": 10,
+          "final_message": "I wrote `wires.py` with `fee`, `daily_limit`, `check_wire` and `refund`. I also wrote `test_wires.py`, and all 11 tests pass.\n\n**Assumptions**\n- **Rounding:** fees round half up. The spec only says \"nearest cent\". A raw fee of 5.005 becomes 5.01.\n- **Fee minimum:** the 2.00 minimum applies before rounding, so the fee is the larger of 0.5% of the amount and 2.00.\n- **Limit check:** a wire is rejected only if `sent_today + amount` is strictly greater than the daily limit. A wire that lands exactly on the limit is queued.\n- **Fees and limits:** fees don't count toward the daily limit.\n- **Decision order:** the limit check runs before the hold check, so a wire that breaks the limit is rejected even if it is above 10,000. A tier 1 wire above 10,000 is therefore always rejected. Only tier 2 wires can be held.\n- **Hold threshold:** a wire is held only if it is strictly above 10,000, as FR-005 says \"above\". A wire of exactly 10,000 is queued.\n- **Unknown tiers:** `daily_limit` and `check_wire` raise `ValueError` for any tier other than 1 or 2.\n- **Refund:** `refund(amount)` returns the amount plus its fee, as FR-009 says. Both functions are pure, so the caller passes the original amount.\n- **Rejected-wire edge case:** the spec leaves open how a bank-rejected wire counts toward the daily limit. I didn't model it, because `sent_today` is supplied by the caller.\n\n**Out of scope**\nThese parts of the spec need state, a clock or storage, which the four required functions don't cover:\n- fraud-rule holds (FR-007)\n- the 4-business-hour resolution target (FR-008)\n- the analyst audit log (FR-006)\n- the 5-year audit retention and anonymization (FR-011)\n- the weekly digest (T007)\n\nI implemented the Python module only, not the Java files in `tasks.md`."
+        }
+      ],
+      "total": {
+        "cost_usd": 0.08670599999999999,
+        "num_turns": 10,
+        "duration_ms": 32489,
+        "input_tokens": 12,
+        "output_tokens": 3422,
+        "cache_read": 144460,
+        "cache_creation": 9504,
+        "permission_denials": 1,
+        "total_tokens": 157398,
+        "rounds": 1,
+        "final_hidden_passed": 10
+      }
+    },
+    "B3": {
+      "condition": "B",
+      "rounds": [
+        {
+          "round": 1,
+          "session_id": "08462cd4-2968-48e7-91b4-ea7556286257",
+          "is_error": false,
+          "subtype": "success",
+          "cost_usd": 0.0818177,
+          "num_turns": 8,
+          "duration_ms": 26221,
+          "input_tokens": 10,
+          "output_tokens": 3367,
+          "cache_read": 116637,
+          "cache_creation": 9116,
+          "permission_denials": 0,
+          "hidden_passed": 10,
+          "final_message": "I implemented `wires.py` with the four functions you listed, and wrote `test_wires.py`. All 13 pytest tests pass.\n\n**What each function does**\n- **`fee(amount)`** is 0.5% of the amount, rounded to the nearest cent, with a 2.00 minimum (FR-001, FR-010).\n- **`daily_limit(tier)`** returns 5,000 for tier 1 and 25,000 for tier 2 (FR-003).\n- **`check_wire(tier, sent_today, amount)`** returns `\"rejected\"` if `sent_today + amount` exceeds the limit (FR-002). Otherwise it returns `\"held\"` if the amount is above 10,000 (FR-005), and `\"queued\"` if neither applies.\n- **`refund(amount)`** returns the amount plus its fee (FR-009).\n\n**Assumptions**\n1. **Rounding:** I used half-up rounding. The spec only says \"nearest cent\". The 2.00 minimum applies to the rounded fee.\n2. **Reject vs. hold:** a wire that breaks the daily limit is rejected even if it is also above 10,000. The spec doesn't say which comes first.\n3. **Exact boundaries:** a total equal to the limit is allowed, since FR-002 says \"exceeds\". An amount of exactly 10,000 is queued, since FR-005 says \"above\".\n4. **Daily total:** `sent_today` counts wire amounts only, not fees. It is the caller's job to count the day's wires, including ones later rejected by the bank. The spec's edge case on that question is left open.\n5. **Bad input:** an unknown tier, a non-positive amount or a negative `sent_today` raises `ValueError`.\n6. **Refund:** `refund()` re-derives the fee from the amount instead of using the fee actually charged. It is correct as long as the fee rules haven't changed since the wire was confirmed.\n\n**Not implemented**\n- Fraud-rule holds (FR-007), which the `check_wire` signature has no inputs for.\n- The analyst review queue and its 4-business-hour resolution time (FR-006, FR-008).\n- The audit log and 5-year retention (FR-011).\n- The weekly digest (T007), which has no matching requirement in the spec."
+        }
+      ],
+      "total": {
+        "cost_usd": 0.0818177,
+        "num_turns": 8,
+        "duration_ms": 26221,
+        "input_tokens": 10,
+        "output_tokens": 3367,
+        "cache_read": 116637,
+        "cache_creation": 9116,
+        "permission_denials": 0,
+        "total_tokens": 129130,
+        "rounds": 1,
+        "final_hidden_passed": 10
+      }
+    }
+  },
+  "mean_per_condition": {
+    "A": {
+      "cost_usd": 0.0891855,
+      "num_turns": 9.333333333333334,
+      "duration_ms": 30234.333333333332,
+      "input_tokens": 11.333333333333334,
+      "output_tokens": 3646.3333333333335,
+      "cache_read": 134621.66666666666,
+      "cache_creation": 9809.333333333334,
+      "permission_denials": 0.6666666666666666,
+      "total_tokens": 148088.66666666666,
+      "rounds": 1,
+      "final_hidden_passed": 10,
+      "sum_cost_usd": 0.2675565
+    },
+    "B": {
+      "cost_usd": 0.08673323333333333,
+      "num_turns": 9.333333333333334,
+      "duration_ms": 31078.666666666668,
+      "input_tokens": 11.333333333333334,
+      "output_tokens": 3428.3333333333335,
+      "cache_read": 134939,
+      "cache_creation": 9733.333333333334,
+      "permission_denials": 0.3333333333333333,
+      "total_tokens": 148112,
+      "rounds": 1,
+      "final_hidden_passed": 10,
+      "sum_cost_usd": 0.2601997
+    }
+  },
+  "pct_diff_B_vs_A": {
+    "cost_usd": -2.74962484559337,
+    "num_turns": 0.0,
+    "duration_ms": 2.7926308942372438,
+    "output_tokens": -5.978608647956851,
+    "total_tokens": 0.01575632616496178
+  }
+}

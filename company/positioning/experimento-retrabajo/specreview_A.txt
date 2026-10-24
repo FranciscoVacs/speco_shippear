@@ -1,0 +1,16 @@
+Spec review · specs_A
+11 requisitos · 2 stories · 4 pasos de plan · 7 tasks
+
+BLOQUEANTE  FR-003 + FR-004  spec.md:53   CON001  FR-003 y FR-004 se contradicen: valores distintos para lo mismo: «5,000 USD» vs «10,000 USD».
+BLOQUEANTE  FR-007           spec.md:57   COV001  FR-007 no tiene correlato en el plan ni en las tasks: nadie lo va a implementar.
+ADVERTENCIA T007             tasks.md:14  COV002  T007 no responde a ningún requisito (introduce: weekly, digest, team): posible scope que se coló.
+ADVERTENCIA FR-007           spec.md:57   QUA001  FR-007 es ambiguo: «appropriately» deja la decisión al implementador.
+ADVERTENCIA FR-008           spec.md:58   QUA002  FR-008 no es testeable: usa «quickly» sin un umbral medible.
+ADVERTENCIA FR-007           spec.md:57   QUA006  FR-007 no tiene criterio de aceptación: ningún escenario ni Success Criterion lo verifica.
+ADVERTENCIA FR-010           spec.md:60   QUA006  FR-010 no tiene criterio de aceptación: ningún escenario ni Success Criterion lo verifica.
+ADVERTENCIA FR-011           spec.md:61   QUA006  FR-011 no tiene criterio de aceptación: ningún escenario ni Success Criterion lo verifica.
+
+Resumen: 2 bloqueantes, 6 advertencias, 0 sugerencias
+(5 hallazgos de menor severidad ocultos; usar --min-severity suggestion para verlos)
+Métricas: cobertura requisito→plan/tasks 91% · con criterio de aceptación 45% · EARS 11/11
+exit=1
