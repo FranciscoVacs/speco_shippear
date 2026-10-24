@@ -1,3 +1,7 @@
+
+
+https://github.com/user-attachments/assets/32d9723a-4990-40cb-a0e7-4931879c7554
+
 # Spec Reviewer
 
 > **Con agentes escribiendo el código, lo caro es decidir qué construir y mantenerlo coherente.** Speco es la capa donde esa decisión vive, se revisa y se verifica: el Cursor para el negocio, para gerencia y producto. Tesis completa: [`docs/16-thesis.md`](docs/16-thesis.md).
