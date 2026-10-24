@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
 import { AlertTriangle, BadgeCheck, Box, FileCode2, X } from "lucide-react";
 import { DesignViewer } from "./DesignViewer";
+import { SpecArtifacts } from "./SpecArtifacts";
 import { moduleById, rule as ruleById, type Spec } from "../data";
 import { setSpecStatus, useBello } from "../store";
 import { useChain } from "../hash";
 import { HashChip, KindIcon, PersonChip, Ring, StatusBadge } from "../ui";
 
 export function SpecDetail({ spec, onClose }: { spec: Spec; onClose: () => void }) {
-  const { events } = useBello();
+  const { events, requirements } = useBello();
   const chain = useChain(events);
   const trail = (chain ?? []).filter((e) => e.target === spec.id || spec.id.startsWith(e.target + "/"));
   const testPct = spec.tests.total ? Math.round((spec.tests.passed / spec.tests.total) * 100) : 0;
@@ -28,10 +29,7 @@ export function SpecDetail({ spec, onClose }: { spec: Spec; onClose: () => void 
 
       <DesignViewer spec={spec} />
 
-      <section className="bl-sec">
-        <h3>Requisito (EARS)</h3>
-        <p className="bl-ears">{spec.ears}</p>
-      </section>
+      <SpecArtifacts spec={spec} requirement={requirements.find((r) => r.specs.some((s) => s.id === spec.id))} />
 
       <section className="bl-sec bl-detail-stats">
         <div>
